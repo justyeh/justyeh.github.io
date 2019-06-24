@@ -58,7 +58,12 @@
 前端的同学想必都碰到过1px边框的问题，在高分屏手机上，我们会发现自己写的1px往往会比预想的“粗”一些，下面是他人总结的解决方案。
 
 单线
-写一个高度为1px的线，然后通过transform:sc</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-09-07</p> <!----> <div></div></div></div></div></div></div>
+写一个高度为1px的线，然后通过transform:scaleY(0.5)缩放来实现
+div{
+    height:1px;
+    background:#ddd;
+    -webkit-transform: scaleY(0.5);
+    -we</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-09-07</p> <!----> <div></div></div></div></div></div></div>
     </div>
 
     <footer>
