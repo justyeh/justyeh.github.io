@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="justyeh,justyeh@163.com" />
+    <meta name="apple-mobile-web-app-title" content="justyeh的前端博客" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#263238" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="x5-orientation" content="portrait" />
+    <meta name="theme-color" content="#263238" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <title>git常用命令</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/front.css">
+    <link rel="stylesheet" href="/static/css/yeh-md-theme.css">
+    <link rel="stylesheet" href="/static/js/highlight/ocean.min.css">
+    <script src="/static/js/highlight/highlight.min.js"></script>
+    <script src="/static/js/public.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="site">
+                <img src="/static/image/avatar.jpg" />
+                <p>JustYeh的前端博客</p>
+            </div>
+            <div class="nav">
+                <div class="menu">
+                    <a href="/">Home</a>
+                    <a href="/about" class="">About</a>
+                    <a target="_blank" href="/projects/index.html">Projects</a>
+                    <a href="http://justyeh.github.io/tools" target="_blank">Tools</a>
+                    <a target="_blank" href="https://github.com/justyeh">Github</a>
+                </div>
+                <div class="search">
+                    <form action="/search" methods='get'>
+                        <input class="ani" autocomplete="off" type="search" name="keyword" value="">
+                        <button class="ani" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="container page">
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(/blogs/git/git.jpg);"></div> <div class="title">git常用命令</div> <div class="info"><i class="fa fa-clock-o"></i> <p>3周前</p> <!----></div> <div class="content"><div class="md"><blockquote>
+<p>记录比较常用但是容易忘记的git命令</p>
+</blockquote>
+<h3 id="远程仓库和本地仓库建立关联">远程仓库和本地仓库建立关联</h3>
+<pre><code>git remote add origin `git@github.com:justyeh/www.justyeh.top.git`</code></pre><h3 id="强制使用远程仓库覆盖本地">强制使用远程仓库覆盖本地</h3>
+<pre><code>git fetch --all &amp;&amp; git reset --hard origin/master &amp;&amp; git pull</code></pre><h3 id="git-checkout远程分支没反应">git checkout<code>远程分支</code>没反应</h3>
+<p>checkout前先执行fetch更新remote索引， 取回所有分支（branch）的更新</p>
+<pre><code>git fetch
+git checkout &#39;remote-branch-name&#39;</code></pre><h3 id="分支的操作">分支的操作</h3>
+<pre><code class="language-bash">#查看远程分支
+git branch -r
+
+#查看所有分支
+git branch -a
+
+#删除本地分支（不能再当前分支删除自己）
+git branch -d branch-name
+
+#删除远程分支
+git push origin :remote-branch-name</code></pre>
+<h3 id="查看单个文件每次提交的内容差异">查看单个文件每次提交的内容差异</h3>
+<pre><code>git log -p &#39;file&#39;</code></pre><h3 id="查看某次提交修改的内容">查看某次提交修改的内容</h3>
+<pre><code>git show &#39;commit_id&#39;</code></pre><h3 id="提交所有被修改的文件">提交所有被修改的文件</h3>
+<pre><code>git commit -am &#39;commit message&#39;</code></pre></div></div></div>
+    </div>
+
+    <footer>
+        <div>
+            <p>参考网址：</p>
+            <div class="links">
+                <a target="_blank" href="https://cnodejs.org/">CNode技术社区</a>
+                <a target="_blank" href="https://cn.vuejs.org/">Vue.js官网</a>
+                <a target="_blank" href="https://zh.nuxtjs.org/">Nuxt.js官网</a>
+                <a target="_blank" href="http://www.expressjs.com.cn/">Express.js官网</a>
+            </div>
+        </div>
+        <div>
+            <p>友情链接：</p>
+            <div class="links">
+                <a target="_blank" href="http://www.lanqiao.org/">蓝桥官网</a>
+                <a target="_blank" href="http://www.javabb.cn/">秦豹的个人网站</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

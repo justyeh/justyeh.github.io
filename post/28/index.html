@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="justyeh,justyeh@163.com" />
+    <meta name="apple-mobile-web-app-title" content="justyeh的前端博客" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#263238" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="x5-orientation" content="portrait" />
+    <meta name="theme-color" content="#263238" />
+    <meta name="description" content="video" />
+    <meta name="keywords" content="video" />
+    <title>前端常用属性、方法备忘</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/front.css">
+    <link rel="stylesheet" href="/static/css/yeh-md-theme.css">
+    <link rel="stylesheet" href="/static/js/highlight/ocean.min.css">
+    <script src="/static/js/highlight/highlight.min.js"></script>
+    <script src="/static/js/public.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="site">
+                <img src="/static/image/avatar.jpg" />
+                <p>JustYeh的前端博客</p>
+            </div>
+            <div class="nav">
+                <div class="menu">
+                    <a href="/">Home</a>
+                    <a href="/about" class="">About</a>
+                    <a target="_blank" href="/projects/index.html">Projects</a>
+                    <a href="http://justyeh.github.io/tools" target="_blank">Tools</a>
+                    <a target="_blank" href="https://github.com/justyeh">Github</a>
+                </div>
+                <div class="search">
+                    <form action="/search" methods='get'>
+                        <input class="ani" autocomplete="off" type="search" name="keyword" value="">
+                        <button class="ani" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="container page">
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(/blogs/front-end-tool/font-end-memo.png);"></div> <div class="title">前端常用属性、方法备忘</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-06-24</p> <i class="fa fa-tag"></i> <div><a href="/tag/36">video</a></div></div> <div class="content"><div class="md"><blockquote>
+<p>在编写前端代码的过程中，有一些属性和方法是需要经常用到的，但是记忆起来又比较麻烦（反正我是间歇性记得），以前我总是要用了就去百度一下，每次还需要对网页对内进行一下筛选，总之很麻烦。本文总结了一些比较常用但又不容易记住的前端属性和方法，包括：文本溢出、文本禁止选中、点击目标区域以外影藏、获取元素距离与位置等。</p>
+</blockquote>
+<h4 id="文本溢出省略符">文本溢出省略符</h4>
+<pre><code>.text-ellipsis{
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+}</code></pre><h4 id="禁止文本选中">禁止文本选中</h4>
+<p>IE6-9不支持该属性，但支持使用标签属性 <code>onselectstart=&quot;return false;&quot;</code>来达到<code>user-select:none</code> 的效果；</p>
+<pre><code>.noselect {
+-webkit-user-select: none;  /* Chrome all / Safari all /opera15+*/  
+-moz-user-select: none;     /* Firefox all */  
+-ms-user-select: none;      /* IE 10+ */  
+user-select: none;  
+}</code></pre><h4 id="opacity兼容ie的写法">opacity兼容IE的写法</h4>
+<p>我总是记不住下面的一个。</p>
+<pre><code>opacity:0.6; 
+filter:alpha(opacity=60);</code></pre><h4 id="点击目标区域以外区域影藏元素">点击目标区域以外区域影藏元素</h4>
+<p>下面有一个例子，实现点击<code>.main</code>以外区域时，影藏<code>.dialog</code>：</p>
+<pre><code>&lt;!--html--&gt;
+&lt;div class=&quot;dialog&quot;&gt;
+&lt;div class=&quot;main&quot;&gt;
+...
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!--js--&gt;
+$(document).mouseup(function(e){
+// 设置目标区域
+var _con = $(&quot;.dialog .main&quot;);   
+//target不是目标元素，并且不是目标元素的子元素
+if( !_con.is(e.target) &amp;&amp; _con.has(e.target).length === 0){
+$(&quot;.dialog&quot;).fadeOut(&#39;fast&#39;)
+}
+});</code></pre><h4 id="checkbox选中">checkbox选中</h4>
+<p>需要注意的是<code>attr(&quot;checked&quot;,true)</code>方法只有第一次会生效，请使用<code>prop()</code>方法代替<code>attr()</code>方法，下面的例子实现了全选与全不选效果：</p>
+<pre><code>$(&quot;checkbox#checkAll&quot;).change(function(){
+if(this.checked){
+ $(&quot;table input[type=&#39;checkbox&#39;]&quot;).prop(&quot;checked&quot;,true);
+}else{
+ $(&quot;table input[type=&#39;checkbox&#39;]&quot;).removeAttr(&quot;checked&quot;);
+}
+});</code></pre><h4 id="返回顶部">返回顶部</h4>
+<pre><code>function returnTop(){
+$(&#39;body,html&#39;).animate({ scrollTop: 0 }, 300);
+}</code></pre><h4 id="获取元素的尺寸">获取元素的尺寸</h4>
+<pre><code>$(window).height(); //浏览器当前窗口可视区域高度
+$(window).width(); //浏览器当前窗口可视区域宽度
+
+$(document).height(); //浏览器当前窗口文档的高度
+$(document).width();//浏览器当前窗口文档对象宽度
+
+$(document.body).height();//浏览器当前窗口文档body的高度
+$(document.body).width();//浏览器当前窗口文档body的宽度
+
+$(document.body).outerHeight(true));//浏览器当前窗口文档body的总高度 包括border padding margin
+$(document.body).outerWidth(true));//浏览器当前窗口文档body的总宽度 包括border padding </code></pre><h4 id="获取元素在文档中的位置">获取元素在文档中的位置</h4>
+<p><strong>获取元素在页面中的相对对位置</strong></p>
+<p>这是一个相对距离，包括滚动条的偏移量</p>
+<pre><code>$(&#39;#tar&#39;).offset().left;
+$(&#39;#tar&#39;).offset().top;</code></pre><p><strong>获取元素在页面中的绝对位置</strong></p>
+<p>当我们需要获取元素在浏览器窗口的绝对距离时，首先获取相对距离，然后减去窗口的偏移量就可以了</p>
+<pre><code>$(&#39;#tar&#39;).offset().left-$(&quot;body&quot;).scrollLeft();
+$(&#39;#tar&#39;).offset().top-$(&quot;body&quot;).scrollTop();</code></pre><h4 id="获取鼠标的位置">获取鼠标的位置</h4>
+<pre><code>$(document).mousemove(function(e){
+//鼠标相对于浏览器窗口（不包括浏览器的工具栏）的坐标,不包括滚动条的偏移量
+console.log(e.clientX+&quot;,&quot;+e.clientY);
+//鼠标相对于屏幕的坐标,这时加上了滚动条的偏移量
+if(e.pageX == null) {
+console.log(e.x+&quot;,&quot;+e.y);
+    }else{
+    console.log(e.pageX+&quot;,&quot;+e.pageY);
+    }
+    //鼠标相对于屏幕的坐标
+    console.log(e.screenX+&quot;,&quot;+e.screenY);
+})</code></pre></div></div></div>
+    </div>
+
+    <footer>
+        <div>
+            <p>参考网址：</p>
+            <div class="links">
+                <a target="_blank" href="https://cnodejs.org/">CNode技术社区</a>
+                <a target="_blank" href="https://cn.vuejs.org/">Vue.js官网</a>
+                <a target="_blank" href="https://zh.nuxtjs.org/">Nuxt.js官网</a>
+                <a target="_blank" href="http://www.expressjs.com.cn/">Express.js官网</a>
+            </div>
+        </div>
+        <div>
+            <p>友情链接：</p>
+            <div class="links">
+                <a target="_blank" href="http://www.lanqiao.org/">蓝桥官网</a>
+                <a target="_blank" href="http://www.javabb.cn/">秦豹的个人网站</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="justyeh,justyeh@163.com" />
+    <meta name="apple-mobile-web-app-title" content="justyeh的前端博客" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#263238" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="x5-orientation" content="portrait" />
+    <meta name="theme-color" content="#263238" />
+    <meta name="description" content="异步" />
+    <meta name="keywords" content="异步" />
+    <title>git乱码解决方法</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/front.css">
+    <link rel="stylesheet" href="/static/css/yeh-md-theme.css">
+    <link rel="stylesheet" href="/static/js/highlight/ocean.min.css">
+    <script src="/static/js/highlight/highlight.min.js"></script>
+    <script src="/static/js/public.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="site">
+                <img src="/static/image/avatar.jpg" />
+                <p>JustYeh的前端博客</p>
+            </div>
+            <div class="nav">
+                <div class="menu">
+                    <a href="/">Home</a>
+                    <a href="/about" class="">About</a>
+                    <a target="_blank" href="/projects/index.html">Projects</a>
+                    <a href="http://justyeh.github.io/tools" target="_blank">Tools</a>
+                    <a target="_blank" href="https://github.com/justyeh">Github</a>
+                </div>
+                <div class="search">
+                    <form action="/search" methods='get'>
+                        <input class="ani" autocomplete="off" type="search" name="keyword" value="">
+                        <button class="ani" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="container page">
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(/blogs/git/git.jpg);"></div> <div class="title">git乱码解决方法</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-06-24</p> <i class="fa fa-tag"></i> <div><a href="/tag/33">异步</a></div></div> <div class="content"><div class="md"><blockquote>
+<p>git对中文的支持不是很好，想必英文不是很好的朋友一定深受其扰；因为Git 是在linux下开发的，而 Linux 的编码方式是基于 UTF-8 的，所以移植到 Windows 之后难免会存在编码冲突，导致乱码。
+下面的方法是我在网上总结来的，并且经过亲自实践，最终解决了这个问题。</p>
+</blockquote>
+<blockquote>
+<p>注意：我的git客户端<code>Git for Windows v2.11.0</code>，有可能你的目录结构和我的不一致。</p>
+</blockquote>
+<h4 id="让-git-支持-utf-8-编码">让 Git 支持 utf-8 编码</h4>
+<p>在命令行输入以下命令：</p>
+<pre><code># 显示 status 编码
+$ git config --global core.quotepath false  
+# 图形界面编码        
+$ git config --global gui.encoding utf-8    
+# 提交信息编码        
+$ git config --global i18n.commit.encoding utf-8    
+# 输出 log 编码
+$ git config --global i18n.logoutputencoding utf-8 
+# 最后一条命令是因为 git log 默认使用 less 分页，所以需要 bash 对 less 命令进行 utf-8 编码
+$ export LESSCHARSET=utf-8</code></pre><h4 id="修改配置文件">修改配置文件</h4>
+<p>编辑安装目录下<code>etc\inputrc</code>文件，查找以下2行，并修改其值：</p>
+<pre><code>set output-meta off
+set convert-meta on</code></pre><p>修改为</p>
+<pre><code>set output-meta on
+set convert-meta off</code></pre><h4 id="让-ls命令可以显示中文名称">让 ls命令可以显示中文名称</h4>
+<p>编辑安装目录下<code>mingw64\share\git\completion\git-completion.bash</code>文件：</p>
+<pre><code># 在文件末尾处添加一行
+alias ls=&quot;ls --show-control-chars --color&quot;</code></pre><h4 id="对命令行进行设置">对命令行进行设置</h4>
+<p>右键&gt;Options...&gt;Text，设置<code>Locale</code>为<code>zh_CN</code>，设置<code>Character set</code>为<code>UTF-8</code>，见下图：
+<img src="/blogs/git//git-option.jpg" alt=""></p>
+</div></div></div>
+    </div>
+
+    <footer>
+        <div>
+            <p>参考网址：</p>
+            <div class="links">
+                <a target="_blank" href="https://cnodejs.org/">CNode技术社区</a>
+                <a target="_blank" href="https://cn.vuejs.org/">Vue.js官网</a>
+                <a target="_blank" href="https://zh.nuxtjs.org/">Nuxt.js官网</a>
+                <a target="_blank" href="http://www.expressjs.com.cn/">Express.js官网</a>
+            </div>
+        </div>
+        <div>
+            <p>友情链接：</p>
+            <div class="links">
+                <a target="_blank" href="http://www.lanqiao.org/">蓝桥官网</a>
+                <a target="_blank" href="http://www.javabb.cn/">秦豹的个人网站</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

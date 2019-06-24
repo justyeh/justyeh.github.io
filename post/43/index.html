@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="justyeh,justyeh@163.com" />
+    <meta name="apple-mobile-web-app-title" content="justyeh的前端博客" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#263238" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="x5-orientation" content="portrait" />
+    <meta name="theme-color" content="#263238" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <title>github项目收藏</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/front.css">
+    <link rel="stylesheet" href="/static/css/yeh-md-theme.css">
+    <link rel="stylesheet" href="/static/js/highlight/ocean.min.css">
+    <script src="/static/js/highlight/highlight.min.js"></script>
+    <script src="/static/js/public.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="site">
+                <img src="/static/image/avatar.jpg" />
+                <p>JustYeh的前端博客</p>
+            </div>
+            <div class="nav">
+                <div class="menu">
+                    <a href="/">Home</a>
+                    <a href="/about" class="">About</a>
+                    <a target="_blank" href="/projects/index.html">Projects</a>
+                    <a href="http://justyeh.github.io/tools" target="_blank">Tools</a>
+                    <a target="_blank" href="https://github.com/justyeh">Github</a>
+                </div>
+                <div class="search">
+                    <form action="/search" methods='get'>
+                        <input class="ani" autocomplete="off" type="search" name="keyword" value="">
+                        <button class="ani" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="container page">
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(/1556253036420-poster.png);"></div> <div class="title">github项目收藏</div> <div class="info"><i class="fa fa-clock-o"></i> <p>1个月前</p> <!----></div> <div class="content"><div class="md"><blockquote>
+<p>记录我start的一些项目，并做简要的说明</p>
+</blockquote>
+<h2 id="工具">工具</h2>
+<p><strong>pty.js</strong></p>
+<p>返回一个支持读、写的虚拟终端（terminal），结合webscoket可以实现web终端的工具</p>
+<p><a href="https://github.com/chjj/pty.js">https://github.com/chjj/pty.js</a></p>
+<p><strong>shelljs</strong></p>
+<p>这个库能够让我们在js文件中执行shell命令，借住它可以轻松实现自动化部署</p>
+<pre><code>//局部模式
+var shell = require(&#39;shelljs&#39;);
+//全局模式下，就不需要用shell开头了。
+//require(&#39;shelljs/global&#39;);
+
+if (shell.exec(&#39;npm run build&#39;).code !== 0) {//执行npm run build 命令
+  shell.echo(&#39;Error: Git commit failed&#39;);
+  shell.exit(1);
+}
+
+//由于我的用另外一个仓库存放dist目录，所以这里要将文件增量复制到目标目录。并切换到对应目录。
+shell.cp (&#39;-r&#39;, &#39;./dist/*&#39;, &#39;../../Rychou&#39;);
+shell.cd(&#39;../../Rychou&#39;);
+
+shell.exec(&#39;git add .&#39;);
+shell.exec(&quot;git commit -m &#39;autocommit&#39;&quot;)
+shell.exec(&#39;git push&#39;)</code></pre><p><a href="https://github.com/shelljs/shelljs">https://github.com/shelljs/shelljs</a></p>
+<p><strong>doubi</strong></p>
+<p>各种有用的（代理、中转、bt下载、服务器、vpn、dns、http...）脚本集合</p>
+<p><a href="https://github.com/erguotou520/doubi">https://github.com/erguotou520/doubi</a></p>
+<p><strong>vue-baidu-map</strong></p>
+<p>基于Vue的百度地图组件库</p>
+<p><a href="https://github.com/Dafrok/vue-baidu-map">https://github.com/Dafrok/vue-baidu-map</a></p>
+<p><strong>vConsole</strong></p>
+<p>轻量、可扩展的移动端web调试工具</p>
+<p><a href="https://github.com/Tencent/vConsole">https://github.com/Tencent/vConsole</a></p>
+<p><strong>vue-skeleton-loading</strong></p>
+<p>一个让我们快速和方便写出自定义骨架屏（skeleton loading）的插件</p>
+<p><a href="https://github.com/jiingwang/vue-skeleton-loading">https://github.com/jiingwang/vue-skeleton-loading</a></p>
+<p><strong>elf</strong></p>
+<p>灵活可扩展的 HTML5 构建工具，写H5活动页时可以用到</p>
+<p><a href="https://github.com/o2team/elf">https://github.com/o2team/elf</a></p>
+<h2 id="编辑器">编辑器</h2>
+<p><strong>editor.md</strong></p>
+<p>功能强大的开源在线 Markdown 编辑器</p>
+<p><a href="https://github.com/pandao/editor.md">https://github.com/pandao/editor.md</a></p>
+<p><strong>vue-quill-editor</strong></p>
+<p>基于 Quill、适用于 Vue 的富文本编辑器，支持服务端渲染和单页应用</p>
+<p><a href="https://github.com/surmon-china/vue-quill-editor">https://github.com/surmon-china/vue-quill-editor</a></p>
+<p><strong>CodeMirror</strong></p>
+<p>可以运行在浏览器端的代码编辑器</p>
+<p><a href="https://github.com/codemirror/CodeMirror">https://github.com/codemirror/CodeMirror</a></p>
+<h2 id="vueui-框架">VueUI 框架</h2>
+<p><strong>vant</strong></p>
+<p>适合做商城的移动端UI框架</p>
+<p><a href="https://github.com/youzan/vant">https://github.com/youzan/vant</a></p>
+<p><strong>muse-ui</strong></p>
+<p>Material Design风格的UI框架</p>
+<p><a href="https://github.com/museui/muse-ui">https://github.com/museui/muse-ui</a></p>
+<p><strong>mint-ui</strong></p>
+<p>Vue移动端UI框架</p>
+<p><a href="https://github.com/ElemeFE/mint-ui">https://github.com/ElemeFE/mint-ui</a></p>
+<h2 id="媒体">媒体</h2>
+<p><strong>DPlayer</strong></p>
+<p>支持弹幕的开源视频播放器</p>
+<p><a href="https://github.com/MoePlayer/DPlayer">https://github.com/MoePlayer/DPlayer</a></p>
+<h2 id="其他">其他</h2>
+<p><strong>node-interview</strong></p>
+<p>如何通过饿了么 Node.js 面试？这个库包含完整的后端Nodejs技术栈</p>
+<p><a href="https://github.com/ElemeFE/node-interview/tree/master/sections/zh-cn">https://github.com/ElemeFE/node-interview/tree/master/sections/zh-cn</a></p>
+<p><strong>effective-javascript</strong></p>
+<p>如何提高自己的JavaScript能力，这个库也许能帮到你</p>
+<p><a href="https://github.com/dreamapplehappy/effective-javascript">https://github.com/dreamapplehappy/effective-javascript</a></p>
+</div></div></div>
+    </div>
+
+    <footer>
+        <div>
+            <p>参考网址：</p>
+            <div class="links">
+                <a target="_blank" href="https://cnodejs.org/">CNode技术社区</a>
+                <a target="_blank" href="https://cn.vuejs.org/">Vue.js官网</a>
+                <a target="_blank" href="https://zh.nuxtjs.org/">Nuxt.js官网</a>
+                <a target="_blank" href="http://www.expressjs.com.cn/">Express.js官网</a>
+            </div>
+        </div>
+        <div>
+            <p>友情链接：</p>
+            <div class="links">
+                <a target="_blank" href="http://www.lanqiao.org/">蓝桥官网</a>
+                <a target="_blank" href="http://www.javabb.cn/">秦豹的个人网站</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

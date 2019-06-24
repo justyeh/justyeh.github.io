@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="justyeh,justyeh@163.com" />
+    <meta name="apple-mobile-web-app-title" content="justyeh的前端博客" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#263238" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="x5-orientation" content="portrait" />
+    <meta name="theme-color" content="#263238" />
+    <meta name="description" content="nginx" />
+    <meta name="keywords" content="nginx" />
+    <title>后台管理系统页面模板</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/front.css">
+    <link rel="stylesheet" href="/static/css/yeh-md-theme.css">
+    <link rel="stylesheet" href="/static/js/highlight/ocean.min.css">
+    <script src="/static/js/highlight/highlight.min.js"></script>
+    <script src="/static/js/public.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="site">
+                <img src="/static/image/avatar.jpg" />
+                <p>JustYeh的前端博客</p>
+            </div>
+            <div class="nav">
+                <div class="menu">
+                    <a href="/">Home</a>
+                    <a href="/about" class="">About</a>
+                    <a target="_blank" href="/projects/index.html">Projects</a>
+                    <a href="http://justyeh.github.io/tools" target="_blank">Tools</a>
+                    <a target="_blank" href="https://github.com/justyeh">Github</a>
+                </div>
+                <div class="search">
+                    <form action="/search" methods='get'>
+                        <input class="ani" autocomplete="off" type="search" name="keyword" value="">
+                        <button class="ani" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="container page">
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(/blogs/bsf/poster.jpg);"></div> <div class="title">后台管理系统页面模板</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-07-10</p> <i class="fa fa-tag"></i> <div><a href="/tag/44">nginx</a></div></div> <div class="content"><div class="md"><blockquote>
+<p>这个模板是我总结多个后台管理项目整合出来的，并已有多个线上项目。现在当我碰到这样的需求时，都是基于这个模板进行二次开发，节省了不少精力。所以将这套方法总结出来，同大家分享。</p>
+</blockquote>
+<blockquote>
+<p>github：<a href="https://github.com/justyeh/BSF">https://github.com/justyeh/BSF</a></p>
+</blockquote>
+<p><a href="/blogs/bsf/demo.html">在线demo</a></p>
+<h4 id="特性">特性</h4>
+<ul>
+<li>html+css组织，不对js产生影响。</li>
+<li>当侧边栏内容较高时，自动滑动。</li>
+<li>支持公共文件include。</li>
+<li>面向对象、好用的css样式。</li>
+</ul>
+<h4 id="页面结构">页面结构</h4>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot; /&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
+&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot; /&gt;ame=&quot;renderer&quot; content=&quot;webkit&quot;&gt;
+&lt;meta name=&quot;keywords&quot; contect=&quot;keywords&quot;&gt;
+    &lt;meta name=&quot;Description&quot; contect=&quot;Description&quot;&gt;
+     &lt;link rel=&quot;shortcut icon&quot; type=&quot;image/x-icon&quot; href=&quot;img/favicon.ico&quot;&gt;
+&lt;title&gt;xx backend&lt;/title&gt;
+&lt;!--[if lte IE 9]&gt;
+            &lt;script src=&quot;js/browser-not-supported-ie10.js&quot;&gt;&lt;/script&gt;
+        &lt;![endif]--&gt;
+&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;css/style.css&quot;/&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div class=&quot;page&quot;&gt;
+
+&lt;include src=&quot;header.html&quot;&gt;&lt;/include&gt;
+&lt;include src=&quot;silder.html&quot;&gt;&lt;/include&gt;
+
+&lt;!--main wrap--&gt;
+&lt;div class=&quot;main&quot;&gt;
+&lt;div&gt;页面主体内容&lt;/div&gt;
+&lt;/div&gt;&lt;!--main wrap end--&gt;
+
+&lt;/div&gt;
+
+&lt;div class=&quot;dialog&quot;&gt;
+&lt;div class=&quot;wrap&quot;&gt;
+&lt;p&gt;弹出框内容&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script src=&quot;js/include.js&quot;&gt;&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre><p>BSF采用的是内滚动布局，关于内滚动布局，腾讯isux有一篇专门的文章，我将它转载了过来：<a href="http://justyeh.com/2017/02/22/inner-scroll-layout/">内滚动布局的概念与实现方法</a></p>
+<h4 id="css的组织">CSS的组织</h4>
+<p>BSF定义了一些常用的样式，命名参考了bootstrap。当然，这里面有些样式你有可能使用不上，直接删除就好了。</p>
+<p><strong>reset</strong></p>
+<pre><code>@charset &quot;utf-8&quot;;
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,legend,input,textarea,p,blockquote,th,td,a,img,span{margin:0;padding:0;}
+body{font-size:14px;font-family: &quot;Arial&quot;,&quot;Microsoft YaHei&quot;,&quot;微软雅黑&quot;,sans-serif;background: #fff;color: #454545;}
+address,caption,cite,code,dfn,em,th,var,i{font-style:normal;font-weight:normal;}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}
+input,textarea,select{font-family:inherit;font-size:inherit;*font-size: 100%;font-weight:inherit;outline:none;}
+table{border-collapse:collapse;border-spacing:0;}
+fieldset,img,abbr,acronym{border:0;}
+a{text-decoration: none;}
+a:focus,a:active,button::-moz-focus-inner,input[type=&quot;reset&quot;]::-moz-focus-inner,input[type=&quot;button&quot;]::-moz-focus-inner,input[type=&quot;submit&quot;]::-moz-focus-inner,select::-moz-focus-inner,input[type=&quot;file&quot;] &gt; input[type=&quot;button&quot;]::-moz-focus-inner{outline: none;}
+input[type=&#39;button&#39;],input[type=&#39;submit&#39;]{border:0;}
+ol,ul ,li{list-style-type:none;list-style: none;}
+caption,th{text-align:left;}
+img{vertical-align:middle;border:0;}
+p{line-height: 1;}
+button,a{cursor: pointer;outline: none;}
+img{display: inline-block;vertical-align: middle;}
+*::after, *::before{box-sizing: border-box;}
+*{box-sizing: border-box;}
+html,body{height: 100%;}
+body{overflow: hidden;background: #fff;line-height: 1;min-width: 800px;position: relative;}</code></pre><p><strong>工具样式</strong></p>
+<pre><code>.clearfix:before,.clearfix:after{content:&quot;&quot;;display:table; } 
+.clearfix:after{clear:both;} 
+.clearfix{*zoom:1;/*IE/7/6*/}
+.fl{float:left;}
+.fr{float:right;}</code></pre><p><strong>定位</strong></p>
+<pre><code>.clearfix:before,.clearfix:after{content:&quot;&quot;; display:table;}
+.clearfix:after{clear:both;}
+.clearfix{*zoom:1;/*IE/7/6*/}
+.relative{position: relative;}
+.absolute{position: absolute;}
+.fl{float:left;}
+.fr{float:right;}</code></pre><p><strong>文字</strong></p>
+<pre><code>.bold{font-weight: bold;}
+.fs36{font-size: 36px !important;}
+.fs30{font-size: 30px !important;}
+.fs24{font-size: 24px !important;}
+.fs18{font-size: 18px !important;}
+.fs16{font-size: 16px !important;}
+.text-c{text-align: center;}
+.text-r{text-align: right;}
+.text-l{text-align: left !important;}
+.text-ellipsis{overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}</code></pre><p><strong>颜色</strong></p>
+<pre><code>.c-green{color: #2fa820 !important;}
+.c-blue{color: #1fbad6 !important;}
+.c-red{color: #f32f00 !important;}</code></pre><p><strong>动画</strong></p>
+<pre><code>.transition3{transition: all 0.3s ease;-moz-transition: all 0.3s ease;-webkit-transition: all 0.3s ease;}
+.transition5{transition: all 0.5s ease;-moz-transition: all 0.5s ease;-webkit-transition: all 0.5s ease;}
+.transition8{transition: all 0.8s ease;-moz-transition: all 0.8s ease;-webkit-transition: all 0.8s ease;}</code></pre><p><strong>分页</strong></p>
+<pre><code>.pager{padding: 40px 0;}
+.pager a, .pager span{background-color: #fff; border: 1px solid #e4e9ee; color: #758796; float: left; font-family: arial; font-size: 14px; line-height: 1.42857; margin-left: 3px; padding: 3px 9px; position: relative; text-decoration: none;}
+.pager .current{background: #1fbad6 !important; border-color: #1fbad6 !important; color: #fff !important;}
+.pager a:hover{background: #fff none repeat scroll 0 0; border-color: #1fbad6; color: #1fbad6;}
+.pager .current.prev, .pager .current.next{background: #fff none repeat scroll 0 0 !important; border-color: #ddd !important; color: #ccc !important; cursor: not-allowed;}</code></pre><p><strong>表格</strong></p>
+<pre><code>.table{padding: 20px 0;}
+.table table{border-collapse: collapse;border-spacing:0;width: 100%;}
+.table table th,.table td{text-align: center;vertical-align: middle;}
+.table-grid th,.table-grid td{padding: 20px 10px;border: solid 1px #ccc;}
+.table-grid th{color: #18b7ee;font-size: 18px}
+.table-grid td{color: #666;font-size: 16px}
+.table-zebra tr{border-bottom: solid 1px #ebebeb;}
+.table-zebra th{padding: 18px 10px;font-size: 18px;color: #161616;}
+.table-zebra td{padding: 13px 10px;font-size: 20px;color: #504f4f;}
+.table-default th{font-size: 20px;color: #484848;padding: 50px 10px;}
+.table-default td{font-size: 18px;color: #5f5f5f;padding: 10px;}</code></pre><p><strong>按钮</strong></p>
+<pre><code>.btn{display: inline-block;width: 95px;text-align: center;font-size: 18px;height: 40px;border-style: solid;border-width: 1px;border-radius: 8px;position: relative;}
+a.btn{line-height: 38px;}
+.btn-default{color: #504f4f;border-color: #d0d0d0;}
+.btn-primary{color: #18b7ee;border-color: #18b7ee;}
+.btn-danger{color: #da030d;border-color: #da030d;}</code></pre><p><strong>弹窗</strong></p>
+<pre><code>.dialog{position: fixed;top: 0;left: 0;bottom: 0;right: 0;background: rgba(0,0,0,0.53);overflow-y: auto;padding: 100px 0;/*display: none;*/}
+.dialog .wrap{background: #fff;margin: 0 auto;width: 800px;padding: 20px;}</code></pre><p><strong>页面样式</strong></p>
+<pre><code>/*page*/
+.page{position: relative;width: 100%;height: 100%;}
+
+/*header*/
+.header{position: absolute;top: 0;height: 80px;left: 0;right: 0;background: #04acf7;}
+.header p{height: 80px;line-height: 80px;font-size: 30px;color: #fff;padding-left: 20px;}
+.header a{display: inline-block;padding: 0 50px;font-size: 18px;color: #fff;height: 80px;line-height: 80px;}
+
+/*silder*/
+.silder{position: absolute;top: 80px;left: 0;bottom: 0;width: 240px;background: #fff;box-shadow: 0 5px 10px rgba(0,0,0,0.2);overflow: hidden;}
+.silder .link-menu{position: absolute;top: 0;bottom: 0;left: 30px;overflow-y: auto;width: 210px;height: auto;}
+.silder dl{margin-right: 50px;}
+.silder dt{font-size: 20px;color: #c2c2c2;border-left: solid #c2c2c2 5px;margin: 40px 0 20px 0;padding-left: 15px;}
+.silder dd{padding: 5px 0 5px 20px;}
+.silder a{font-size: 16px;color: #c2c2c2;}
+.silder .act dt{border-left-color: #18b7ee;color: #18b7ee;}
+.silder .act a{color: #18b7ee;}
+
+/*main*/
+.main{position: absolute;top: 80px;left: 240px;bottom: 0;right: 0;overflow-x: hidden;overflow-y: auto;}
+.main&gt;div:last-child{margin-bottom: 50px;}
+
+/*媒体查询*/
+@media only screen and (max-width: 1280px){
+.silder{width: 180px;}
+.silder .link-menu{left: 10px;}
+.main{left: 180px;}
+}</code></pre><h4 id="javascript">JavaScript</h4>
+<p>BSF有两个个JS文件：</p>
+<pre><code>&lt;!--[if lte IE 9]&gt;
+    &lt;script src=&quot;js/browser-not-supported-ie10.js&quot;&gt;&lt;/script&gt;
+&lt;![endif]--&gt;</code></pre><p>这个文件的目是当浏览器不支持时改进行如何处理，BSF的做法是直接跳转并提示用户升级浏览器。</p>
+<pre><code>&lt;script src=&quot;js/include.js&quot;&gt;&lt;/script&gt;</code></pre><p>在很多项目中，header和silder文件是公用的，includejs是一个前端模板文件加载器，用于引入公用的文件，请注意：<em>includejs要在服务器环境运行</em>。</p>
+<p>除此之外，BSF没有关于js的内容，所以需要引入什么脚本（jquery or other）文件由你自己决定。</p>
+</div></div></div>
+    </div>
+
+    <footer>
+        <div>
+            <p>参考网址：</p>
+            <div class="links">
+                <a target="_blank" href="https://cnodejs.org/">CNode技术社区</a>
+                <a target="_blank" href="https://cn.vuejs.org/">Vue.js官网</a>
+                <a target="_blank" href="https://zh.nuxtjs.org/">Nuxt.js官网</a>
+                <a target="_blank" href="http://www.expressjs.com.cn/">Express.js官网</a>
+            </div>
+        </div>
+        <div>
+            <p>友情链接：</p>
+            <div class="links">
+                <a target="_blank" href="http://www.lanqiao.org/">蓝桥官网</a>
+                <a target="_blank" href="http://www.javabb.cn/">秦豹的个人网站</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

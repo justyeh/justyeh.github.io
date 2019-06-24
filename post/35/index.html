@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="justyeh,justyeh@163.com" />
+    <meta name="apple-mobile-web-app-title" content="justyeh的前端博客" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#263238" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="x5-orientation" content="portrait" />
+    <meta name="theme-color" content="#263238" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <title>折腾一个html5播放器</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/front.css">
+    <link rel="stylesheet" href="/static/css/yeh-md-theme.css">
+    <link rel="stylesheet" href="/static/js/highlight/ocean.min.css">
+    <script src="/static/js/highlight/highlight.min.js"></script>
+    <script src="/static/js/public.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="site">
+                <img src="/static/image/avatar.jpg" />
+                <p>JustYeh的前端博客</p>
+            </div>
+            <div class="nav">
+                <div class="menu">
+                    <a href="/">Home</a>
+                    <a href="/about" class="">About</a>
+                    <a target="_blank" href="/projects/index.html">Projects</a>
+                    <a href="http://justyeh.github.io/tools" target="_blank">Tools</a>
+                    <a target="_blank" href="https://github.com/justyeh">Github</a>
+                </div>
+                <div class="search">
+                    <form action="/search" methods='get'>
+                        <input class="ani" autocomplete="off" type="search" name="keyword" value="">
+                        <button class="ani" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="container page">
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url();"></div> <div class="title">折腾一个html5播放器</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-09-27</p> <!----></div> <div class="content"><div class="md"><blockquote>
+<p>现在的网页中有很多场景中会涉及到视频播放，个人认为原生的控件已经做得很好了。但是老有人觉得原生的就是丑的，有什么办法呢，(&#39;_&#39;)。本文利用html5 video的相关api，尝试折腾出一个“美化”过的的视频播放器。</p>
+</blockquote>
+<p>代码地址<a href="https://github.com/justyeh/y-video-player">https://github.com/justyeh/y-video-player</a></p>
+<h2 id="构建html结构">构建HTML结构</h2>
+<pre><code>&lt;div class=&quot;y-video-box&quot;&gt;
+        &lt;video id=&quot;y-video&quot; src=&quot;http://www.runoob.com/try/demo_source/movie.mp4&quot; poster=&quot;&quot;&gt;&lt;/video&gt;
+        &lt;div class=&quot;control-box&quot;&gt;
+            &lt;div class=&quot;play-control&quot;&gt;
+                &lt;i class=&quot;fa fa-play&quot;&gt;&lt;/i&gt;
+                &lt;i class=&quot;fa fa-pause&quot;&gt;&lt;/i&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;time&quot;&gt;
+                &lt;span class=&quot;time-current&quot;&gt;00:00&lt;/span&gt; /
+                &lt;span class=&quot;time-duration&quot;&gt;00:00&lt;/span&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;process&quot;&gt;
+                &lt;div class=&quot;process-buffered&quot;&gt;&lt;/div&gt;
+                &lt;div class=&quot;process-played&quot;&gt;
+                    &lt;i class=&quot;drag-bar&quot;&gt;&lt;/i&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;volume&quot;&gt;
+                &lt;i class=&quot;fa fa-volume-up&quot;&gt;&lt;/i&gt;
+                &lt;i class=&quot;fa fa-volume-off&quot;&gt;&lt;/i&gt;
+                &lt;div class=&quot;volume-control&quot;&gt;
+                    &lt;div class=&quot;volume-process&quot;&gt;
+                        &lt;div class=&quot;volume-now&quot;&gt;
+                            &lt;i class=&quot;drag-bar&quot;&gt;&lt;/i&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;rate&quot;&gt;
+                &lt;div&gt;1.0x&lt;/div&gt;
+                &lt;ul&gt;
+                    &lt;li data-val=&quot;2&quot;&gt;2.0x&lt;/li&gt;
+                    &lt;li data-val=&quot;1.5&quot;&gt;1.5x&lt;/li&gt;
+                    &lt;li data-val=&quot;1&quot; class=&quot;active&quot;&gt;1.0x&lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;fullscreen fullscreened&quot;&gt;
+                &lt;i class=&quot;fa fa-expand&quot;&gt;&lt;/i&gt;
+                &lt;i class=&quot;fa fa-compress&quot;&gt;&lt;/i&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre><h3 id="播放控制">播放控制</h3>
+<p>控制视频的播放暂停主要是使用<code>play()</code>和<code>pause()</code>两个方法，先判断视频是否处于播放状态，然后切换状态就可以了。</p>
+<pre><code>let $videoBox = $(&quot;.y-video-box&quot;);
+let $videoElement = $(&#39;#y-video&#39;);
+let videoElement = $videoElement[0];
+let $controlBox = $(&quot;.control-box&quot;);
+
+let $playControl = $(&quot;.play-control&quot;);
+$playControl.click(function (e) {
+    let isPlaying = videoElement.currentTime &gt; 0 &amp;&amp; !videoElement.paused &amp;&amp; !videoElement.ended &amp;&amp; videoElement.readyState &gt; 2;
+    if (!isPlaying) {
+        videoElement.play();
+        $playControl.addClass(&quot;playing&quot;)
+    } else {
+        videoElement.pause();
+        $playControl.removeClass(&quot;playing&quot;)
+    }
+    return false;
+})</code></pre><h3 id="获取视频当前事件总时长">获取视频当前事件/总时长</h3>
+<p>当指定的视频的元数据已加载时，会发生<code>loadedmetadata</code>事件。借此我们可以获取视频的时长、尺寸以及文本轨道。</p>
+<pre><code>/*获取总时长*/
+let $timeDuration = $(&quot;.time-duration&quot;)
+$videoElement.on(&#39;loadedmetadata&#39;, function () {
+    $timeDuration.text(numberToTime(videoElement.duration));
+});</code></pre><p>当视频的播放位置发生改变时会触发<code>timeupdate</code>事件，配合<code>currentTime</code>（设置或返回视频播放的当前位置） 属性，就可以获取视频的播放进度。</p>
+<pre><code>let $timeCurrent = $(&quot;.time-current&quot;);
+$videoElement.on(&#39;timeupdate&#39;, function () {
+    let maxduration = videoElement.duration;
+    let currentPos = videoElement.currentTime;
+    /*视频进度+时长*/
+    $timeCurrent.text(numberToTime(currentPos));
+
+});</code></pre><p><code>duration</code>和<code>currentTime</code>属性返回的是包含小数位的秒数据位，借助下面的工具函数将数据进行格式化，便于显示。</p>
+<pre><code>let numberToTime = function (number) {
+    number = parseInt(number, 10);
+    let minues = 0;
+    let second = 0;
+    minues = parseInt(number / 60, 10);
+    second = number % 60
+    if (minues &lt; 10) {
+        minues = &#39;0&#39; + minues
+    }
+    if (second &lt; 10) {
+        second = &#39;0&#39; + second
+    }
+    return minues + &#39;:&#39; + second;
+}</code></pre><h3 id="进度条">进度条</h3>
+<p>进度条有两个，一个是当前进度，一个是缓冲进度。</p>
+<p>设置的方法都是获取相关时间点，然后时间点/总时长*100%，然后将得到的值设置为div的width属性即可。</p>
+<ul>
+<li>借助上面的<code>timeupdate</code>事件，利用<code>currentTime</code>属性获取当前播放位置。</li>
+<li>利用<code>buffered</code>属性获取<code>TimeRanges</code>对象，取<code>TimeRanges</code>对象里面的<code>end(index)</code>，从而获得某个已缓冲范围的结束位置。</li>
+</ul>
+<pre><code>let $processPlayed = $(&quot;.process-played&quot;),
+    $processBuffered = $(&quot;.process-buffered&quot;);
+$videoElement.on(&#39;timeupdate&#39;, function () {
+    let maxduration = videoElement.duration;
+    let currentPos = videoElement.currentTime;
+    let currentBuffer = videoElement.buffered.end(0);
+
+    /*播放进度条*/
+    $processPlayed.css(&#39;width&#39;, 100 * currentPos / maxduration + &#39;%&#39;);
+    /*缓冲进度条*/
+    $processBuffered.css(&#39;width&#39;, 100 * currentBuffer / maxduration + &#39;%&#39;)
+});</code></pre><h3 id="声音控制">声音控制</h3>
+<p>实现点击声音图标，切换静音功能。</p>
+<pre><code>let $volumeControl = $(&quot;.volume&quot;);
+$volumeControl.find(&quot;i&quot;).click(function () {
+    $volumeControl.toggleClass(&quot;muted&quot;)
+    if ($volumeControl.hasClass(&quot;muted&quot;)) {
+        videoElement.muted = true;
+        $volumeNow.css(&#39;height&#39;, &#39;0%&#39;);
+    } else {
+        videoElement.muted = false;
+        $volumeNow.css(&#39;height&#39;, videoElement.volume * 100 + &#39;%&#39;);
+    }
+});</code></pre><h3 id="进度音量的点击与拖拽">进度/音量的点击与拖拽</h3>
+<p>点击与拖拽控制是一个难点，具体的思路是根据鼠标在进度条上的位置/进度条的width（声音是height），获取一个比例，通过这个比例来进行赋值。</p>
+<p>进行更新之前要先判断是否处于拖拽状态。</p>
+<pre><code>let timeDrag = false,
+    volumeDrag = false;
+$(document).mouseup(function (e) {
+    if (timeDrag) {
+        timeDrag = false;
+        updateVideoTime(e.pageX);
+    }
+    if (volumeDrag) {
+        volumeDrag = false;
+        updateVideoVolume(e.pageY);
+    }
+});
+$(document).mousemove(function (e) {
+    if (timeDrag) {
+        updateVideoTime(e.pageX);
+    }
+    if (volumeDrag) {
+        updateVideoVolume(e.pageY);
+    }
+});</code></pre><p><strong>时间进度条</strong></p>
+<p>直接点击进度条</p>
+<pre><code>let $timeProcess = $(&quot;.process&quot;);
+$timeProcess.mousedown(function (e) {
+    updateVideoTime(e.pageX);
+});</code></pre><p>拖拽进度条</p>
+<pre><code>$timeProcess.find(&quot;.drag-bar&quot;).mousedown(function (e) {
+    timeDrag = true
+});
+let updateVideoTime = function (x) {
+    //超出临界值后拖拽无效
+    if (x &lt; $timeProcess.offset().left || x &gt; $timeProcess.offset().left + $timeProcess.width()) {
+        return
+    }
+    let maxduration = videoElement.duration; //视频总时长
+    let position = x - $timeProcess.offset().left; //变化量
+    let percentage = position / $timeProcess.width();
+    //超出范围的修正
+    if (percentage &gt; 1) {
+        percentage = 100;
+    }
+    if (percentage &lt; 0) {
+        percentage = 0;
+    }
+    console.log(maxduration * percentage)
+    //更新进度条和当前时间
+    videoElement.currentTime = maxduration * percentage;
+    //$processPlayed.css(&#39;width&#39;, (percentage * 100)+&#39;%&#39;);
+}</code></pre><p><strong>声音进度条</strong>   </p>
+<p>初始化精度条的位置</p>
+<pre><code>let $volumeProcess = $(&quot;.volume-process&quot;),
+    $volumeNow = $(&quot;.volume-now&quot;);
+$volumeNow.css(&#39;height&#39;, videoElement.volume * 100 + &#39;%&#39;);</code></pre><p>直接点击进度条</p>
+<pre><code>$volumeProcess.mousedown(function (e) {
+    updateVideoVolume(e.pageY);
+});</code></pre><p>拖拽进度条</p>
+<pre><code>$volumeProcess.find(&quot;.drag-bar&quot;).mousedown(function (e) {
+    volumeDrag = true
+});
+
+let updateVideoVolume = function (y) {
+    //超出临界值后拖拽无效
+    if (y &lt; $volumeProcess.offset().top || y &gt; $volumeProcess.offset().top + $volumeProcess.height()) {
+        return
+    }
+    let position = y - $volumeProcess.offset().top; //变化量
+    let percentage = 1 - (position / $volumeProcess.height());
+    /*0~0.05取个过渡，都认为是0*/
+    if (percentage &lt; 0.05) {
+        $volumeControl.addClass(&quot;muted&quot;)
+        percentage = 0
+    } else {
+        $volumeControl.removeClass(&quot;muted&quot;)
+    }
+    console.log(percentage)
+    //更新进度条和当前时间
+    videoElement.volume = percentage;
+    $volumeNow.css(&#39;height&#39;, percentage * 100 + &#39;%&#39;);
+}</code></pre><h3 id="视频播放速率">视频播放速率</h3>
+<p>播放速率的控制比较简单，使用<code>playbackRate</code>这个属性就可以完成。</p>
+<pre><code>let $videoRate = $(&quot;.rate&quot;);
+$videoRate.find(&quot;li&quot;).click(function () {
+    if ($(this).hasClass(&quot;active&quot;)) {
+        return
+    }
+    $(this).addClass(&quot;active&quot;).siblings().removeClass(&quot;active&quot;);
+    $videoRate.find(&quot;div&quot;).text($(this).text())
+    videoElement.playbackRate = parseFloat($(this).data(&quot;val&quot;))
+})</code></pre><h3 id="全屏控制">全屏控制</h3>
+<p>全屏的兼容处理起来比较麻烦，参考下面的代码：</p>
+<pre><code>let $fullScreen = $(&quot;.fullscreen&quot;);
+$fullScreen.click(function () {
+    $(this).toggleClass(&quot;fullscreened&quot;);
+    $videoBox.toggleClass(&quot;fullscreened&quot;);
+    if ($(this).hasClass(&quot;fullscreened&quot;)) {
+        fullScreenOff()
+    } else {
+        fullScreenOn(videoElement)
+    }
+})</code></pre><p>切换到全屏</p>
+<pre><code>function fullScreenOn(element) {
+    if (element.requestFullscreen) {
+        element.requestFullscreen();
+    } else if (element.mozRequestFullScreen) {
+        //firefox会用&lt;video&gt;元素的父元素去调用全屏
+        $videoBox[0].mozRequestFullScreen();
+    } else if (element.msRequestFullscreen) {
+        element.msRequestFullscreen();
+    } else if (element.oRequestFullscreen) {
+        element.oRequestFullscreen();
+    } else if (element.webkitRequestFullscreen) {
+        element.webkitRequestFullScreen();
+    } else {
+        /* var docHtml = document.documentElement;
+            var docBody = document.body;
+            var videobox = document.getElementById(&#39;sfLive&#39;);
+            var cssText = &#39;width:100%;height:100%;overflow:hidden;&#39;;
+            docHtml.style.cssText = cssText;
+            docBody.style.cssText = cssText;
+            videobox.style.cssText = cssText+&#39;;&#39;+&#39;margin:0px;padding:0px;&#39;;
+            document.IsFullScreen = true;*/
+    }
+    $controlBox.css(&#39;z-index&#39;, &#39;2147483647&#39;);
+}</code></pre><p>关闭全屏</p>
+<pre><code>function fullScreenOff() {
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+    } else if (document.oRequestFullscreen) {
+        document.oCancelFullScreen();
+    } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+    } else {
+        var docHtml = document.documentElement;
+        var docBody = document.body;
+        var videobox = document.getElementById(&#39;sfLive&#39;);
+        docHtml.style.cssText = &quot;&quot;;
+        docBody.style.cssText = &quot;&quot;;
+        videobox.style.cssText = &quot;&quot;;
+        document.IsFullScreen = false;
+    }
+}</code></pre><h3 id="总结">总结</h3>
+<ul>
+<li><p>在chrome中，使用本地视频时，设置<code>currentTime</code>会出现视频重新播放的问题，将视频改为<code>http(s)</code>地址就好了。</p>
+</li>
+<li><p>时长（声音）进度条上的拖拽点现在还有一点问题，为了美观将它的left设置成了负值（声音为top），拖拽有可能造成超出临界值，这造成了拖拽的一些bug，目前还有待解决。</p>
+</li>
+</ul>
+<p>参考文章：<a href="http://cheri.love/post/xue-xi-lei/h5-liu-lan-qi-zi-ding-yi-yong-hu-kong-jian">http://cheri.love/post/xue-xi-lei/h5-liu-lan-qi-zi-ding-yi-yong-hu-kong-jian</a></p>
+</div></div></div>
+    </div>
+
+    <footer>
+        <div>
+            <p>参考网址：</p>
+            <div class="links">
+                <a target="_blank" href="https://cnodejs.org/">CNode技术社区</a>
+                <a target="_blank" href="https://cn.vuejs.org/">Vue.js官网</a>
+                <a target="_blank" href="https://zh.nuxtjs.org/">Nuxt.js官网</a>
+                <a target="_blank" href="http://www.expressjs.com.cn/">Express.js官网</a>
+            </div>
+        </div>
+        <div>
+            <p>友情链接：</p>
+            <div class="links">
+                <a target="_blank" href="http://www.lanqiao.org/">蓝桥官网</a>
+                <a target="_blank" href="http://www.javabb.cn/">秦豹的个人网站</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

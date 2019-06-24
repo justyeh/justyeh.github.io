@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="justyeh,justyeh@163.com" />
+    <meta name="apple-mobile-web-app-title" content="justyeh的前端博客" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#263238" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="x5-orientation" content="portrait" />
+    <meta name="theme-color" content="#263238" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <title>使用nodejs做爬虫来爬取一本小说</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/front.css">
+    <link rel="stylesheet" href="/static/css/yeh-md-theme.css">
+    <link rel="stylesheet" href="/static/js/highlight/ocean.min.css">
+    <script src="/static/js/highlight/highlight.min.js"></script>
+    <script src="/static/js/public.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="site">
+                <img src="/static/image/avatar.jpg" />
+                <p>JustYeh的前端博客</p>
+            </div>
+            <div class="nav">
+                <div class="menu">
+                    <a href="/">Home</a>
+                    <a href="/about" class="">About</a>
+                    <a target="_blank" href="/projects/index.html">Projects</a>
+                    <a href="http://justyeh.github.io/tools" target="_blank">Tools</a>
+                    <a target="_blank" href="https://github.com/justyeh">Github</a>
+                </div>
+                <div class="search">
+                    <form action="/search" methods='get'>
+                        <input class="ani" autocomplete="off" type="search" name="keyword" value="">
+                        <button class="ani" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="container page">
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url();"></div> <div class="title">使用nodejs做爬虫来爬取一本小说</div> <div class="info"><i class="fa fa-clock-o"></i> <p>5个月前</p> <!----></div> <div class="content"><div class="md"><blockquote>
+<p>最近在网上看到了一个小说，感觉挺好看的，在线阅读的网站广告比较多，想下载下来，结果找半天也没个全本下载的。于是想到用爬虫自己来实现，下面记录了我的实现过程。</p>
+</blockquote>
+<h3 id="使用nodegrass做网络请求">使用nodegrass做网络请求</h3>
+<p>刚开始是使用<code>http</code>模块的<code>get</code>方法来做网络请求的，不过一直有中文乱码的问题，于是找到了<code>nodegrass</code>，使用比较简单：</p>
+<pre><code>var gs = require(&#39;nodegrass&#39;);
+gs.get(&#39;章节列表地址&#39;, function (data) {
+  filterHtml(data)
+}, &#39;gbk&#39;);</code></pre><h3 id="使用cheerio做爬虫">使用cheerio做爬虫</h3>
+<p>这里使用<code>cheerio</code>来解析<code>html</code>，这个库对前端来说简直是如鱼得水，它具有和<code>JQuery</code>相似的语法，使用起来毫无障碍。</p>
+<pre><code>function filterHtml(html) {
+    // 沿用JQuery风格，定义$
+    var $ = cheerio.load(html);
+    //遍历章节列表，获取所有章节的url
+    $(&#39;#list a&#39;).each(function () {
+        getNovelContent($(this).attr(&#39;href&#39;), $(this).text())
+    });
+}
+function getNovelContent(url, title) {
+    //获取html中的小说内容并存入本地
+    gs.get(url, function (data) {
+        var $ = cheerio.load(data);
+        //有时一次不能下载所有的章节，再执行一次，并过滤掉已经存在的
+        if (!fse.pathExistsSync(&#39;./novel/&#39; + title + &#39;.txt&#39;)) {
+            fse.outputFile(&#39;./novel/&#39; + title + &#39;.txt&#39;, title + &#39;\n&#39; + $(&#39;#content&#39;).text() + &#39;\n&#39;, function (err) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                console.log(title + &#39;保存成功&#39;);
+            });
+        }
+    }, &#39;gbk&#39;);
+}</code></pre><h3 id="多个txt文件的合并">多个txt文件的合并</h3>
+<p>上面的方法有个问题，就是下载下来的每个章节都是一个txt文件，下面这个脚本可以将多个txt文件合并成一个文件。</p>
+<pre><code>::合并多个txt文件.bat
+::将目录下的所有文件按照文件名顺序合并，保存为name.txt
+copy *.txt name.txt</code></pre></div></div></div>
+    </div>
+
+    <footer>
+        <div>
+            <p>参考网址：</p>
+            <div class="links">
+                <a target="_blank" href="https://cnodejs.org/">CNode技术社区</a>
+                <a target="_blank" href="https://cn.vuejs.org/">Vue.js官网</a>
+                <a target="_blank" href="https://zh.nuxtjs.org/">Nuxt.js官网</a>
+                <a target="_blank" href="http://www.expressjs.com.cn/">Express.js官网</a>
+            </div>
+        </div>
+        <div>
+            <p>友情链接：</p>
+            <div class="links">
+                <a target="_blank" href="http://www.lanqiao.org/">蓝桥官网</a>
+                <a target="_blank" href="http://www.javabb.cn/">秦豹的个人网站</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

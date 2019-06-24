@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="justyeh,justyeh@163.com" />
+    <meta name="apple-mobile-web-app-title" content="justyeh的前端博客" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#263238" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="x5-orientation" content="portrait" />
+    <meta name="theme-color" content="#263238" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <title>1px解决方案</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/front.css">
+    <link rel="stylesheet" href="/static/css/yeh-md-theme.css">
+    <link rel="stylesheet" href="/static/js/highlight/ocean.min.css">
+    <script src="/static/js/highlight/highlight.min.js"></script>
+    <script src="/static/js/public.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="site">
+                <img src="/static/image/avatar.jpg" />
+                <p>JustYeh的前端博客</p>
+            </div>
+            <div class="nav">
+                <div class="menu">
+                    <a href="/">Home</a>
+                    <a href="/about" class="">About</a>
+                    <a target="_blank" href="/projects/index.html">Projects</a>
+                    <a href="http://justyeh.github.io/tools" target="_blank">Tools</a>
+                    <a target="_blank" href="https://github.com/justyeh">Github</a>
+                </div>
+                <div class="search">
+                    <form action="/search" methods='get'>
+                        <input class="ani" autocomplete="off" type="search" name="keyword" value="">
+                        <button class="ani" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="container page">
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url();"></div> <div class="title">1px解决方案</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-09-07</p> <!----></div> <div class="content"><div class="md"><blockquote>
+<p>前端的同学想必都碰到过1px边框的问题，在高分屏手机上，我们会发现自己写的1px往往会比预想的“粗”一些，下面是他人总结的解决方案。</p>
+</blockquote>
+<h2 id="单线">单线</h2>
+<p>写一个高度为1px的线，然后通过transform:scaleY(0.5)缩放来实现</p>
+<pre><code>div{
+    height:1px;
+    background:#ddd;
+    -webkit-transform: scaleY(0.5);
+    -webkit-transform-origin:0 0;
+    overflow: hidden;
+}</code></pre><h2 id="边框圆角">边框+圆角</h2>
+<p>和上面的思路是一样的，也是通过放大后再缩小实现的，需要注意的是宽高以及圆角要设置为原来的2倍</p>
+<pre><code>div{
+    position: relative;
+}
+div:before{
+content: &quot;&quot;;
+position: absolute;
+top: 0;
+left: 0;
+    width: 200%;/* 宽高要放大 */
+    height: 200%;
+    border: solid 1px #ddd;
+    border-radius: 10px;/* 圆角要放大 */
+    overflow: hidden;
+transform-origin: 0 0;
+-webkit-transform-origin: 0 0;
+    transform: scale(0.5, 0.5);
+    -webkit-transform: scale(0.5, 0.5);
+}</code></pre><p>参考链接：<a href="http://www.cnblogs.com/shuiyi/p/5568348.html">http://www.cnblogs.com/shuiyi/p/5568348.html</a></p>
+</div></div></div>
+    </div>
+
+    <footer>
+        <div>
+            <p>参考网址：</p>
+            <div class="links">
+                <a target="_blank" href="https://cnodejs.org/">CNode技术社区</a>
+                <a target="_blank" href="https://cn.vuejs.org/">Vue.js官网</a>
+                <a target="_blank" href="https://zh.nuxtjs.org/">Nuxt.js官网</a>
+                <a target="_blank" href="http://www.expressjs.com.cn/">Express.js官网</a>
+            </div>
+        </div>
+        <div>
+            <p>友情链接：</p>
+            <div class="links">
+                <a target="_blank" href="http://www.lanqiao.org/">蓝桥官网</a>
+                <a target="_blank" href="http://www.javabb.cn/">秦豹的个人网站</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

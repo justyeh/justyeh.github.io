@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="justyeh,justyeh@163.com" />
+    <meta name="apple-mobile-web-app-title" content="justyeh的前端博客" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#263238" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="x5-orientation" content="portrait" />
+    <meta name="theme-color" content="#263238" />
+    <meta name="description" content="插件" />
+    <meta name="keywords" content="插件" />
+    <title>滚动条美化插件Perfect Scrollbar</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/front.css">
+    <link rel="stylesheet" href="/static/css/yeh-md-theme.css">
+    <link rel="stylesheet" href="/static/js/highlight/ocean.min.css">
+    <script src="/static/js/highlight/highlight.min.js"></script>
+    <script src="/static/js/public.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="site">
+                <img src="/static/image/avatar.jpg" />
+                <p>JustYeh的前端博客</p>
+            </div>
+            <div class="nav">
+                <div class="menu">
+                    <a href="/">Home</a>
+                    <a href="/about" class="">About</a>
+                    <a target="_blank" href="/projects/index.html">Projects</a>
+                    <a href="http://justyeh.github.io/tools" target="_blank">Tools</a>
+                    <a target="_blank" href="https://github.com/justyeh">Github</a>
+                </div>
+                <div class="search">
+                    <form action="/search" methods='get'>
+                        <input class="ani" autocomplete="off" type="search" name="keyword" value="">
+                        <button class="ani" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="container page">
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(/blogs/perfect-scrollbar/perfect-scrollbar.jpg);"></div> <div class="title">滚动条美化插件Perfect Scrollbar</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-07-10</p> <i class="fa fa-tag"></i> <div><a href="/tag/11">插件</a></div></div> <div class="content"><div class="md"><blockquote>
+<p><a href="https://github.com/noraesae/perfect-scrollbar">Perfect Scrollbar</a> 是一个轻量级的（~14KB）的 jQuery插件，能够帮助你轻松创建出自定义风格的滚动条。
+它不会影响默认的布局，也不需要任何任何的 CSS 修改，该插件适用于任何大小的容器，并重新安排位置，如果容器大小发生变化会自动调整位置。
+此外，滚动条的风格可以完全通过 CSS 定制，另外还支持鼠标滚轮插件 – <a href="http://www.jqcool.net/jquery-mousewheel.html">jquery-mousewheel</a></p>
+</blockquote>
+<p><a href="/blogs/perfect-scrollbar/demo.html">在线demo</a></p>
+<p><strong>特性</strong></p>
+<ul>
+<li>不需要修改任何的元素的css</li>
+<li>滚动条不影响最初的页面布局设计</li>
+<li>滚动条支持完整的自定义</li>
+<li>滚动条的尺寸和位置会随着容器尺寸或者内容的变化而变化</li>
+<li>不需要定义宽度和高度。它会固定在容器的右下</li>
+<li>你可以修改任何滚动条的样式，不依赖于其它脚本</li>
+<li>不使用&#39;scrollTop&#39;和&#39;scrollLeft&#39;，不使用任何绝对定位</li>
+</ul>
+<h4 id="使用案例">使用案例</h4>
+<p><strong>使用要求</strong></p>
+<ul>
+<li>必须有一个内容元素</li>
+<li>容器必须拥有一个&#39;position&#39;的CSS样式定义</li>
+<li>滚动条的position必须是&#39;absolute&#39;</li>
+<li>scrollbar-x必须拥有一个bottom的样式定义，scrollbar-必须有一个&#39;right&#39;的样式定义</li>
+</ul>
+<h4 id="api介绍">API介绍</h4>
+<p>Scrollbar插件是一个开源项目，这里是项目<a href="https://github.com/noraesae/perfect-scrollbar">git主页</a></p>
+<p> <strong>初始化插件</strong></p>
+<p> 这个是最基础的用法</p>
+<pre><code>$(&#39;#container&#39;).perfectScrollbar();// Initialize</code></pre><p><strong>初始化（带有选项）</strong></p>
+<p>在实例化的时候你也可以附带一些选项</p>
+<pre><code>$(&#39;#container&#39;).perfectScrollbar({// with options
+wheelSpeed: 2,
+  wheelPropagation: true,
+  minScrollbarLength: 20
+});  </code></pre><p><strong>更新</strong></p>
+<p>如果容器大小或者位置变化了，你可以update插件</p>
+<pre><code>$(&#39;#container&#39;).perfectScrollbar(&#39;update&#39;);  // Update</code></pre><p><strong>销毁</strong>
+如果你不再需要scrollbar效果，你可以destroy插件</p>
+<pre><code>$(&#39;#container&#39;).perfectScrollbar(&#39;destroy&#39;); // Destroy</code></pre><p><strong>定位</strong>
+如果你需要滚动到某一个特定位置，使用scrollTop方法，然后update就可以了</p>
+<pre><code>$(&#39;#container&#39;).scrollTop（0）;
+$(&#39;#container&#39;).perfectScrollbar（‘update’）;</code></pre></div></div></div>
+    </div>
+
+    <footer>
+        <div>
+            <p>参考网址：</p>
+            <div class="links">
+                <a target="_blank" href="https://cnodejs.org/">CNode技术社区</a>
+                <a target="_blank" href="https://cn.vuejs.org/">Vue.js官网</a>
+                <a target="_blank" href="https://zh.nuxtjs.org/">Nuxt.js官网</a>
+                <a target="_blank" href="http://www.expressjs.com.cn/">Express.js官网</a>
+            </div>
+        </div>
+        <div>
+            <p>友情链接：</p>
+            <div class="links">
+                <a target="_blank" href="http://www.lanqiao.org/">蓝桥官网</a>
+                <a target="_blank" href="http://www.javabb.cn/">秦豹的个人网站</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

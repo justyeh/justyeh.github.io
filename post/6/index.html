@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="justyeh,justyeh@163.com" />
+    <meta name="apple-mobile-web-app-title" content="justyeh的前端博客" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#263238" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="x5-orientation" content="portrait" />
+    <meta name="theme-color" content="#263238" />
+    <meta name="description" content="微信小程序" />
+    <meta name="keywords" content="微信小程序" />
+    <title>微信小程序开发之初识小程序</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/front.css">
+    <link rel="stylesheet" href="/static/css/yeh-md-theme.css">
+    <link rel="stylesheet" href="/static/js/highlight/ocean.min.css">
+    <script src="/static/js/highlight/highlight.min.js"></script>
+    <script src="/static/js/public.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="site">
+                <img src="/static/image/avatar.jpg" />
+                <p>JustYeh的前端博客</p>
+            </div>
+            <div class="nav">
+                <div class="menu">
+                    <a href="/">Home</a>
+                    <a href="/about" class="">About</a>
+                    <a target="_blank" href="/projects/index.html">Projects</a>
+                    <a href="http://justyeh.github.io/tools" target="_blank">Tools</a>
+                    <a target="_blank" href="https://github.com/justyeh">Github</a>
+                </div>
+                <div class="search">
+                    <form action="/search" methods='get'>
+                        <input class="ani" autocomplete="off" type="search" name="keyword" value="">
+                        <button class="ani" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="container page">
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(/blogs/wechat-app/bg-weixin.jpg);"></div> <div class="title">微信小程序开发之初识小程序</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-06-24</p> <i class="fa fa-tag"></i> <div><a href="/tag/7">微信小程序</a></div></div> <div class="content"><div class="md"><blockquote>
+<p>今天接到个任务，公司有部门需要做一个微信小程序，正好接触一下新东西，就来记录一下学习的收获。</p>
+</blockquote>
+<h4 id="准备">准备</h4>
+<h5 id="前端知识">前端知识</h5>
+<p>你需要了解基本的前端知识，包括js、css、html，如果你对这些还不熟悉，可以到<a href="http://www.w3school.com.cn/">w3cschool</a>上进行学习</p>
+<h5 id="ide搭建">IDE搭建</h5>
+<p>微信官方为我们提供了<a href="https://mp.weixin.qq.com/debug/wxadoc/dev/devtools/download.html">开发者工具</a>，直接下载安装就好了；如果你需要其他选择，网上有一篇<a href="http://www.ashan.org/archives/934">5款微信小程序开发对比</a>的文章，你也可以看一下，在本篇文章中，我使用的是官方提供的开发者工具。
+<img src="/blogs/wechat-app/WeChatIDE.png" alt="微信小程序开发者工具"></p>
+<h4 id="了解小程序">了解小程序</h4>
+<h5 id="小程序的文件类型">小程序的文件类型</h5>
+<p>小程序有以下几种文件类型</p>
+<ul>
+<li>js ---------- JavaScrip文件</li>
+<li>wxss ------- 类似CSS文件</li>
+<li>wxml ------- 类似HTML文件</li>
+<li>json -------- 项目配置文件，负责窗口颜色等等</li>
+</ul>
+<p>在程序的根目录用app来命名的这四中类型的文件，就是程序入口文件。</p>
+<p><strong>app.json</strong></p>
+<p>必须要有这个文件，如果没有这个文件，IDE会报错，因为微信框架把这个作为配置文件入口，你只需创建这个文件，里面写个大括号就行；在这里对整个小程序的全局配置。记录了页面组成，配置小程序的窗口 背景色，配置导航条样式，配置默认标题。</p>
+<p><strong>app.js</strong></p>
+<p>必须要有这个文件，没有也是会报错！但是这个文件创建一下就行 什么都不需要写
+以后我们可以在这个文件中监听并处理小程序的生命周期函数、声明全局变量。</p>
+<p><strong>app.wxss</strong></p>
+<p>这个文件不是必须的。因为它只是个全局CSS样式文件。</p>
+<p><strong>app.wxml</strong></p>
+<p>这个也不是必须的，而且这个并不是指主界面哦~因为小程序的主页面是靠在JSON文件中配置来决定的
+js文件。</p>
+<p>有了以上两个必须的文件，IDE就不会报错了，也意味着这是最简单的微信小程序
+<img src="/blogs/wechat-app/WeChatIDE3.png" alt="文件类型"></p>
+<h4 id="开始">开始</h4>
+<h5 id="配置app">配置app</h5>
+<p><code>app.json</code>是文件小程序的配置文件；
+<img src="/blogs/wechat-app/appjson.png" alt=""></p>
+<pre><code>{
+  &quot;pages&quot;:[
+    &quot;pages/index/index&quot;,
+    &quot;pages/logs/logs&quot;
+  ],
+  &quot;tabBar&quot;: {
+    &quot;color&quot;: &quot;#dddddd&quot;,
+    &quot;selectedColor&quot;: &quot;#d92121&quot;,
+    &quot;borderStyle&quot;: &quot;white&quot;,
+    &quot;backgroundColor&quot;: &quot;#fff&quot;,
+    &quot;list&quot;: [{
+      &quot;pagePath&quot;: &quot;pages/index&quot;,
+      &quot;iconPath&quot;: &quot;images/main.png&quot;,
+      &quot;selectedIconPath&quot;: &quot;images/main-s.png&quot;,
+      &quot;text&quot;: &quot;新闻&quot;
+    },{
+      &quot;pagePath&quot;: &quot;pages/layout/hot&quot;,
+      &quot;iconPath&quot;: &quot;images/hot.png&quot;,
+      &quot;selectedIconPath&quot;: &quot;images/hot-s.png&quot;,
+      &quot;text&quot;: &quot;图片&quot;
+    }]
+  },
+  &quot;window&quot;:{
+    &quot;backgroundTextStyle&quot;:&quot;light&quot;,
+    &quot;navigationBarBackgroundColor&quot;: &quot;#fff&quot;,
+    &quot;navigationBarTitleText&quot;: &quot;WeChat&quot;,
+    &quot;navigationBarTextStyle&quot;:&quot;black&quot;
+  }
+}</code></pre><h5 id="注册程序">注册程序</h5>
+<p>在<code>app.js</code>中，App()函数用来注册一个小程序。接受一个 object 参数，其指定小程序的生命周期函数等。</p>
+<pre><code>//app.js
+App({
+  onLaunch: function () {
+    //调用API从本地缓存中获取数据
+    var logs = wx.getStorageSync(&#39;logs&#39;) || []
+    logs.unshift(Date.now())
+    wx.setStorageSync(&#39;logs&#39;, logs)
+  },
+  getUserInfo:function(cb){
+    var that = this
+    if(this.globalData.userInfo){
+      typeof cb == &quot;function&quot; &amp;&amp; cb(this.globalData.userInfo)
+    }else{
+      //调用登录接口
+      wx.login({
+        success: function () {
+          wx.getUserInfo({
+            success: function (res) {
+              that.globalData.userInfo = res.userInfo
+              typeof cb == &quot;function&quot; &amp;&amp; cb(that.globalData.userInfo)
+            }
+          })
+        }
+      })
+    }
+  },
+  globalData:{
+    userInfo:null
+  }
+})</code></pre><p>app()函数具体API解释如下:
+<img src="/blogs/wechat-app/app-func.png" alt="app方法 API"></p>
+<h5 id="注册页面">注册页面</h5>
+<p>在开发者工具提供的demo中，有两个页面，可以通过<code>Page()</code> 函数用来注册一个页面。接受一个 object 参数，其指定页面的初始数据、生命周期函数、事件处理函数等。</p>
+<pre><code>//index.js
+//获取应用实例
+var app = getApp()
+Page({
+  data: {
+    motto: &#39;Hello World&#39;,
+    userInfo: {}
+  },
+  //事件处理函数
+  bindViewTap: function() {
+    wx.navigateTo({
+      url: &#39;../logs/logs&#39;
+    })
+  },
+  onLoad: function () {
+    console.log(&#39;onLoad&#39;)
+    var that = this
+    //调用应用实例的方法获取全局数据
+    app.getUserInfo(function(userInfo){
+      //更新数据
+      that.setData({
+        userInfo:userInfo
+      })
+    })
+  }
+})</code></pre><p>page()函数具体API解释如下:
+<img src="/blogs/wechat-app/page-func.png" alt="page方法 API"></p>
+<h5 id="美化页面">美化页面</h5>
+<p>美化页面我们用到了 <code>wxml</code> 和 <code>wxss</code>文件。</p>
+<p>这是<code>wxss</code>代码：</p>
+<pre><code>/**app.wxss**/
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: border-box;
+} </code></pre><p>这是<code>wxml</code>代码：</p>
+<pre><code>&lt;!--index.wxml--&gt;
+&lt;view class=&quot;container&quot;&gt;
+  &lt;view  bindtap=&quot;bindViewTap&quot; class=&quot;userinfo&quot;&gt;
+    &lt;image class=&quot;userinfo-avatar&quot; src=&quot;{{userInfo.avatarUrl}}&quot; background-size=&quot;cover&quot;&gt;&lt;/image&gt;
+    &lt;text class=&quot;userinfo-nickname&quot;&gt;{{userInfo.nickName}}&lt;/text&gt;
+  &lt;/view&gt;
+  &lt;view class=&quot;usermotto&quot;&gt;
+    &lt;text class=&quot;user-motto&quot;&gt;{{motto}}&lt;/text&gt;
+  &lt;/view&gt;
+&lt;/view&gt;</code></pre><p>如果你对css、js有基本的了解，这两个文件都不在话下。</p>
+<h5 id="事件绑定">事件绑定</h5>
+<p>事件列表
+<img src="/blogs/wechat-app/event.png" alt="">
+事件绑定的写法同组件的属性，以 key、value 的形式</p>
+<ul>
+<li>key 以bind或catch开头，然后跟上事件的类型，如bindtap, catchtouchstart</li>
+<li>value 是一个字符串，需要在对应的 Page 中定义同名的函数。不然当触发事件的时候会报错。</li>
+</ul>
+<p>注意：<code>bind</code>事件绑定不会阻止冒泡事件向上冒泡，<code>catch</code>事件绑定可以阻止冒泡事件向上冒泡</p>
+<p>冒泡事件就是需要向父节点传递这个事件</p>
+</div></div></div>
+    </div>
+
+    <footer>
+        <div>
+            <p>参考网址：</p>
+            <div class="links">
+                <a target="_blank" href="https://cnodejs.org/">CNode技术社区</a>
+                <a target="_blank" href="https://cn.vuejs.org/">Vue.js官网</a>
+                <a target="_blank" href="https://zh.nuxtjs.org/">Nuxt.js官网</a>
+                <a target="_blank" href="http://www.expressjs.com.cn/">Express.js官网</a>
+            </div>
+        </div>
+        <div>
+            <p>友情链接：</p>
+            <div class="links">
+                <a target="_blank" href="http://www.lanqiao.org/">蓝桥官网</a>
+                <a target="_blank" href="http://www.javabb.cn/">秦豹的个人网站</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

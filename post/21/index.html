@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="justyeh,justyeh@163.com" />
+    <meta name="apple-mobile-web-app-title" content="justyeh的前端博客" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#263238" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="x5-orientation" content="portrait" />
+    <meta name="theme-color" content="#263238" />
+    <meta name="description" content="IDE，Vue，微信分享" />
+    <meta name="keywords" content="IDE，Vue，微信分享" />
+    <title>web代码编辑器CodeMirror</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/front.css">
+    <link rel="stylesheet" href="/static/css/yeh-md-theme.css">
+    <link rel="stylesheet" href="/static/js/highlight/ocean.min.css">
+    <script src="/static/js/highlight/highlight.min.js"></script>
+    <script src="/static/js/public.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="site">
+                <img src="/static/image/avatar.jpg" />
+                <p>JustYeh的前端博客</p>
+            </div>
+            <div class="nav">
+                <div class="menu">
+                    <a href="/">Home</a>
+                    <a href="/about" class="">About</a>
+                    <a target="_blank" href="/projects/index.html">Projects</a>
+                    <a href="http://justyeh.github.io/tools" target="_blank">Tools</a>
+                    <a target="_blank" href="https://github.com/justyeh">Github</a>
+                </div>
+                <div class="search">
+                    <form action="/search" methods='get'>
+                        <input class="ani" autocomplete="off" type="search" name="keyword" value="">
+                        <button class="ani" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="container page">
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(/blogs/codemirror/codemirror-banner.jpg);"></div> <div class="title">web代码编辑器CodeMirror</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-07-10</p> <i class="fa fa-tag"></i> <div><a href="/tag/28">IDE</a><a href="/tag/29">Vue</a><a href="/tag/43">微信分享</a></div></div> <div class="content"><div class="md"><blockquote>
+<p>这两天有个项目需要使用在线代码编辑器，要求支持语法高亮、自动缩进、可切换高亮语法框架等要求。最终我选择了CodeMirror，发现这个插件确实不错，将其记录在我的博客中。</p>
+</blockquote>
+<blockquote>
+<p>本文有部分内容参考自知乎网友var dump的文章。连接：[<a href="https://zhuanlan.zhihu.com/p/22163474%5D">https://zhuanlan.zhihu.com/p/22163474]</a>(<a href="https://zhuanlan.zhihu.com/p/22163474">https://zhuanlan.zhihu.com/p/22163474</a></p>
+</blockquote>
+<p><a href="/blogs/codemirror/demo.html">在线DEMO</a></p>
+<h4 id="关于codemirror">关于CodeMirror</h4>
+<p>CodeMirror是一个用于在浏览器编辑代码的javascript插件，为各种编程语言实现关键字，函数，变量等代码高亮显示，CodeMirror提供丰富的api和可扩展功能以及多个主题样式，能满足您各种项目的需求。</p>
+<p>CodeMirror支持大量语言的语法高亮，包括C、C++、C#、Java、Perl、PHP、JavaScript、Python、Lua、Go、Groovy、Ruby等，以及diff、LaTeX、SQL、wiki、Markdown等文件格式。此外，CodeMirror还支持代码自动完成、搜索/替换、HTML预览、行号、选择/搜索结果高亮、可视化tab、Emacs/VIM键绑定、代码自动格式等。</p>
+<p>CodeMirror采用MIT开源许可协议，目前已经被集成到各种应用程序中，如Adobe Brackets、CoDev、Light Table等开发环境，还被作为各种SQL、Haxe、JavaScript在线编辑器的基础库来使用。</p>
+<ul>
+<li><p><a href="http://codemirror.net/">官网</a></p>
+</li>
+<li><p><a href="http://codemirror.net/">github</a></p>
+</li>
+</ul>
+<p>今天（2017-02-23）到git下载代码的时候，发现里面的demo调不通，原来是<code>lib</code>文件夹缺少了<code>codemirror.js</code>文件，所以大家在使用的时候还是到官网下载比较好。</p>
+<h4 id="特性">特性</h4>
+<p>下面是CodeMirror的主要特性：</p>
+<ul>
+<li>语法高亮</li>
+<li>支持超过100中语言</li>
+<li>动态、可组合的语法提示模块</li>
+<li>代码自动完成</li>
+<li>代码折叠</li>
+<li>可配置快捷键</li>
+<li>Vim、Emacs和Sublime Text键盘映射绑定</li>
+<li>文本搜索和替换</li>
+<li>括号和标签匹配</li>
+<li>支持更改主题</li>
+<li>显示行号</li>
+<li>支持拆分视图</li>
+<li>插件支持和丰富的API</li>
+<li>支持各种现代浏览器、IE7以上</li>
+</ul>
+<h4 id="使用">使用</h4>
+<p>下面是我在项目里面使用CodeMirror的代码，通过这个<a href="#demo">demo</a>，你可以了解到以下内容：</p>
+<ol>
+<li>切换主题</li>
+<li>设置获取内容</li>
+<li>多实例支持</li>
+<li>切换语言</li>
+<li>...</li>
+</ol>
+<p><strong>引入文件</strong></p>
+<p>CodeMirror的语言和主题文件成模块化组织，可能会引入比较多的文件：</p>
+<pre><code>&lt;!--核心代码和样式--&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;js/codemirror-5.24.2/lib/codemirror.css&quot;&gt; 
+&lt;script src=&quot;js/codemirror-5.24.2/lib/codemirror.js&quot;&gt;&lt;/script&gt; 
+
+&lt;!--语言高亮支持文件：语言放在mode文件件中--&gt;
+&lt;script src=&quot;js/codemirror-5.24.2/mode/clike/clike.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/codemirror-5.24.2/mode/xml/xml.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/codemirror-5.24.2/mode/javascript/javascript.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/codemirror-5.24.2/mode/vbscript/vbscript.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/codemirror-5.24.2/mode/css/css.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/codemirror-5.24.2/mode/sql/sql.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/codemirror-5.24.2/mode/htmlmixed/htmlmixed.js&quot;&gt;&lt;/script&gt;
+
+&lt;!--主题文件:主题放在theme文件件中--&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;js/codemirror-5.24.2/theme/icecoder.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;js/codemirror-5.24.2/theme/eclipse.css&quot;&gt;</code></pre><p>另外，下面这些文件也是比较常用的（本文中没有使用）：</p>
+<pre><code>&lt;!--引入js，绑定Vim--&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;codemirror-5.12/addon/dialog/dialog.css&quot;&gt;
+&lt;script src=&quot;codemirror-5.12/keymap/vim.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;codemirror-5.12/addon/search/searchcursor.js&quot;&gt;&lt;/script&gt;
+&lt;!--改善vim输入命令时的样式--&gt;
+&lt;script src=&quot;codemirror-5.12/addon/dialog/dialog.js&quot;&gt;&lt;/script&gt;
+
+&lt;!--支持代码折叠--&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;codemirror-5.12/addon/fold/foldgutter.css&quot;/&gt;
+&lt;script src=&quot;codemirror-5.12/addon/fold/foldcode.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;codemirror-5.12/addon/fold/foldgutter.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;codemirror-5.12/addon/fold/brace-fold.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;codemirror-5.12/addon/fold/comment-fold.js&quot;&gt;&lt;/script&gt;
+
+&lt;!--全屏模式--&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;codemirror-5.12/addon/display/fullscreen.css&quot;&gt;
+&lt;script src=&quot;codemirror-5.12/addon/display/fullscreen.js&quot;&gt;&lt;/script&gt;
+
+&lt;!--括号匹配--&gt;
+&lt;script src=&quot;codemirror-5.12/addon/edit/matchbrackets.js&quot;&gt;&lt;/script&gt;
+
+&lt;!--自动补全--&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;codemirror-5.12/addon/hint/show-hint.css&quot;&gt;
+&lt;script src=&quot;codemirror-5.12/addon/hint/show-hint.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;codemirror-5.12/addon/hint/anyword-hint.js&quot;&gt;&lt;/script&gt;</code></pre><p><strong>页面</strong></p>
+<pre><code>&lt;div class=&quot;container&quot;&gt;
+&lt;div class=&quot;codeEditor&quot;&gt;
+&lt;div class=&quot;editor&quot;&gt;
+&lt;textarea id=&quot;code&quot;&gt;&lt;/textarea&gt;
+&lt;/div&gt;
+&lt;div class=&quot;editor-seleteor&quot;&gt;
+&lt;label&gt;语言&lt;/label&gt;
+&lt;select class=&quot;selector&quot; onchange=&quot;selectLanguage(this)&quot;&gt;
+&lt;option value=&quot;java&quot;&gt;java&lt;/option&gt;
+&lt;option value=&quot;html&quot;&gt;html&lt;/option&gt;
+&lt;option value=&quot;javascript&quot;&gt;javascript&lt;/option&gt;
+&lt;option value=&quot;css&quot;&gt;css&lt;/option&gt;
+&lt;option value=&quot;sql&quot;&gt;sql&lt;/option&gt;
+&lt;option value=&quot;c/c++&quot;&gt;c/c++&lt;/option&gt;
+&lt;/select&gt;
+&lt;label&gt;主题&lt;/label&gt;
+&lt;select class=&quot;selector&quot; onchange=&quot;selectTheme(this)&quot;&gt;
+&lt;option value=&quot;java&quot;&gt;deault&lt;/option&gt;
+&lt;option value=&quot;html&quot;&gt;eclipse&lt;/option&gt;
+&lt;option value=&quot;javascript&quot;&gt;icecoder&lt;/option&gt;
+&lt;option value=&quot;css&quot;&gt;css&lt;/option&gt;
+&lt;option value=&quot;sql&quot;&gt;sql&lt;/option&gt;
+&lt;option value=&quot;c/c++&quot;&gt;c/c++&lt;/option&gt;
+&lt;/select&gt;
+&lt;/div&gt;
+&lt;/div&gt;</code></pre><p><strong>调用</strong></p>
+<pre><code class="language-javascript">&lt;script&gt;
+var editor = CodeMirror.fromTextArea(document.getElementById(&quot;code&quot;), {
+        lineNumbers: true,
+        styleActiveLine: true,
+        matchBrackets: true,
+        mode: &quot;text/x-c&quot;
+        width: &quot;100%&quot;,
+        height: &quot;100%&quot;,
+        keyMap: &quot;default&quot;,
+        lineWrapping: true,
+        foldGutter: true,
+        gutters: [&quot;CodeMirror-linenumbers&quot;, &quot;CodeMirror-foldgutter&quot;],
+        indentUnit: 4,
+        showCursorWhenSelecting: true,
+        extraKeys: {
+            &quot;Shift-Alt-Enter&quot;: function (cm) {
+                cm.setOption(&quot;fullScreen&quot;, !cm.getOption(&quot;fullScreen&quot;));
+            },
+            &quot;Ctrl-Space&quot;: &quot;autocomplete&quot;,
+            &quot;Ctrl-F7&quot;: function () {
+                $(&#39;#code_submit&#39;).click();
+            }
+        }
+});
+&lt;/script&gt;</code></pre>
+<h4 id="常见问题">常见问题</h4>
+<p><strong>设置/获取内容</strong></p>
+<pre><code>//该方法得到的结果是经过转义的数据
+editor.getValue();
+//该方法得到的结果是未经过转义的数据
+editor.toTextArea();
+editor.getTextArea().value;
+
+//如果是通过 JS 进行表单提交，可以在提交的 JS 代码中这样使用：
+//将 Codemirror 的内容赋值给 Textarea
+$(&quot;#content&quot;).text(editor.getValue());
+
+//Codemirror赋值
+editor.setValue(&#39;为codemirror赋值&#39;);</code></pre><p><strong>设置/获取属性值</strong>
+在构造editor时相关的属性大多数都可以动态的指定。如设置显示行号可以不在构造editor时指出，只需构造出editor之后，调用<code>setOption</code>方法：</p>
+<pre><code>editor.setOption(&quot;lineNumbers&quot;,true);//是否显示行号
+editor.setOption(&quot;theme&quot;,&quot;seti&quot;);//设置主题</code></pre><p>获取属性值，也有对应的<code>setOption</code>方法，可以用：<code>editor.getOption(&quot;属性名&quot;)</code>来获取editor某属性的值，在本例中：</p>
+<pre><code>editor.getOption(&quot;theme&quot;)</code></pre><p>将返回&quot;seti&quot;。</p>
+<p><strong>更改外观</strong></p>
+<p>可以自定义编辑器的大小，只需设置如下样式即可：</p>
+<pre><code>&lt;style type=&quot;text/css&quot;&gt;
+     .CodeMirror{border:1px solid black;font-   size:15px;width:100px;height:100px}
+&lt;/style&gt;</code></pre><p><strong>快捷键绑定</strong></p>
+<p>在extra中可绑定函数到按键上，例如：</p>
+<pre><code>var editor=CodeMirror.fromTextArea(document.getElementById(&quot;code&quot;),{
+    mode:&quot;text/x-java&quot;,
+    extraKeys:{
+        &quot;Ctrl-Space&quot;:&quot;autocomplete&quot;,
+        &quot;Ctrl-F7&quot;:function () {
+                    alert(&quot;绑定了Ctrl-F7&quot;);
+                  },
+        &quot;Shift-Alt-Enter&quot;: function (cm) {
+                   cm.setOption(&quot;fullScreen&quot;, !cm.getOption(&quot;fullScreen&quot;));
+                  }
+    }
+});</code></pre><p>需要注意的是，如果将esc键绑定了某函数，那么Vim可能无法正常工作。</p>
+<h4 id="配置项">配置项</h4>
+<p>Code Mirror非常强大，上面的例子说明了其基本的使用方法，足够应付大多数使用场景，当然还有很多功能未能一一说明。如要深入学习，请阅读其<a href="http://codemirror.net/">官方文档</a>。下面是部分内容：</p>
+<p><strong>value: string | CodeMirror.Doc</strong></p>
+<p>编辑器的初始值（文本），可以是字符串或者CodeMirror文档对象(不同于HTML文档对象)。</p>
+<p><strong>mode: string | object</strong></p>
+<p>通用的或者在CodeMirror中使用的与mode相关联的mime，当不设置这个值的时候，会默认使用第一个载入的mode定义文件。一般地，会使用关联的mime类型来设置这个值；除此之外，也可以使用一个带有name属性的对象来作为值（如：{name: “javascript”, json: true}）。可以通过访问CodeMirror.modes和CodeMirror.mimeModes获取定义的mode和MIME。</p>
+<p><strong>lineSeparator: string|null</strong></p>
+<p>明确指定编辑器使用的行分割符（换行符）。默认（值为null）情况下，文档会被 CRLF(以及单独的CR, LF)分割，单独的LF会在所有的输出中用作换行符（如：getValue）。当指定了换行字符串，行就只会被指定的串分割。</p>
+<p><strong>theme: string</strong></p>
+<p>配置编辑器的主题样式。要使用主题，必须保证名称为 .cm-s-[name] (name是设置的theme的值)的样式是加载上了的。当然，你也可以一次加载多个主题样式，使用方法和html和使用类一样，如： theme: foo bar，那么此时需要cm-s-foo cm-s-bar这两个样式都已经被加载上了。</p>
+<p><strong>indentUnit: integer</strong></p>
+<p>缩进单位，值为空格数，默认为2 。</p>
+<p><strong>smartIndent: boolean</strong></p>
+<p>自动缩进，设置是否根据上下文自动缩进（和上一行相同的缩进量）。默认为true。</p>
+<p><strong>tabSize: integer</strong></p>
+<p>tab字符的宽度，默认为4 。</p>
+<p><strong>indentWithTabs: boolean</strong></p>
+<p>在缩进时，是否需要把 n*tab宽度个空格替换成n个tab字符，默认为false 。</p>
+<p><strong>electricChars: boolean</strong></p>
+<p>在输入可能改变当前的缩进时，是否重新缩进，默认为true （仅在mode支持缩进时有效）。</p>
+<p><strong>specialChars: RegExp</strong></p>
+<p>需要被占位符(placeholder)替换的特殊字符的正则表达式。最常用的是非打印字符。默认为：/[\u0000-\u0019\u00ad\u200b-\u200f\u2028\u2029\ufeff]/。</p>
+<p><strong>specialCharPlaceholder: function(char) → Element</strong></p>
+<p>这是一个接收由specialChars选项指定的字符作为参数的函数，此函数会产生一个用来显示指定字符的DOM节点。默认情况下，显示一个红点（•），这个红点有一个带有前面特殊字符编码的提示框。</p>
+<p><strong>rtlMoveVisually: boolean</strong></p>
+<p>Determines whether horizontal cursor movement through right-to-left (Arabic, Hebrew) text is visual (pressing the left arrow moves the cursor left) or logical (pressing the left arrow moves to the next lower index in the string, which is visually right in right-to-left text). The default is false on Windows, and true on other platforms.（这段完全不晓得搞啥子鬼）</p>
+<p><strong>keyMap: string</strong></p>
+<p>配置快捷键。默认值为default，即 codemorrir.js 内部定义。其它在key map目录下。</p>
+<p><strong>extraKeys: object</strong></p>
+<p>给编辑器绑定与前面keyMap配置不同的快捷键。</p>
+<p><strong>lineWrapping: boolean</strong></p>
+<p>在长行时文字是换行(wrap)还是滚动(scroll)，默认为滚动(scroll)。</p>
+<p><strong>lineNumbers: boolean</strong></p>
+<p>是否在编辑器左侧显示行号。</p>
+<p><strong>firstLineNumber: integer</strong></p>
+<p>行号从哪个数开始计数，默认为1 。</p>
+<p><strong>lineNumberFormatter: function(line: integer) → string</strong></p>
+<p>使用一个函数设置行号。</p>
+<p><strong>gutters: array&lt;string&gt;</strong></p>
+<p>用来添加额外的gutter（在行号gutter前或代替行号gutter）。值应该是CSS名称数组，每一项定义了用于绘制gutter背景的宽度（还有可选的背景）。为了能明确设置行号gutter的位置（默认在所有其它gutter的右边），也可以包含CodeMirror-linenumbers类。类名是用于传给setGutterMarker的键名(keys)。</p>
+<p><strong>fixedGutter: boolean</strong></p>
+<p>设置gutter跟随编辑器内容水平滚动（false）还是固定在左侧（true或默认）。</p>
+<p><strong>scrollbarStyle: string</strong></p>
+<p>设置滚动条。默认为”native”，显示原生的滚动条。核心库还提供了”null”样式，此样式会完全隐藏滚动条。Addons可以设置更多的滚动条模式。</p>
+<p><strong>coverGutterNextToScrollbar: boolean</strong></p>
+<p>当fixedGutter启用，并且存在水平滚动条时，在滚动条最左侧默认会显示gutter，当此项设置为true时，gutter会被带有CodeMirror-gutter-filler类的元素遮挡。</p>
+<p><strong>inputStyle: string</strong></p>
+<p>选择CodeMirror处理输入和焦点的方式。核心库定义了textarea和contenteditable输入模式。在移动浏览器上，默认是contenteditable，在桌面浏览器上，默认是textarea。在contenteditable模式下对IME和屏幕阅读器支持更好。</p>
+<p><strong>readOnly: boolean|string</strong></p>
+<p>编辑器是否只读。如果设置为预设的值 “nocursor”，那么除了设置只读外，编辑区域还不能获得焦点。</p>
+<p><strong>showCursorWhenSelecting: boolean</strong></p>
+<p>在选择时是否显示光标，默认为false。</p>
+<p><strong>lineWiseCopyCut: boolean</strong></p>
+<p>启用时，如果在复制或剪切时没有选择文本，那么就会自动操作光标所在的整行。</p>
+<p><strong>undoDepth: integer</strong></p>
+<p>最大撤消次数，默认为200（包括选中内容改变事件） 。</p>
+<p><strong>historyEventDelay: integer</strong></p>
+<p>在输入或删除时引发历史事件前的毫秒数。</p>
+<p><strong>tabindex: integer</strong></p>
+<p>编辑器的tabindex。</p>
+<p><strong>autofocus: boolean</strong></p>
+<p>是否在初始化时自动获取焦点。默认情况是关闭的。但是，在使用textarea并且没有明确指定值的时候会被自动设置为true。</p>
+<p>低级选项</p>
+<p>下面的选项仅用于一些特殊情况。</p>
+<p><strong>dragDrop: boolean</strong></p>
+<p>是否允许拖放，默认为true。</p>
+<p><strong>allowDropFileTypes: array&lt;string&gt;</strong></p>
+<p>默认为null。当设置此项时，只接收包含在此数组内的文件类型拖入编辑器。文件类型为MIME名称。</p>
+<p><strong>cursorBlinkRate: number</strong></p>
+<p>光标闪动的间隔，单位为毫秒。默认为530。当设置为0时，会禁用光标闪动。负数会隐藏光标。</p>
+<p><strong>cursorScrollMargin: number</strong></p>
+<p>当光标靠近可视区域边界时，光标距离上方和下方的距离。默认为0 。</p>
+<p><strong>cursorHeight: number</strong></p>
+<p>光标高度。默认为1，也就是撑满行高。对一些字体，设置0.85看起来会更好。</p>
+<p><strong>resetSelectionOnContextMenu: boolean</strong></p>
+<p>设置在选择文本外点击打开上下文菜单时，是否将光标移动到点击处。默认为true。</p>
+<p><strong>workTime, workDelay: number</strong></p>
+<p>通过一个假的后台线程高亮 workTime 时长，然后使用 timeout 休息 workDelay 时长。默认为200和300 。（完全不懂这个功能是在说啥）</p>
+<p><strong>pollInterval: number</strong></p>
+<p>指明CodeMirror向对应的textarea滚动（写数据）的速度（获得焦点时）。大多数的输入都是通过事件捕获，但是有的输入法（如IME）在某些浏览器上并不会生成事件，所以使用数据滚动。默认为100毫秒。</p>
+<p><strong>flattenSpans: boolean</strong></p>
+<p>默认情况下，CodeMirror会将使用相同class的两个span合并成一个。通过设置此项为false禁用此功能。</p>
+<p><strong>addModeClass: boolean</strong></p>
+<p>当启用时（默认禁用），会给每个标记添加额外的表示生成标记的mode的以cm-m开头的CSS样式类。例如，XML mode产生的标记，会添加cm-m-xml类。</p>
+<p><strong>maxHighlightLength: number</strong></p>
+<p>当需要高亮很长的行时，为了保持响应性能，当到达某些位置时，编辑器会直接将其他行设置为纯文本(plain text)。默认为10000，可以设置为Infinity来关闭此功能。</p>
+<p><strong>viewportMargin: integer</strong></p>
+<p>指定当前滚动到视图中内容上方和下方要渲染的行数。这会影响到滚动时要更新的行数。通常情况下应该使用默认值10。可以设置值为Infinity始终渲染整个文档。注意：这样设置在处理大文档时会影响性能。</p>
+<h4 id="demo">demo</h4>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot; /&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
+&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot; /&gt;ame=&quot;renderer&quot; content=&quot;webkit&quot;&gt;
+&lt;title&gt;轻量级web富文本编辑器wangEditor介绍&lt;/title&gt;
+&lt;style type=&quot;text/css&quot;&gt;
+*{margin: 0;padding: 0;}
+body{background: #eaebec;}
+.container{
+width: 800px;
+background: #fff;
+margin: 0 auto;
+padding: 15px 15px 45px 15px;
+}
+.codeEditor{
+position: relative;
+}
+.codeEditor .editor{
+border: solid 1px #c2c2c2;
+height: 300px;
+}
+.codeEditor .editor-seleteor{
+position: absolute;
+bottom: 15px;
+left: 15px;
+}
+.codeEditor .editor-seleteor select{
+display:inline-block;
+width:100px;
+height:20px;
+height: 20px;
+border: solid 1px #c2c2c2;
+width: 100px;
+}
+.btns{
+padding-top:100px;
+text-align:right;
+}
+.btns button{
+display:inline-block;
+margin-left:10px;
+padding:3px 6px;
+}
+&lt;/style&gt;
+&lt;!--核心样式--&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;js/codemirror-5.24.2/lib/codemirror.css&quot;&gt; 
+&lt;!--引入css文件，用以支持主题--&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;js/codemirror-5.24.2/theme/icecoder.css&quot;&gt;k rel=&quot;stylesheet&quot; href=&quot;js/codemirror-5.24.2/theme/eclipse.css&quot;&gt;
+
+&lt;!--核心库文件--&gt;
+&lt;script src=&quot;js/codemirror-5.24.2/lib/codemirror.js&quot;&gt;&lt;/script&gt; 
+
+&lt;!--语法文件:加入高亮支持--&gt;
+&lt;script src=&quot;js/codemirror-5.24.2/mode/clike/clike.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/codemirror-5.24.2/mode/xml/xml.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/codemirror-5.24.2/mode/javascript/javascript.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/codemirror-5.24.2/mode/vbscript/vbscript.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/codemirror-5.24.2/mode/css/css.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/codemirror-5.24.2/mode/sql/sql.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/codemirror-5.24.2/mode/htmlmixed/htmlmixed.js&quot;&gt;&lt;/script&gt;
+
+
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&quot;container&quot;&gt;
+&lt;div class=&quot;codeEditor&quot;&gt;
+&lt;div class=&quot;editor&quot;&gt;
+&lt;textarea id=&quot;code&quot;&gt;&lt;/textarea&gt;
+&lt;/div&gt;
+&lt;div class=&quot;editor-seleteor&quot;&gt;
+&lt;label&gt;语言&lt;/label&gt;
+&lt;select class=&quot;selector&quot; onchange=&quot;selectLanguage(this)&quot;&gt;
+&lt;option value=&quot;java&quot;&gt;java&lt;/option&gt;
+&lt;option value=&quot;html&quot;&gt;html&lt;/option&gt;
+&lt;option value=&quot;javascript&quot;&gt;javascript&lt;/option&gt;
+&lt;option value=&quot;css&quot;&gt;css&lt;/option&gt;
+&lt;option value=&quot;sql&quot;&gt;sql&lt;/option&gt;
+&lt;option value=&quot;c/c++&quot;&gt;c/c++&lt;/option&gt;
+&lt;/select&gt;
+&lt;label&gt;主题&lt;/label&gt;
+&lt;select class=&quot;selector&quot; onchange=&quot;selectTheme(this)&quot;&gt;
+&lt;option value=&quot;java&quot;&gt;deault&lt;/option&gt;
+&lt;option value=&quot;html&quot;&gt;eclipse&lt;/option&gt;
+&lt;option value=&quot;javascript&quot;&gt;icecoder&lt;/option&gt;
+&lt;option value=&quot;css&quot;&gt;css&lt;/option&gt;
+&lt;option value=&quot;sql&quot;&gt;sql&lt;/option&gt;
+&lt;option value=&quot;c/c++&quot;&gt;c/c++&lt;/option&gt;
+&lt;/select&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;btns&quot;&gt;
+&lt;button onclick=&quot;getVal()&quot;&gt;getVal&lt;/button&gt; onclick=&quot;setVal()&quot;&gt;setVal&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script src=&quot;http://libs.baidu.com/jquery/2.0.0/jquery.min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+var editor = CodeMirror.fromTextArea(document.getElementById(&quot;code&quot;), {
+        lineNumbers: true,
+        styleActiveLine: true,
+        matchBrackets: true,
+        mode: {name: &quot;text/x-java&quot;},
+        width: &quot;100%&quot;,
+        height: &quot;100%&quot;,
+        theme:&quot;icecoder&quot;,
+        keyMap: &quot;default&quot;,
+        lineWrapping: true,
+        foldGutter: true,
+        gutters: [&quot;CodeMirror-linenumbers&quot;, &quot;CodeMirror-foldgutter&quot;],
+        indentUnit: 4,
+        showCursorWhenSelecting: true,
+        extraKeys: {
+            &quot;Shift-Alt-Enter&quot;: function (cm) {
+                cm.setOption(&quot;fullScreen&quot;, !cm.getOption(&quot;fullScreen&quot;));
+            },
+            &quot;Ctrl-Space&quot;: &quot;autocomplete&quot;,
+            &quot;Ctrl-F7&quot;: function () {
+                $(&#39;#code_submit&#39;).click();
+            }
+        }
+    });
+
+    function selectLanguage(obj) {
+    var lang = obj.value;
+    var mode = &#39;&#39;;
+    switch (lang){
+    &#39;htmlmixed&#39;;break;
+    l&#39;: mode=&#39;text/x-sql&#39;; break;
+    gth != &#39;&#39;){
+    (&#39;mode&#39;,mode)
+    }
+
+    function getVal(){
+    console.log($(&quot;.CodeMirror-sizer&quot;).html())
+    var val = editor.getValue();
+    console.log(val)
+    }
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div></div></div>
+    </div>
+
+    <footer>
+        <div>
+            <p>参考网址：</p>
+            <div class="links">
+                <a target="_blank" href="https://cnodejs.org/">CNode技术社区</a>
+                <a target="_blank" href="https://cn.vuejs.org/">Vue.js官网</a>
+                <a target="_blank" href="https://zh.nuxtjs.org/">Nuxt.js官网</a>
+                <a target="_blank" href="http://www.expressjs.com.cn/">Express.js官网</a>
+            </div>
+        </div>
+        <div>
+            <p>友情链接：</p>
+            <div class="links">
+                <a target="_blank" href="http://www.lanqiao.org/">蓝桥官网</a>
+                <a target="_blank" href="http://www.javabb.cn/">秦豹的个人网站</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

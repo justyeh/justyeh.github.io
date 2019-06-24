@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="justyeh,justyeh@163.com" />
+    <meta name="apple-mobile-web-app-title" content="justyeh的前端博客" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#263238" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="x5-orientation" content="portrait" />
+    <meta name="theme-color" content="#263238" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <title>Object.defineProperty方法解读</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/front.css">
+    <link rel="stylesheet" href="/static/css/yeh-md-theme.css">
+    <link rel="stylesheet" href="/static/js/highlight/ocean.min.css">
+    <script src="/static/js/highlight/highlight.min.js"></script>
+    <script src="/static/js/public.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="site">
+                <img src="/static/image/avatar.jpg" />
+                <p>JustYeh的前端博客</p>
+            </div>
+            <div class="nav">
+                <div class="menu">
+                    <a href="/">Home</a>
+                    <a href="/about" class="">About</a>
+                    <a target="_blank" href="/projects/index.html">Projects</a>
+                    <a href="http://justyeh.github.io/tools" target="_blank">Tools</a>
+                    <a target="_blank" href="https://github.com/justyeh">Github</a>
+                </div>
+                <div class="search">
+                    <form action="/search" methods='get'>
+                        <input class="ani" autocomplete="off" type="search" name="keyword" value="">
+                        <button class="ani" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="container page">
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url();"></div> <div class="title">Object.defineProperty方法解读</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-09-18</p> <!----></div> <div class="content"><div class="md"><p>Object.defineProperty是ES5中提出的新方法，作用是为对象新添加一个属性或者修改对象中已经存在的属性</p>
+<h3 id="用法">用法</h3>
+<p> Object.defineProperty(obj, prop, descriptor)</p>
+<ul>
+<li>obj：需要定义属性的对象</li>
+<li>prop：需要定义或修改的属性的名称</li>
+<li>descriptor：需要定义或修改的属性的特性
+上面的三个参数都是必需的</li>
+</ul>
+<p>descriptor的值是一个对象，可以有configurable、enumerable、value、writable、get和set，下面来一一介绍：</p>
+<p><strong>configurable</strong></p>
+<p>是否可配置，默认为false，当他的值为false时，起到了下面的作用：</p>
+<ul>
+<li>目标属性不可以使用delete删除</li>
+<li>目标属性不可以再次设置特性（value,writable,configurable,enumerable）</li>
+</ul>
+<pre><code>//不可以使用delete删除
+let yeh = {}
+Object.defineProperty(yeh, &#39;age&#39;, {value:24})
+delete yeh.age
+console.log(yeh.age) //24
+
+let yeh2 = {}
+Object.defineProperty(yeh2, &#39;age&#39;, {value:24,configurable:true})
+delete yeh2.age
+console.log(yeh2.age) //undefined
+
+//不可以重新设置特性
+Object.defineProperty(yeh, &#39;age&#39;, {value:24})
+Object.defineProperty(yeh, &#39;age&#39;, {enumerable:true})//caught TypeError: Cannot redefine property: age</code></pre><p><strong>enumerable</strong></p>
+<p>是否可枚举，默认为false，此时对象的属性不能在for...in 循环和 Object.keys() 中被枚举</p>
+<pre><code>let yeh = {}
+Object.defineProperty(yeh, &#39;age&#39;, {})
+console.log(Object.keys(yeh)) //[]
+
+let yeh2 = {}
+Object.defineProperty(yeh2, &#39;age&#39;, {
+    enumerable:true
+})
+console.log(Object.keys(yeh2)) //[&quot;age&quot;]</code></pre><p><strong>value</strong></p>
+<p>属性的值，默认为undefined，属性对应的值，可以是任意的值(number, object, function, etc)</p>
+<pre><code> let yeh = {}
+Object.defineProperty(yeh, &#39;age&#39;, {})
+console.log(yeh.age) //undefined
+
+let yeh2 = {}
+Object.defineProperty(yeh2, &#39;age&#39;, {
+    value:24
+})
+console.log(yeh2.age) //24</code></pre><p><strong>writable</strong></p>
+<p>是否可重新赋值，默认为false，此时为obj的prop重新赋值是无效的</p>
+<pre><code> let yeh = {}
+Object.defineProperty(yeh, &#39;age&#39;, {
+    value:24
+})
+yeh.age = 25
+console.log(yeh.age) //24
+
+let yeh2 = {}
+Object.defineProperty(yeh2, &#39;age&#39;, {
+    value:24,
+    writable:true
+})
+yeh2.age = 25
+console.log(yeh2.age) //25</code></pre><p><strong>get()/set()</strong></p>
+<p>默认值为undefined，当使用了get()或set()方法时，就不能再使用value和writable这两个特性</p>
+<pre><code>let yeh = {}
+Object.defineProperty(yeh, &#39;age&#39;, {
+    value:24,
+    set(newVal) {}
+})
+//TypeError: Invalid property descriptor. Cannot both specify accessors and a value or writable attribute, #&lt;Object&gt; at Function.defineProperty (&lt;anonymous&gt;)</code></pre><p>定义了这两个方法后，当对对象属性进行赋值或取值操作时，会触发相应的get()或set()方法，在Vue.js中，这就是实现数据双向绑定的关键</p>
+<pre><code> var yeh = {}
+function watch(obj, key) {
+    var temp = {}
+    Object.defineProperty(obj, key, {
+        enumerable: true,
+        configurable: true,
+        set(newVal) {
+            temp = newVal
+            console.log(&#39;执行了set方法，新的值为&#39; + newVal)
+        },
+        get() {
+            console.log(&#39;执行了get方法&#39;)
+            return temp
+        }
+    })
+}
+watch(yeh, &quot;age&quot;)
+yeh.age = 25 //赋值，触发了set方法，打印“执行了set方法，新的值为25”
+console.log(yeh.age) //取值，触发了get方法，先打印“执行了get方法”，再打印“25”</code></pre></div></div></div>
+    </div>
+
+    <footer>
+        <div>
+            <p>参考网址：</p>
+            <div class="links">
+                <a target="_blank" href="https://cnodejs.org/">CNode技术社区</a>
+                <a target="_blank" href="https://cn.vuejs.org/">Vue.js官网</a>
+                <a target="_blank" href="https://zh.nuxtjs.org/">Nuxt.js官网</a>
+                <a target="_blank" href="http://www.expressjs.com.cn/">Express.js官网</a>
+            </div>
+        </div>
+        <div>
+            <p>友情链接：</p>
+            <div class="links">
+                <a target="_blank" href="http://www.lanqiao.org/">蓝桥官网</a>
+                <a target="_blank" href="http://www.javabb.cn/">秦豹的个人网站</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

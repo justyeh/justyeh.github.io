@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="justyeh,justyeh@163.com" />
+    <meta name="apple-mobile-web-app-title" content="justyeh的前端博客" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#263238" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="x5-orientation" content="portrait" />
+    <meta name="theme-color" content="#263238" />
+    <meta name="description" content="Vue.js" />
+    <meta name="keywords" content="Vue.js" />
+    <title>JavaScript模块化开发</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/front.css">
+    <link rel="stylesheet" href="/static/css/yeh-md-theme.css">
+    <link rel="stylesheet" href="/static/js/highlight/ocean.min.css">
+    <script src="/static/js/highlight/highlight.min.js"></script>
+    <script src="/static/js/public.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="site">
+                <img src="/static/image/avatar.jpg" />
+                <p>JustYeh的前端博客</p>
+            </div>
+            <div class="nav">
+                <div class="menu">
+                    <a href="/">Home</a>
+                    <a href="/about" class="">About</a>
+                    <a target="_blank" href="/projects/index.html">Projects</a>
+                    <a href="http://justyeh.github.io/tools" target="_blank">Tools</a>
+                    <a target="_blank" href="https://github.com/justyeh">Github</a>
+                </div>
+                <div class="search">
+                    <form action="/search" methods='get'>
+                        <input class="ani" autocomplete="off" type="search" name="keyword" value="">
+                        <button class="ani" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="container page">
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(/blogs/javascript-module/modules-banner.jpg);"></div> <div class="title">JavaScript模块化开发</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-06-24</p> <i class="fa fa-tag"></i> <div><a href="/tag/32">Vue.js</a></div></div> <div class="content"><div class="md"><blockquote>
+<p>通俗易懂的介绍了模块化概念，以及使用模块化编程的必要性。详细介绍了实现模块化开发的演变过程。</p>
+</blockquote>
+<h4 id="一、为什么会有模块化">一、为什么会有模块化</h4>
+<p>1.当一个项目开发的<strong>越来越复杂</strong>的时候，会遇到一些问题，比如：</p>
+<p><strong>命名冲突</strong></p>
+<p>当项目由团队进行协作开发的时候，不同开发人员的变量和函数命名可能相同；即使是一个开发，当开发周期比较长的时候，也有可能会忘记之前使用了什么变量，从而导致重复命名，导致命名冲突。</p>
+<p><strong>文件依赖</strong></p>
+<p>代码重用时，引入js文件的数目可能少了，或者引入的顺序不对，比如使用boostrap的时候，需要引入jQuery，并且jQuery的文件必须要比boostrap的js文件先引入。</p>
+<p>2.当使用模块化开发的时候可以避免以上的问题，并且让开发的效率变高，以及方便后期的维护：</p>
+<p><strong>提升开发效率</strong></p>
+<p>代码方便重用，别人开发的模块直接拿过来就可以使用，不需要重复开发法类似的功能。</p>
+<p><strong>方便后期维护</strong></p>
+<p>代码方便重用，别人开发的模块直接拿过来就可以使用，不需要重复开发法类似的功能。</p>
+<p>所以总结来说，在生产角度，模块化开发是一种生产方式，这种方式生产效率高，维护成本低。从软件开发角度来说，模块化开发是一种开发模式，写代码的一种方式，开发效率高，方便后期维护。</p>
+<h4 id="二、模块化开发的演变过程">二、模块化开发的演变过程</h4>
+<h5 id="1-全局函数">1. 全局函数</h5>
+<pre><code>function m1(){
+    //...
+}
+function m2(){
+    //...
+}</code></pre><p>在早期的开发过程中就是将重复的代码封装到函数中，再将一系列的函数放到一个文件中，这种情况下全局函数的方式只能认为的认为它们属于一个模块，但是程序并不能区分哪些函数是同一个模块，如果仅仅从代码的角度来说，这没有任何模块的概念。</p>
+<p>存在的问题：</p>
+<ul>
+<li>污染了全局变量，无法保证不与其他模块发生变量名冲突。</li>
+<li>模块成员之间看不出直接关系。</li>
+</ul>
+<h5 id="2-对象封装-命名空间">2. 对象封装-命名空间</h5>
+<pre><code>var module1 = new Object({
+    _count : 0,
+    m1 : function (){
+        //...
+    },
+    m2 : function (){
+        //...
+    }
+});</code></pre><p>通过添加命名空间的形式从某种程度上解决了变量命名冲突的问题，但是并不能从根本上解决命名冲突。 不过此时从代码级别可以明显区分出哪些函数属于同一个模块。</p>
+<p>存在的问题：</p>
+<ul>
+<li>暴露了所有的模块成员，内部状态可以被外部改写，不安全。</li>
+<li>命名空间越来越长。</li>
+</ul>
+<h5 id="3-立即执行函数写法">3. 立即执行函数写法</h5>
+<p>使用&quot;立即执行函数&quot;（Immediately-Invoked Function Expression，IIFE），可以达到不暴露私有成员的目的。</p>
+<pre><code>var module1 = (function(){
+var _count = 0;
+var m1 = function(){
+//...
+};
+var m2 = function(){
+//...
+};
+return {
+m1 : m1,
+m2 : m2
+};
+})();</code></pre><p>特点：</p>
+<ul>
+<li>利用此种方式将函数包装成一个独立的作用域，私有空间的变量和函数不会影响到全局作用域。</li>
+<li>以返回值的方式得到模块的公共成员，公开公有方法，隐藏私有空间内部的属性、元素，比如注册方法中可能会记录日志。</li>
+<li>可以有选择的对外暴露自身成员。</li>
+<li>从某种意义上来说，解决了变量命名冲突的问题。</li>
+</ul>
+<h5 id="4-放大模式">4. 放大模式</h5>
+<pre><code>// 原有方法
+var module1 = (function(){
+var _count = 0;
+var m1 = function(){
+//...
+};
+var m2 = function(){
+//...
+};
+return {
+m1 : m1,
+m2 : m2
+};
+})();
+
+// 新增需求
+var module1 = (function (mod){
+mod.m3 = function () {
+//...
+};
+return mod;
+})(module1);</code></pre><p>特点：</p>
+<ul>
+<li>利用此种方式，有利于对庞大的模块的子模块划分。</li>
+<li>实现了开闭原则：对新增开发，对修改关闭。对于已有文件尽量不要修改，通过添加新文件的方式添加新功能。</li>
+</ul>
+<h5 id="5-宽放大模式">5. 宽放大模式</h5>
+<p>在浏览器环境中，模块的各个部分通常都是从网上获取的，有时无法知道哪个部分会先加载。如果采用上一节的写法，第一个执行的部分有可能加载一个不存在空对象，这时就要采用&quot;宽放大模式&quot;。</p>
+<pre><code>var module1 = ( function (mod){
+//...
+return mod;
+})(window.module1 || {});</code></pre><p>与&quot;放大模式&quot;相比，＂宽放大模式＂就是&quot;立即执行函数&quot;的参数可以是空对象。</p>
+<p><strong>总结：在什么场景下使用模块化开发：</strong></p>
+<ul>
+<li>业务复杂</li>
+<li>重用逻辑非常多</li>
+<li>扩展性要求较高</li>
+</ul>
+<h4 id="三、模块化规范">三、模块化规范</h4>
+<h5 id="commonjs">CommonJS</h5>
+<p>服务器端规范主要是CommonJS，node.js用的就是CommonJS规范：</p>
+<p><strong>定义模块</strong></p>
+<p>根据CommonJS规范，一个单独的文件就是一个模块。每一个模块都是一个单独的作用域，也就是说，在该模块内部定义的变量，无法被其他模块读取，除非定义为global对象的属性。</p>
+<p><strong>模块输出</strong></p>
+<p>模块只有一个出口，module.exports对象，我们需要把模块希望输出的内容放入该对象</p>
+<p><strong>加载模块</strong></p>
+<p>加载模块使用require方法，该方法读取一个文件并执行，返回文件内部的module.exports对象</p>
+<p>看个例子：</p>
+<pre><code>//模块定义 myModel.js
+var name = &#39;Byron&#39;;
+function printName(){
+    console.log(name);
+}
+function printFullName(firstName){
+    console.log(firstName + name);
+}
+module.exports = {
+    printName: printName,
+    printFullName: printFullName
+}
+
+// 加载模块
+var nameModule = require(&#39;./myModel.js&#39;);
+nameModule.printName();</code></pre><h4 id="客户端规范">客户端规范</h4>
+<p>客户端规范主要有：AMD（异步模块定义，推崇依赖前置）、CMD（通用模块定义，推崇依赖就近）。AMD规范的实现主要有RequireJs，CMD规范的主要实现有SeaJs。SeaJs在国内用的比较多，但SeaJs已经停止维护了，就多做多的介绍。RequireJs是使用最广泛的模块化的实现方案，关于RequireJs的介绍，请参考本站文章：<a href="http://justyeh.com/2017/02/24/requirejs/">RequireJS参考手册</a>。</p>
+<h3 id="amd与cmd区别">AMD与CMD区别</h3>
+<p>下面的回答来自SeaJs的作者<a href="https://www.zhihu.com/question/20351507/answer/14859415">玉伯</a>：</p>
+<ul>
+<li><p>对于依赖的模块，AMD 是提前执行，CMD 是延迟执行。不过 RequireJS 从 2.0 开始，也改成可以延迟执行（根据写法不同，处理方式不同）。CMD 推崇 as lazy as possible.</p>
+</li>
+<li><p>CMD 推崇依赖就近，AMD 推崇依赖前置。看代码：</p>
+<pre><code>// CMD
+define(function(require, exports, module) {
+  var a = require(&#39;./a&#39;)
+  a.doSomething()
+  // 此处略去 100 行
+  var b = require(&#39;./b&#39;) // 依赖可以就近书写
+  b.doSomething()
+  // ... 
+})
+</code></pre></li>
+</ul>
+<p>// AMD 默认推荐的是
+define([&#39;./a&#39;, &#39;./b&#39;], function(a, b) { // 依赖必须一开始就写好
+    a.doSomething()
+    // 此处略去 100 行
+    b.doSomething()
+    ...
+}) 
+```
+虽然 AMD 也支持 CMD 的写法，同时还支持将 require 作为依赖项传递，但 RequireJS 的作者默认是最喜欢上面的写法，也是官方文档里默认的模块定义写法。</p>
+<ul>
+<li>AMD 的 API 默认是一个当多个用，CMD 的 API 严格区分，推崇职责单一。比如 AMD 里，require 分全局 require 和局部 require，都叫 require。CMD 里，没有全局 require，而是根据模块系统的完备性，提供 seajs.use 来实现模块系统的加载启动。CMD 里，每个 API 都简单纯粹。</li>
+</ul>
+</div></div></div>
+    </div>
+
+    <footer>
+        <div>
+            <p>参考网址：</p>
+            <div class="links">
+                <a target="_blank" href="https://cnodejs.org/">CNode技术社区</a>
+                <a target="_blank" href="https://cn.vuejs.org/">Vue.js官网</a>
+                <a target="_blank" href="https://zh.nuxtjs.org/">Nuxt.js官网</a>
+                <a target="_blank" href="http://www.expressjs.com.cn/">Express.js官网</a>
+            </div>
+        </div>
+        <div>
+            <p>友情链接：</p>
+            <div class="links">
+                <a target="_blank" href="http://www.lanqiao.org/">蓝桥官网</a>
+                <a target="_blank" href="http://www.javabb.cn/">秦豹的个人网站</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

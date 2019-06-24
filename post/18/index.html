@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="justyeh,justyeh@163.com" />
+    <meta name="apple-mobile-web-app-title" content="justyeh的前端博客" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#263238" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="x5-orientation" content="portrait" />
+    <meta name="theme-color" content="#263238" />
+    <meta name="description" content="模块化，css" />
+    <meta name="keywords" content="模块化，css" />
+    <title>轻量级web富文本编辑器wangEditor介绍</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/front.css">
+    <link rel="stylesheet" href="/static/css/yeh-md-theme.css">
+    <link rel="stylesheet" href="/static/js/highlight/ocean.min.css">
+    <script src="/static/js/highlight/highlight.min.js"></script>
+    <script src="/static/js/public.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="site">
+                <img src="/static/image/avatar.jpg" />
+                <p>JustYeh的前端博客</p>
+            </div>
+            <div class="nav">
+                <div class="menu">
+                    <a href="/">Home</a>
+                    <a href="/about" class="">About</a>
+                    <a target="_blank" href="/projects/index.html">Projects</a>
+                    <a href="http://justyeh.github.io/tools" target="_blank">Tools</a>
+                    <a target="_blank" href="https://github.com/justyeh">Github</a>
+                </div>
+                <div class="search">
+                    <form action="/search" methods='get'>
+                        <input class="ani" autocomplete="off" type="search" name="keyword" value="">
+                        <button class="ani" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="container page">
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(/blogs/wangeditor/poster.jpg);"></div> <div class="title">轻量级web富文本编辑器wangEditor介绍</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-06-24</p> <i class="fa fa-tag"></i> <div><a href="/tag/23">模块化</a><a href="/tag/25">css</a></div></div> <div class="content"><div class="md"><blockquote>
+<p>今天发现了一个不错的富文本编辑器，记录下来，同时分享给大家。</p>
+</blockquote>
+<p><a href="/blogs/wangeditor/demo.html">在线demo</a></p>
+<h4 id="特性">特性</h4>
+<ul>
+<li>基于javascript和css开发的html富文本编辑器，开源免费。</li>
+<li>支持自定义编辑器样式。</li>
+<li>支持模块化：require.js，seajs，webpack等都有解决方案。</li>
+<li>与国产编辑器 百度ueditor 和 kindeditor 相比，它轻量、易用、UI设计精致漂亮。</li>
+<li>与国外编辑器 bootstrap-wysiwyg 和 simditor 相比，它文档易读、交流方便，更接地气。</li>
+<li>它还会根据使用者的反馈不断完善，未来将支持移动版。</li>
+</ul>
+<h4 id="文档">文档</h4>
+<p>wangEditor的文档非常详尽，直接到对应的网站查看即可。</p>
+<ul>
+<li><a href="http://www.wangeditor.com/">官网</a></li>
+<li><a href="http://www.kancloud.cn/wangfupeng/wangeditor2/113961">文档</a></li>
+<li><a href="https://github.com/wangfupeng1988/wangEditor/">github</a></li>
+</ul>
+<h4 id="demo">demo</h4>
+<p>这是一个整合requirejs的基本demo，拷贝好这些文件就可以运行了，运行效果可以参考页面的banner。</p>
+<p><strong>demo.html</strong></p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot; /&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
+&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot; /&gt;ame=&quot;renderer&quot; content=&quot;webkit&quot;&gt;
+&lt;title&gt;轻量级web富文本编辑器wangEditor介绍&lt;/title&gt;
+&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;wangEditor/css/wangEditor.css&quot;/&gt;
+&lt;style type=&quot;text/css&quot;&gt;
+*{margin: 0;padding: 0;}
+body{background: #eaebec;}
+h1{font-size: 40px;text-align: center;padding: 20px 0;}
+            .container{background: #fff;width: 900px;padding: 20px;margin: 50px auto;}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&quot;container&quot;&gt;
+&lt;h1&gt;轻量级web富文本编辑器-wangEditor&lt;/h1&gt;
+&lt;div id=&quot;editor&quot; style=&quot;height: 400px;&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;script src=&quot;//cdn.bootcss.com/require.js/2.3.2/require.min.js&quot; data-main=&quot;main.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p><strong>main.js</strong></p>
+<pre><code>require.config({
+paths:{
+&#39;jquery&#39;:&#39;http://cdn.bootcss.com/jquery/1.9.1/jquery.min&#39;,
+&#39;wangEditor&#39;: &#39;wangEditor/js/wangEditor.min&#39;,
+&#39;editorCfg&#39;:&#39;wangEditor/wangEditor.config&#39;
+}
+});
+require([&#39;wangEditor&#39;,&#39;editorCfg&#39;], function(wangEditor,editorCfg){
+    $(function(){
+        var editor = new wangEditor(&#39;editor&#39;);
+        editor.config.emotions = editorCfg.emotions
+        editor.create();
+    });
+});
+</code></pre><p><strong>wangEditor.config.js</strong></p>
+<pre><code>define(function (){
+　　　　emotions = {
+    // 支持多组表情
+    // 第一组，id叫做 &#39;default&#39; 
+    &#39;default&#39;: {
+        title: &#39;默认&#39;,  // 组名称
+        data: &#39;http://www.wangeditor.com/wangEditor/test/emotions.data&#39;  // 服务器的一个json文件url，例如官网这里配置的是 http://www.wangeditor.com/wangEditor/test/emotions.data
+    },
+    // 第二组，id叫做&#39;weibo&#39;
+    &#39;weibo&#39;: {
+        title: &#39;微博表情&#39;,  // 组名称
+        data: [  // data 还可以直接赋值为一个表情包数组
+            // 第一个表情
+            {
+                &#39;icon&#39;: &#39;http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/7a/shenshou_thumb.gif&#39;,
+                &#39;value&#39;: &#39;[草泥马]&#39;
+            },
+            // 第二个表情
+            {
+                &#39;icon&#39;: &#39;http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/60/horse2_thumb.gif&#39;,
+                &#39;value&#39;: &#39;[神马]&#39;
+            }
+            // 下面还可以继续，第三个、第四个、第N个表情。。。
+        ]
+    }
+    // 下面还可以继续，第三组、第四组、、、
+};
+　　　　return {
+　　　　　　emotions
+　　　　};
+});</code></pre></div></div></div>
+    </div>
+
+    <footer>
+        <div>
+            <p>参考网址：</p>
+            <div class="links">
+                <a target="_blank" href="https://cnodejs.org/">CNode技术社区</a>
+                <a target="_blank" href="https://cn.vuejs.org/">Vue.js官网</a>
+                <a target="_blank" href="https://zh.nuxtjs.org/">Nuxt.js官网</a>
+                <a target="_blank" href="http://www.expressjs.com.cn/">Express.js官网</a>
+            </div>
+        </div>
+        <div>
+            <p>友情链接：</p>
+            <div class="links">
+                <a target="_blank" href="http://www.lanqiao.org/">蓝桥官网</a>
+                <a target="_blank" href="http://www.javabb.cn/">秦豹的个人网站</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

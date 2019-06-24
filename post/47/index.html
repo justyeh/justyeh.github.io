@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="justyeh,justyeh@163.com" />
+    <meta name="apple-mobile-web-app-title" content="justyeh的前端博客" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#263238" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="x5-orientation" content="portrait" />
+    <meta name="theme-color" content="#263238" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <title>一道面试题（关于输出结果）</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/front.css">
+    <link rel="stylesheet" href="/static/css/yeh-md-theme.css">
+    <link rel="stylesheet" href="/static/js/highlight/ocean.min.css">
+    <script src="/static/js/highlight/highlight.min.js"></script>
+    <script src="/static/js/public.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="site">
+                <img src="/static/image/avatar.jpg" />
+                <p>JustYeh的前端博客</p>
+            </div>
+            <div class="nav">
+                <div class="menu">
+                    <a href="/">Home</a>
+                    <a href="/about" class="">About</a>
+                    <a target="_blank" href="/projects/index.html">Projects</a>
+                    <a href="http://justyeh.github.io/tools" target="_blank">Tools</a>
+                    <a target="_blank" href="https://github.com/justyeh">Github</a>
+                </div>
+                <div class="search">
+                    <form action="/search" methods='get'>
+                        <input class="ani" autocomplete="off" type="search" name="keyword" value="">
+                        <button class="ani" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="container page">
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url();"></div> <div class="title">一道面试题（关于输出结果）</div> <div class="info"><i class="fa fa-clock-o"></i> <p>1周前</p> <!----></div> <div class="content"><div class="md"><blockquote>
+<p>今天划水的时候看到一个面试题，比较有意思，记录一下。</p>
+</blockquote>
+<h3 id="题目">题目</h3>
+<pre><code>function Foo() {
+    getName = function() {
+        console.log(&quot;1&quot;);
+    };
+    return this;
+}
+Foo.getName = function() {
+    console.log(&quot;2&quot;);
+};
+
+Foo.prototype.getName = function() {
+    console.log(&quot;3&quot;);
+};
+
+var getName = function() {
+    console.log(&quot;4&quot;);
+};
+function getName() {
+    console.log(&quot;5&quot;);
+}
+Foo.getName(); //  2
+getName(); //  4
+Foo().getName(); //  1
+getName(); //  1
+new Foo.getName(); //  2
+new Foo().getName(); //  3
+new new Foo().getName(); //  3
+</code></pre><h3 id="说明">说明</h3>
+<p><strong>Foo.getName();</strong></p>
+<p>执行函数的静态方法，输出 2</p>
+<p><strong>getName();</strong></p>
+<p>重点在于两种声明函数的方法的区别</p>
+<p>解析器会先读取函数声明（ console.log(&quot;5&quot;)），并使其在执行任何代码之前可以访问，在任何地方调用都不会有问题</p>
+<p>而函数表达式（ console.log(&quot;4&quot;)）则必须等到解析器执行到它所在的代码行才会真正被执行，提前调用会报错</p>
+<p>这里输出 4</p>
+<p><strong>Foo().getName();</strong>
+执行 Foo 方法导致 window 上的（没有作用域限制，默认是 window ） getName 函数被重新定义</p>
+<p>返回的 this 的值取决于执行的位置，此时返回 window</p>
+<p>相当于执行 window.getName()，输出1</p>
+<p><strong>getName();</strong></p>
+<p>即执行 window.getName()，输出1</p>
+<p><strong>new Foo.getName();</strong></p>
+<p>和执行属性有关</p>
+<p>Foo.getName()先于new 关键字执行，相当于 new 对象的静态方法，输出 2</p>
+<p>*<em>new Foo().getName(); *</em></p>
+<p>在 js 中，对象在调用一个方法时会首先在自身里寻找是否有该方法（对象方法），若没有，则去原型链（原型方法）上去寻找，依次层层递进</p>
+<p>这里没有对象方法，执行原型方法，输出3</p>
+<p><strong>new new Foo().getName();</strong></p>
+<p>这个我自己也比较懵，网友的解释</p>
+<p>拆成两步：</p>
+<p>var foo = new Foo() =&gt; 实例化一个 Foo</p>
+<p>new foo.getName() =&gt; 把原型链上的 getName 方法当作构造函数执行</p>
+<p>执行下面这条语句就可以验证了</p>
+<p>console.log(new new Foo().getName() instanceof Foo.prototype.getName)</p>
+<h3 id="相关博文">相关博文</h3>
+<p><a href="/post/33">js的方法和属性</a></p>
+</div></div></div>
+    </div>
+
+    <footer>
+        <div>
+            <p>参考网址：</p>
+            <div class="links">
+                <a target="_blank" href="https://cnodejs.org/">CNode技术社区</a>
+                <a target="_blank" href="https://cn.vuejs.org/">Vue.js官网</a>
+                <a target="_blank" href="https://zh.nuxtjs.org/">Nuxt.js官网</a>
+                <a target="_blank" href="http://www.expressjs.com.cn/">Express.js官网</a>
+            </div>
+        </div>
+        <div>
+            <p>友情链接：</p>
+            <div class="links">
+                <a target="_blank" href="http://www.lanqiao.org/">蓝桥官网</a>
+                <a target="_blank" href="http://www.javabb.cn/">秦豹的个人网站</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

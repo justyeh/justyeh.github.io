@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="justyeh,justyeh@163.com" />
+    <meta name="apple-mobile-web-app-title" content="justyeh的前端博客" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#263238" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="x5-orientation" content="portrait" />
+    <meta name="theme-color" content="#263238" />
+    <meta name="description" content="Ghost博客的搭建" />
+    <meta name="keywords" content="Ghost博客的搭建" />
+    <title>Ghost博客在windows下的搭建过程</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/front.css">
+    <link rel="stylesheet" href="/static/css/yeh-md-theme.css">
+    <link rel="stylesheet" href="/static/js/highlight/ocean.min.css">
+    <script src="/static/js/highlight/highlight.min.js"></script>
+    <script src="/static/js/public.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="site">
+                <img src="/static/image/avatar.jpg" />
+                <p>JustYeh的前端博客</p>
+            </div>
+            <div class="nav">
+                <div class="menu">
+                    <a href="/">Home</a>
+                    <a href="/about" class="">About</a>
+                    <a target="_blank" href="/projects/index.html">Projects</a>
+                    <a href="http://justyeh.github.io/tools" target="_blank">Tools</a>
+                    <a target="_blank" href="https://github.com/justyeh">Github</a>
+                </div>
+                <div class="search">
+                    <form action="/search" methods='get'>
+                        <input class="ani" autocomplete="off" type="search" name="keyword" value="">
+                        <button class="ani" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="container page">
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(/blogs/ghost/logo.jpg);"></div> <div class="title">Ghost博客在windows下的搭建过程</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-07-10</p> <i class="fa fa-tag"></i> <div><a href="/tag/3">Ghost博客的搭建</a></div></div> <div class="content"><div class="md"><blockquote>
+<p>今晚通宵加班，干点私活，把自己的个人博客搭好了，写一下过程，大家可以参考一下！
+过程比较新手向，所以可能比较啰嗦，请大家不要介意！</p>
+</blockquote>
+<h5 id="域名">域名</h5>
+<p>万网买的不多说，<a href="https://wanwang.aliyun.com/">https://wanwang.aliyun.com/</a></p>
+<h5 id="主机">主机</h5>
+<p>vultr服务器，选了乞丐版（土豪随意），37一个月，速度还可以，顺便可以搭个VPN，美滋滋，感兴趣的可以参考这个<a href="https://item.taobao.com/item.htm?spm=a1z09.2.0.0.Hti4Lg&amp;id=522935903991&amp;_u=u117onlnf6c2">链接</a></p>
+<h5 id="关于ghost">关于Ghost</h5>
+<p>基于 Node.js 的开源博客平台，简单易用，支持MarkDown语法+在线预览，更多细节请移步<a href="http://www.ghostchina.com/">Ghost中文网</a></p>
+<h4 id="以上都是废话，干货在下面">以上都是废话，干货在下面</h4>
+<h5 id="环境">环境</h5>
+<p>由于当时在Linux上搭建VPN一直不成功，所以就转投到了Windows Server，所以以下的所有操作都是基于Windows平台下的</p>
+<h5 id="安装nodejs">安装Node.js</h5>
+<p>Ghost将Node.js v4 LTS 成为 Ghost 推荐版本，所以下载的是 <a href="https://nodejs.org/dist/v4.2.0/"> 4.2.0</a> 版本，安装很简单，直接下一步就好</p>
+<h5 id="安装ghost">安装Ghost</h5>
+<p>推荐在Ghost中文网下载<a href="http://www.ghostchina.com/download/">中文集成版本</a>，此版本已经集成好了node_modules，省却了许多麻烦</p>
+<ul>
+<li>打开node控制台，进入到ghost所在目录 <code>cd Downloads/ghost-#.#.#</code></li>
+<li>在命令行中执行 <code>npm install --production</code> 命令，这一步时最好打个梯子，有时npm会出现下载不完全的问题，各种坑</li>
+<li>当 npm 安装成功后，输入 <code>npm start</code> 启动开发模式下的 Ghost</li>
+<li>在浏览器中，访问 <code>127.0.0.1:2368</code> 即可查看最新搭建的 Ghost 博客</li>
+</ul>
+<h5 id="ghost的配置">Ghost的配置</h5>
+<p>这里面，邮件的配置比较麻烦，我也是在网上找的，我使用的是163邮箱，如果你使用的是其他产品，就需要自行搜索配置方法了，以下是我的配置文件：</p>
+<pre><code>var path = require(&#39;path&#39;),
+    config;
+config = {
+    // ### Production
+    production: {
+        url: &#39;http://justyeh.com&#39;,
+        mail: {
+            transport: &#39;SMTP&#39;,
+            options: {
+                service: &#39;Mailgun&#39;,
+                port: 25,
+                host: &#39;smtp.163.com&#39;,
+                auth: {
+                    user: &#39;justyeh@163.com&#39;, // 邮件账户
+                    pass: &#39;******&#39;  // 邮件密码
+                }
+            }
+        },
+        database: {
+            client: &#39;sqlite3&#39;,
+            connection: {
+                filename: path.join(__dirname, &#39;/content/data/ghost.db&#39;)
+            },
+            debug: false
+        },
+
+        // 配置MySQL 数据库
+        /*database: {
+            client: &#39;mysql&#39;,
+            connection: {
+                host     : &#39;host&#39;,
+                user     : &#39;user&#39;,
+                password : &#39;password&#39;,
+                database : &#39;database&#39;,
+                charset  : &#39;utf8&#39;
+            },
+            debug: false
+        },*/
+        server: {
+            host: &#39;127.0.0.1&#39;,
+            port: &#39;2368&#39;
+        },
+        //Storage.Now,we can support `qiniu`,`upyun`, `aliyun oss`, `aliyun ace-storage` and `local-file-store`
+        storage: {
+            provider: &#39;local-file-store&#39;
+        }
+    },
+
+    // ### Development **(default)**
+    development: {
+        // The url to use when providing links to the site, E.g. in RSS and email.
+        // Change this to your Ghost blog&#39;s published URL.
+        url: &#39;http://localhost:2368&#39;,
+        // #### Database
+        // Ghost supports sqlite3 (default), MySQL &amp; PostgreSQL
+        database: {
+            client: &#39;sqlite3&#39;,
+            connection: {
+                filename: path.join(__dirname, &#39;/content/data/ghost-dev.db&#39;)
+            },
+            debug: false
+        },
+        // #### Server
+        // Can be host &amp; port (default), or socket
+        server: {
+            // Host to be passed to node&#39;s `net.Server#listen()`
+            host: &#39;127.0.0.1&#39;,
+            // Port to be passed to node&#39;s `net.Server#listen()`, for iisnode set this to `process.env.PORT`
+            port: &#39;2368&#39;
+        },
+        // #### Paths
+        // Specify where your content directory lives
+        paths: {
+            contentPath: path.join(__dirname, &#39;/content/&#39;)
+        }
+    },
+
+    // **Developers only need to edit below here**
+    // ### Testing
+    // Used when developing Ghost to run tests and check the health of Ghost
+    // Uses a different port number
+    testing: {
+        url: &#39;http://127.0.0.1:2369&#39;,
+        database: {
+            client: &#39;sqlite3&#39;,
+            connection: {
+                filename: path.join(__dirname, &#39;/content/data/ghost-test.db&#39;)
+            }
+        },
+        server: {
+            host: &#39;127.0.0.1&#39;,
+            port: &#39;2369&#39;
+        },
+        logging: false
+    },
+
+    // ### Testing MySQL
+    // Used by Travis - Automated testing run through GitHub
+    &#39;testing-mysql&#39;: {
+        url: &#39;http://127.0.0.1:2369&#39;,
+        database: {
+            client: &#39;mysql&#39;,
+            connection: {
+                host: &#39;127.0.0.1&#39;,
+                user: &#39;root&#39;,
+                password: &#39;&#39;,
+                database: &#39;ghost_testing&#39;,
+                charset: &#39;utf8&#39;
+            }
+        },
+        server: {
+            host: &#39;127.0.0.1&#39;,
+            port: &#39;2369&#39;
+        },
+        logging: false
+    },
+
+    // ### Testing pg
+    // Used by Travis - Automated testing run through GitHub
+    &#39;testing-pg&#39;: {
+        url: &#39;http://127.0.0.1:2369&#39;,
+        database: {
+            client: &#39;pg&#39;,
+            connection: {
+                host: &#39;127.0.0.1&#39;,
+                user: &#39;postgres&#39;,
+                password: &#39;&#39;,
+                database: &#39;ghost_testing&#39;,
+                charset: &#39;utf8&#39;
+            }
+        },
+        server: {
+            host: &#39;127.0.0.1&#39;,
+            port: &#39;2369&#39;
+        },
+        logging: false
+    }
+};
+module.exports = config;</code></pre><h5 id="安装nginx">安装Nginx</h5>
+<p>我使用的是<a href="http://nginx.org/en/download.html">1.8.1版本</a>，解压后修改配置文件</p>
+<pre><code>events {
+    worker_connections  1024;
+}
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+    sendfile        on;
+    keepalive_timeout  65;
+    server {
+listen 80;
+server_name justyeh.com www.justyeh.com;
+location / {
+proxy_set_header   X-Real-IP $remote_addr;
+proxy_set_header   Host      $http_host;
+proxy_pass         http://127.0.0.1:2368;
+}
+}
+}</code></pre><p>稍微解释一下，<code>listen</code> 代表监听80端口，<code>server_name</code> 是你的网站，<code>proxy_pass</code> 代表转发，将 <code>justyeh.com</code> 的请求转发到 <code>http://127.0.0.1:2368</code></p>
+<p>之后右键 nginx.exe 以管理员身份运行nginx程序便可启动服务器</p>
+<h5 id="解析">解析</h5>
+<p>这个没什么好说的，百度一下应该就有了，在阿里云解析上也有教程！
+如果前面的步骤都没有出问题，解析完成之后就可以通过你的域名访问你的博客网站了。至此，大功告成！</p>
+</div></div></div>
+    </div>
+
+    <footer>
+        <div>
+            <p>参考网址：</p>
+            <div class="links">
+                <a target="_blank" href="https://cnodejs.org/">CNode技术社区</a>
+                <a target="_blank" href="https://cn.vuejs.org/">Vue.js官网</a>
+                <a target="_blank" href="https://zh.nuxtjs.org/">Nuxt.js官网</a>
+                <a target="_blank" href="http://www.expressjs.com.cn/">Express.js官网</a>
+            </div>
+        </div>
+        <div>
+            <p>友情链接：</p>
+            <div class="links">
+                <a target="_blank" href="http://www.lanqiao.org/">蓝桥官网</a>
+                <a target="_blank" href="http://www.javabb.cn/">秦豹的个人网站</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

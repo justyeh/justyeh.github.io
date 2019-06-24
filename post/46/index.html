@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="justyeh,justyeh@163.com" />
+    <meta name="apple-mobile-web-app-title" content="justyeh的前端博客" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#263238" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="x5-orientation" content="portrait" />
+    <meta name="theme-color" content="#263238" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <title>使用Cloudflare隐藏网站真实IP</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/front.css">
+    <link rel="stylesheet" href="/static/css/yeh-md-theme.css">
+    <link rel="stylesheet" href="/static/js/highlight/ocean.min.css">
+    <script src="/static/js/highlight/highlight.min.js"></script>
+    <script src="/static/js/public.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="site">
+                <img src="/static/image/avatar.jpg" />
+                <p>JustYeh的前端博客</p>
+            </div>
+            <div class="nav">
+                <div class="menu">
+                    <a href="/">Home</a>
+                    <a href="/about" class="">About</a>
+                    <a target="_blank" href="/projects/index.html">Projects</a>
+                    <a href="http://justyeh.github.io/tools" target="_blank">Tools</a>
+                    <a target="_blank" href="https://github.com/justyeh">Github</a>
+                </div>
+                <div class="search">
+                    <form action="/search" methods='get'>
+                        <input class="ani" autocomplete="off" type="search" name="keyword" value="">
+                        <button class="ani" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="container page">
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url();"></div> <div class="title">使用Cloudflare隐藏网站真实IP</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2周前</p> <!----></div> <div class="content"><div class="md"><blockquote>
+<p>果真是6月运维节，这几天大量网友反映IP被封，我的搬瓦工也不幸中招。在v2ex上了解到可以通过使用Cloudflare来解决此问题，记录一下过程。</p>
+</blockquote>
+<h3 id="关于cloudflare">关于cloudflare</h3>
+<p>cloudflare是一家国外的 CDN 加速服务商，提供免费和付费的加速和网站保护服务，国内用户使用此服务后有可能网站加载变得更慢，但至少目前，cloudflare是一个有效并且免费的解决方案。</p>
+<h3 id="教程">教程</h3>
+<p><strong>注册</strong></p>
+<p>浏览器输入cloudflare.com，输入邮箱、密码，点击“Create Account”</p>
+<p><img src="/blogs/cloudflare/1-register.png" alt="1-register"></p>
+<p><strong>添加站点</strong></p>
+<p>注册成功后会提示你输入网址，输入后点击“Add site”</p>
+<p><img src="/blogs/cloudflare/2-add_site.png" alt="2-add_site"></p>
+<p>添加成功会提示你他将查询网站的DNS记录，点击“Next”即可</p>
+<p><img src="/blogs/cloudflare/3-query_dns-recoreds.png" alt="3-query_dns-recoreds"></p>
+<p><strong>选择套餐</strong></p>
+<p>这里我选择的是免费的，当然你愿意付费也是可以的，之后点击“Confirm plan”</p>
+<p><img src="/blogs/cloudflare/4-choose-plan.png" alt="4-choose-plan"></p>
+<p>之后会弹出确认提示框，点击“Confirm”即可</p>
+<p><img src="/blogs/cloudflare/5-confirm_plan.png" alt="5-confirm_plan"></p>
+<p><strong>域名解析</strong></p>
+<p>你会发现cloudflare已经自动添加了部分域名解析，当然你也可以自己添加、修改和删除解析记录。</p>
+<p>注意图中的Status图标，灰色代表不适用cloudflare的CDN服务，黄色代表使用。像我这样IP被封的，都选择使用就行。</p>
+<p>配置好之后点击“Continue”</p>
+<p><img src="/blogs/cloudflare/6-dns_config.png" alt="6-dns_config"></p>
+<p><strong>修改域名DNS</strong></p>
+<p>解析配置好之后会提示你修改域名DNS</p>
+<p><img src="/blogs/cloudflare/7-chage_nameserves.png" alt="7-chage_nameserves"></p>
+<p>我的域名是万网买的，打开阿里云控制台，选择域名面板并点击你的域名，这时会显示你的域名基本信息</p>
+<p>点击修改DNS</p>
+<p><img src="/blogs/cloudflare/8-update_dns_1.png" alt="8-update_dns1"></p>
+<p>将cloudflare中的提供的DNS填入到输入框中，点击“确认”</p>
+<p><img src="/blogs/cloudflare/8-update_dns_2.png" alt="8-update_dns2"></p>
+<p><strong>完成</strong></p>
+<p>安装上面的步骤一步步来的话，应该是不会出问题的。最后点击页面左上角你添加的网站，如果出现下面的页面，即代表配置成功。之后（DNS解析需要时间，我这边几分钟就生效了），被封的网站应该就能访问了。</p>
+<p><img src="/blogs/cloudflare/9-success.png" alt="9-success"></p>
+</div></div></div>
+    </div>
+
+    <footer>
+        <div>
+            <p>参考网址：</p>
+            <div class="links">
+                <a target="_blank" href="https://cnodejs.org/">CNode技术社区</a>
+                <a target="_blank" href="https://cn.vuejs.org/">Vue.js官网</a>
+                <a target="_blank" href="https://zh.nuxtjs.org/">Nuxt.js官网</a>
+                <a target="_blank" href="http://www.expressjs.com.cn/">Express.js官网</a>
+            </div>
+        </div>
+        <div>
+            <p>友情链接：</p>
+            <div class="links">
+                <a target="_blank" href="http://www.lanqiao.org/">蓝桥官网</a>
+                <a target="_blank" href="http://www.javabb.cn/">秦豹的个人网站</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

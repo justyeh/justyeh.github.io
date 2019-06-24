@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="justyeh,justyeh@163.com" />
+    <meta name="apple-mobile-web-app-title" content="justyeh的前端博客" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#263238" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="x5-orientation" content="portrait" />
+    <meta name="theme-color" content="#263238" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <title>Vue项目history模式下微信分享总结</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/front.css">
+    <link rel="stylesheet" href="/static/css/yeh-md-theme.css">
+    <link rel="stylesheet" href="/static/js/highlight/ocean.min.css">
+    <script src="/static/js/highlight/highlight.min.js"></script>
+    <script src="/static/js/public.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="site">
+                <img src="/static/image/avatar.jpg" />
+                <p>JustYeh的前端博客</p>
+            </div>
+            <div class="nav">
+                <div class="menu">
+                    <a href="/">Home</a>
+                    <a href="/about" class="">About</a>
+                    <a target="_blank" href="/projects/index.html">Projects</a>
+                    <a href="http://justyeh.github.io/tools" target="_blank">Tools</a>
+                    <a target="_blank" href="https://github.com/justyeh">Github</a>
+                </div>
+                <div class="search">
+                    <form action="/search" methods='get'>
+                        <input class="ani" autocomplete="off" type="search" name="keyword" value="">
+                        <button class="ani" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="container page">
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(/1555490710472-poster.png);"></div> <div class="title">Vue项目history模式下微信分享总结</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2个月前</p> <!----></div> <div class="content"><div class="md"><blockquote>
+<p>每回遇到微信分享都是一个坑，目前的商城项目使用Vue开发，采用history的路由模式，配置微信分享又遇到了很多问题，最后终于解决了，现将解决的过程分享一下。</p>
+</blockquote>
+<h3 id="技术要点">技术要点</h3>
+<p>Vue，history模式</p>
+<h3 id="常见问题及说明">常见问题及说明</h3>
+<p><strong>debug模式下报false</strong></p>
+<p>这个没得说，就是调用<code>wx.config</code>方法的参数错误造成的，请确认以下事项：</p>
+<ol>
+<li>是否成功绑定了域名（域名校验文件要能被访问到）</li>
+<li>使用最新的js-sdk文件，因为微信会改部分api</li>
+<li>config方法的参数是否传正确了（拼写错误、大小写...）</li>
+<li>需要使用的方法是否写在了<code>jsApiList</code>中</li>
+<li>获取签名的url需要<code>decodeURIComponent</code></li>
+<li>后台的生成签名的加密方法需要对照官方文档</li>
+</ol>
+<p><strong>debug返回ok，分享不成功</strong></p>
+<ol>
+<li>确保代码拼写正确</li>
+<li>分享链接域名或路径必须与当前页面对应的公众号JS安全域名一致</li>
+<li>接口调用需要放在<code>wx.ready</code>方法中</li>
+</ol>
+<h3 id="单页项目（spa）中的一些要点">单页项目（SPA）中的一些要点</h3>
+<blockquote>
+<p>所有需要使用JS-SDK的页面必须先注入配置信息，否则将无法调用（同一个url仅需调用一次，对于变化url的SPA的web app可在每次url变化时进行调用,目前Android微信客户端不支持pushState的H5新特性，所以使用pushState来实现web app的页面会导致签名失败，此问题会在Android6.2中修复）。</p>
+</blockquote>
+<p>上面那段话摘自<a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=mp1421141115">官方文档</a></p>
+<p>开发者需要注意的事项：</p>
+<ol>
+<li>android和ios需要分开处理</li>
+<li>需要在页面url变化的时候重新调用<code>wx.config</code>方法，android获取签名的url就传<code>window.location.href</code></li>
+<li>Vue项目在切换页面时，IOS中浏览器的url并不会改变，依旧是第一次进入页面的地址，所以IOS获取签名的url需要传第一次进入的页面url</li>
+</ol>
+<h3 id="code">Code</h3>
+<p><strong>router/index.js</strong></p>
+<pre><code>......
+import { wechatAuth } from &quot;@/common/wechatConfig.js&quot;;
+......
+
+const router = new Router({
+    mode: &quot;history&quot;,
+    base: process.env.BASE_URL,
+    routes: [
+        {
+            path: &quot;/&quot;,
+            name: &quot;home&quot;,
+            meta: {
+                title: &quot;首页&quot;,
+                showTabbar: true,
+                allowShare: true
+            },
+        },
+        {
+            path: &quot;/cart&quot;,
+            name: &quot;cart&quot;,
+            meta: {
+                title: &quot;购物车&quot;,
+                showTabbar: true
+            },
+            component: () =&gt; import(&quot;./views/cart/index.vue&quot;)
+        }
+        ......
+    ]
+});
+
+
+router.afterEach((to, from) =&gt; {
+    let authUrl = `${window.location.origin}${to.fullPath}`;
+    let allowShare = !!to.meta.allowShare;
+
+    if (!!window.__wxjs_is_wkwebview) {// IOS
+        if (window.entryUrl == &quot;&quot; || window.entryUrl == undefined) {
+            window.entryUrl = authUrl; // 将后面的参数去除
+        }
+        wechatAuth(authUrl, &quot;ios&quot;, allowShare);
+    } else {
+        // 安卓
+        setTimeout(function () {
+            wechatAuth(authUrl, &quot;android&quot;, allowShare);
+        }, 500);
+    }
+});</code></pre><p>代码要点：</p>
+<ol>
+<li>meta中的allowShare用于判断页面是否可分享</li>
+<li>window.__wxjs_is_wkwebview可用来判断是否是微信IOS浏览器</li>
+<li>entryUrl是项目第一次进入的页面的地址，将其缓存在window对象上</li>
+<li>为什么安卓的时候要增加一个延时器，因为安卓会存在一些情况，就是即便签名成功，但是还是会唤不起功能，这个貌似是一个比较稳妥的解决办法</li>
+</ol>
+<p><strong>wechatConfig.js</strong></p>
+<pre><code>import http from &quot;../api/http&quot;;
+import store from &quot;../store/store&quot;;
+
+export const wechatAuth = async (authUrl, device, allowShare) =&gt; {
+    let shareConfig = {
+        title: &quot;xx一站式服务平台&quot;,
+        desc: &quot;xxxx&quot;,
+        link: allowShare ? authUrl : window.location.origin,
+        imgUrl: window.location.origin + &quot;/share.png&quot;
+    };
+
+    let authRes = await http.get(&quot;/pfront/wxauth/jsconfig&quot;, {
+        params: {
+            url: decodeURIComponent(device == &quot;ios&quot; ? window.entryUrl : authUrl)
+        }
+    });
+
+    if (authRes &amp;&amp; authRes.code == 101) {
+        wx.config({
+            //debug: true,
+            appId: authRes.data.appId,
+            timestamp: authRes.data.timestamp,
+            nonceStr: authRes.data.nonceStr,
+            signature: authRes.data.signature,
+            jsApiList: [&quot;updateAppMessageShareData&quot;, &quot;updateTimelineShareData&quot;, &quot;onMenuShareAppMessage&quot;, &quot;onMenuShareTimeline&quot;]
+        });
+
+        wx.ready(() =&gt; {
+            wx.updateAppMessageShareData({
+                title: shareConfig.title,
+                desc: shareConfig.desc,
+                link: shareConfig.link,
+                imgUrl: shareConfig.imgUrl,
+                success: function () {//设置成功
+                    //shareSuccessCallback();
+                }
+            });
+            wx.updateTimelineShareData({
+                title: shareConfig.title,
+                link: shareConfig.link,
+                imgUrl: shareConfig.imgUrl,
+                success: function () {//设置成功
+                    //shareSuccessCallback();
+                }
+            });
+            wx.onMenuShareTimeline({
+                title: shareConfig.title,
+                link: shareConfig.link,
+                imgUrl: shareConfig.imgUrl,
+                success: function () {
+                    shareSuccessCallback();
+                }
+            });
+            wx.onMenuShareAppMessage({
+                title: shareConfig.title,
+                desc: shareConfig.desc,
+                link: shareConfig.link,
+                imgUrl: shareConfig.imgUrl,
+                success: function () {
+                    shareSuccessCallback();
+                }
+            });
+        });
+    }
+};
+
+function shareSuccessCallback() {
+    if (!store.state.user.uid) {
+        return false;
+    }
+    store.state.cs.stream({
+        eid: &quot;share&quot;,
+        tpc: &quot;all&quot;,
+        data: {
+            uid: store.state.user.uid,
+            truename: store.state.user.truename || &quot;&quot;
+        }
+    });
+    http.get(&quot;/pfront/member/share_score&quot;, {
+        params: {
+            uid: store.state.user.uid
+        }
+    });
+}
+</code></pre><h3 id="总结">总结</h3>
+<p>原先计划不能分享的页面就使用hideMenuItems方法隐藏掉相关按钮，在ios下试了一下，有些bug：显示按钮的页面切换的影藏按钮的页面，分享按钮有时依然存在，刷新就没问题，估计又是一个深坑，没精力在折腾了，就改为隐私页面分享到首页，公共页面分享原地址，如果有什么好的解决办法，请联系我！</p>
+<p>一开始我有参考sf上的一篇博客<a href="https://segmentfault.com/a/1190000014455713">https://segmentfault.com/a/1190000014455713</a>，按照上面的代码，android手机都能成功，但是IOS有一个奇怪的问题，就是分享间歇性的失效，同一个页面，刚刚调起分享成功，再试一次就失败（没有图标、title，只能跳转到首页），经过“不断”努力的尝试，应该是解决了问题，说一下过程：</p>
+<ol>
+<li>一开始以为是异步唤起没成功的问题，就和android一样给IOS调用wechatAuth方法也加了个定时器，测了一遍没效果，放弃</li>
+</ol>
+<ol start="2">
+<li>起始js-sdk是通过npm安装的，版本上带了个test，有点不放心，改为直接使用script标签引用官方的版本</li>
+</ol>
+<ol start="3">
+<li>重新读了一遍文档，发现onMenuShareTimeline等方法即将废弃，就把jsApiList改为<code>jsApiList:[&#39;updateAppMessageShareData&#39;,&#39;updateTimelineShareData&#39;]</code>，改后就变成了IOS可以成功，android分享失败</li>
+</ol>
+<ol start="4">
+<li>百度updateAppMessageShareData安卓失败原因，参考这个链接<a href="https://www.jianshu.com/p/1b6e04c2944a">https://www.jianshu.com/p/1b6e04c2944a</a>，把老的api也加到jsApiList中，仔细、反复试了试两种设备都ok，好像是成功了，说&quot;好像&quot;是因为心里没底啊，各种“魔法”代码！</li>
+</ol>
+<p>最后，在这里希望腾讯官方能不能走点心，更新文档及时点，demo能不能提供完整点....</p>
+<p><strong>参考链接</strong></p>
+<p><a href="https://segmentfault.com/a/1190000014455713">https://segmentfault.com/a/1190000014455713</a></p>
+<p><a href="https://www.jianshu.com/p/1b6e04c2944a">https://www.jianshu.com/p/1b6e04c2944a</a></p>
+<p><a href="https://segmentfault.com/a/1190000012339148">https://segmentfault.com/a/1190000012339148</a></p>
+<p><a href="https://github.com/vuejs/vue-router/issues/481">https://github.com/vuejs/vue-router/issues/481</a></p>
+</div></div></div>
+    </div>
+
+    <footer>
+        <div>
+            <p>参考网址：</p>
+            <div class="links">
+                <a target="_blank" href="https://cnodejs.org/">CNode技术社区</a>
+                <a target="_blank" href="https://cn.vuejs.org/">Vue.js官网</a>
+                <a target="_blank" href="https://zh.nuxtjs.org/">Nuxt.js官网</a>
+                <a target="_blank" href="http://www.expressjs.com.cn/">Express.js官网</a>
+            </div>
+        </div>
+        <div>
+            <p>友情链接：</p>
+            <div class="links">
+                <a target="_blank" href="http://www.lanqiao.org/">蓝桥官网</a>
+                <a target="_blank" href="http://www.javabb.cn/">秦豹的个人网站</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

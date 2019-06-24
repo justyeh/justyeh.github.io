@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="justyeh,justyeh@163.com" />
+    <meta name="apple-mobile-web-app-title" content="justyeh的前端博客" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#263238" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="x5-orientation" content="portrait" />
+    <meta name="theme-color" content="#263238" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <title>ajax回退解决方案</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/front.css">
+    <link rel="stylesheet" href="/static/css/yeh-md-theme.css">
+    <link rel="stylesheet" href="/static/js/highlight/ocean.min.css">
+    <script src="/static/js/highlight/highlight.min.js"></script>
+    <script src="/static/js/public.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="site">
+                <img src="/static/image/avatar.jpg" />
+                <p>JustYeh的前端博客</p>
+            </div>
+            <div class="nav">
+                <div class="menu">
+                    <a href="/">Home</a>
+                    <a href="/about" class="">About</a>
+                    <a target="_blank" href="/projects/index.html">Projects</a>
+                    <a href="http://justyeh.github.io/tools" target="_blank">Tools</a>
+                    <a target="_blank" href="https://github.com/justyeh">Github</a>
+                </div>
+                <div class="search">
+                    <form action="/search" methods='get'>
+                        <input class="ani" autocomplete="off" type="search" name="keyword" value="">
+                        <button class="ani" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="container page">
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url();"></div> <div class="title">ajax回退解决方案</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-06-24</p> <!----></div> <div class="content"><div class="md"><p><a href="http://www.cnblogs.com/snandy/archive/2011/09/21/2181816.html">http://www.cnblogs.com/snandy/archive/2011/09/21/2181816.html</a></p>
+<blockquote>
+<p>我目前做了一个新闻列表页。  滚动到底部时，利用ajax加载分页更多内容进来。 </p>
+</blockquote>
+<p>但我现在碰到一个问题， 假如点击一条新闻，跳到新闻详细页之后，再返回到列表页，之前列表页ajax加载的分页内容没有了。</p>
+<p>1.新窗口打开</p>
+<p>2.使用iframe，通过document.write产生历史</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;/&gt;
+    &lt;title&gt;0&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;input type=&quot;button&quot; value=&quot;加1&quot; onclick=&quot;add()&quot; /&gt;
+    &lt;div id=&quot;info&quot; style=&quot;border:red 1px solid;width:200px;padding:10px;margin:5px;&quot;&gt;0&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+&lt;script src=&quot;history-0.1.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+    var info = document.getElementById(&#39;info&#39;);
+    var i = 1;
+    function add() {
+        info.innerHTML = i;
+        document.title = i;
+        var data = {
+            param : i,
+            func : func
+        };
+        History.push(data);
+        i++;
+    }
+
+    History.push({param:0, func: func});
+
+    function func(i) {
+        info.innerHTML = i;
+        document.title = i;
+    }
+&lt;/script&gt;</code></pre><p>点击按钮后更新页面DOM（模拟ajax提交），会发现浏览器后退按钮可用了。点击后退，可返回到前一个状态。</p>
+<p>这种方式缺点是只支持IE和Firefox。</p>
+<p>3.使用iframe，通过修改iframe.src产生历史</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;title&gt;0&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;input type=&quot;button&quot; value=&quot;加1&quot; onclick=&quot;add()&quot; /&gt;
+    &lt;div id=&quot;info&quot; style=&quot;border:red 1px solid;width:200px;padding:10px;margin:5px;&quot;&gt;0&lt;/div&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
+&lt;script src=&quot;history-0.2.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+    var info = document.getElementById(&#39;info&#39;);
+    var i = 1;
+    function add() {
+        info.innerHTML = i;
+        document.title = i;
+        var data = {
+            param : i,
+            func : func
+        };
+        History.push(data);
+        i++;
+    }
+
+    History.push({param:0, func: func});
+
+    function func(i) {
+        info.innerHTML = i;
+        document.title = i;
+    }
+&lt;/script&gt;</code></pre><p>较上一篇多了个blank.html，是一个空html架子，没有JS逻辑代码，如下</p>
+<pre><code>&lt;!DOCTYPE HTML&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;blank.html&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre><p>每次ajax操作会往iframe.src的问号后附加一个数字以记录历史。点击后退按钮，iframe的onload事件中获取iframe的url，根据问号后的数字去取记录。</p>
+<p>所有浏览器均支持该方式。缺点是如果主页面中存在其它iframe，且修改了其src。历史管理会混乱。</p>
+<p>4.使用iframe，通过修改iframe.src产生历史，回调写在iframe对应的html页面中</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;title&gt;0&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;input type=&quot;button&quot; value=&quot;加1&quot; onclick=&quot;add()&quot; /&gt;
+    &lt;div id=&quot;info&quot; style=&quot;border:red 1px solid;width:200px;padding:10px;&quot;&gt;0&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+&lt;script src=&quot;history-0.3.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+    var info = document.getElementById(&#39;info&#39;);
+    var i = 1;
+    function add() {
+        var data = {
+            param : i,
+            func : func
+        };
+        History.push(data);
+        i++;
+    }
+
+    History.push({param:0, func: func});
+
+    function func(i) {
+        info.innerHTML = i;
+        document.title = i;
+    }
+&lt;/script&gt;</code></pre><p>与方案3相同也是使用iframe.src来产生历史，也需要一个单独的html页面（iframe）。不同的是回调逻辑不是写在iframe.onload中，而直接写在html页面中（上一篇则是空的html架子）。blank.html如下</p>
+<pre><code>&lt;!DOCTYPE HTML&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;blank.html&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;script&gt;
+        var url= location.href;
+        if(url.indexOf(&#39;?&#39;)&gt;-1) {
+            var idx = url.substr(url.indexOf(&#39;?&#39;)+1);
+            parent.History.get(idx);
+        }
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre><p>和方案3一样所有浏览器均支持。</p>
+<p>5.通过修改location.hash产生历史，hashchange事件处理后退</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;title&gt;0&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;input type=&quot;button&quot; value=&quot;加1&quot; onclick=&quot;add()&quot; /&gt;
+    &lt;div id=&quot;info&quot; style=&quot;border:red 1px solid;width:200px;padding:10px;&quot;&gt;0&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+&lt;script src=&quot;history-0.4.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+    var info = document.getElementById(&#39;info&#39;);
+    var i = 1;
+    function add() {
+        var data = {
+            param : i,
+            func : func
+        };
+        History.push(data);
+        i++;
+    }
+
+    History.push({param:0, func: func});
+
+    function func(i) {
+        info.innerHTML = i;
+        document.title = i;
+    }
+&lt;/script&gt;</code></pre><p>每次ajax操作去改变location.hash的值，每次修改后地址栏均会有所体现。在window.onhashchange中监听该事件。通过hash的值取对应的历史。</p>
+<p>较iframe的好处是可以复制地址栏的url直接进入该历史记录，缺点是IE6/7不支持。</p>
+<p>6.使用history.pushState产生历史，popstate事件处理后退</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;title&gt;0&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;input type=&quot;button&quot; value=&quot;加1&quot; onclick=&quot;add()&quot; /&gt;
+    &lt;div id=&quot;info&quot; style=&quot;border:red 1px solid;width:200px;padding:10px;&quot;&gt;0&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+&lt;script src=&quot;history-0.5.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+    var info = document.getElementById(&#39;info&#39;);
+    var i = 1;
+    function add() {
+        var data = {
+            param : i,
+            func : func
+        };
+        info.innerHTML = i;
+        document.title = i;
+        History.push(data);
+        i++;
+    }
+
+    function func(i) {
+        info.innerHTML = i;
+        document.title = i;
+    }
+&lt;/script&gt;</code></pre><p>pushState和popstate是HTML5为history对象新增的方法和事件。虽然可以改变地址栏，但却不能复制地址栏的url直接进入该历史记录。该系列API直到IE10预览版尚不支持，Firefox/Safari/Chrome/Opera的最新版本均支持(IE10已经支持)。</p>
+<p>开发中应根据需求组合以上形式以兼容所有浏览器，如新浪微博就组合使用了方案一，四，五(<a href="http://js.t.sinajs.cn/t4/home/js/base.js">base.js</a>)。如果项目中使用了一些开源库如jQuery，mootools等时强烈推荐使用<a href="https://github.com/balupton/history.js">histroy.js</a> 。古老的dhtmlHistory.js和RSH已经很久没更新了。</p>
+</div></div></div>
+    </div>
+
+    <footer>
+        <div>
+            <p>参考网址：</p>
+            <div class="links">
+                <a target="_blank" href="https://cnodejs.org/">CNode技术社区</a>
+                <a target="_blank" href="https://cn.vuejs.org/">Vue.js官网</a>
+                <a target="_blank" href="https://zh.nuxtjs.org/">Nuxt.js官网</a>
+                <a target="_blank" href="http://www.expressjs.com.cn/">Express.js官网</a>
+            </div>
+        </div>
+        <div>
+            <p>友情链接：</p>
+            <div class="links">
+                <a target="_blank" href="http://www.lanqiao.org/">蓝桥官网</a>
+                <a target="_blank" href="http://www.javabb.cn/">秦豹的个人网站</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
