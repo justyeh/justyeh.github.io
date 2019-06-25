@@ -35,14 +35,13 @@
             <div class="nav">
                 <div class="menu">
                     <a href="/">Home</a>
-                    <a href="/about" class="">About</a>
-                    <a target="_blank" href="/projects/index.html">Projects</a>
-                    <a href="http://justyeh.github.io/tools" target="_blank">Tools</a>
+                    <a href="/projects/history/index.html">Projects</a>
+                    <a href="/projects/tools">Tools</a>
                     <a target="_blank" href="https://github.com/justyeh">Github</a>
                 </div>
                 <div class="search">
-                    <form action="/search" methods='get'>
-                        <input class="ani" autocomplete="off" type="search" name="keyword" value="">
+                    <form action="https://www.google.com" id="search" methods='get' target="_blank">
+                        <input class="ani" autocomplete="off" type="search" name="q" value="">
                         <button class="ani" type="submit">
                             <i class="fa fa-search"></i>
                         </button>
@@ -54,10 +53,10 @@
 
 
     <div class="container page">
-        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(/blogs/kxbdmarquee/poster.jpg);"></div> <div class="title">无缝滚动插件kxbdMarquee.js</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-06-24</p> <i class="fa fa-tag"></i> <div><a href="/tag/20">isux</a></div></div> <div class="content"><div class="md"><blockquote>
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(./image/poster.jpg);"></div> <div class="title">无缝滚动插件kxbdMarquee.js</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-06-24</p> <i class="fa fa-tag"></i> <div><a href="/tag/20">isux</a></div></div> <div class="content"><div class="md"><blockquote>
 <p><code>&lt;marquee&gt;</code> 曾是 IE 下独有的一个走马灯效果的标签，其他浏览器并不兼容，于是出现了使用 JavaScript 来模拟该效果的插件。可以运用于新闻内容的滚动效果。<a href="http://www.kxbd.com/?p=281">官网</a></p>
 </blockquote>
-<p><a href="/blogs/kxbdmarquee/demo.html">在线demo</a></p>
+<p><a href="./demo/index.html">在线demo</a></p>
 <h4 id="使用方法">使用方法</h4>
 <p><strong>载入 JavaScript 文件</strong></p>
 <pre><code>&lt;script src=&quot;http://libs.baidu.com/jquery/2.0.0/jquery.min.js&quot;&gt;&lt;/script&gt;
@@ -77,45 +76,41 @@
 &lt;/div&gt;</code></pre><p><strong>JavaScript 调用方式</strong></p>
 <pre><code>$(&#39;#element_id&#39;).kxbdMarquee();
 $(&#39;#element_id&#39;).kxbdMarquee({...});</code></pre><h4 id="参数说明">参数说明</h4>
-<p>&lt;table&gt;
-    &lt;thead&gt;
-        &lt;tr&gt;
-          &lt;th width=&quot;100&quot;&gt;名称&lt;/th&gt;
-          &lt;th width=&quot;100&quot;&gt;默认值&lt;/th&gt;
-          &lt;th&gt;说明&lt;/th&gt;
-        &lt;/tr&gt;
-    &lt;/thead&gt;
-    &lt;tbody&gt;
-    &lt;tr&gt;
-        &lt;td&gt;direction&lt;/td&gt;
-        &lt;td&gt;&quot;left&quot;&lt;/td&gt;
-        &lt;td&gt;滚动方向。可设置为：&quot;left&quot;, &quot;right&quot;, &quot;up&quot;, &quot;down&quot;&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-        &lt;td&gt;isEqual&lt;/td&gt;
-        &lt;td&gt;true&lt;/td&gt;
-        &lt;td&gt;所有滚动的元素长宽是否相等。可设置为：true, false&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-        &lt;td&gt;loop&lt;/td&gt;
-        &lt;td&gt;0&lt;/td&gt;
-        &lt;td&gt;循环滚动次数，0 表示无限循环&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-        &lt;td&gt;scrollAmount&lt;/td&gt;
-        &lt;td&gt;1&lt;/td&gt;
-        &lt;td&gt;步长(px)&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-        &lt;td&gt;scrollDelay&lt;/td&gt;
-        &lt;td&gt;20&lt;/td&gt;
-        &lt;td&gt;时长(ms)&lt;/td&gt;
-      &lt;/tr&gt;
-    &lt;/tbody&gt;
-&lt;/table&gt;
-#### DEMO
-
-</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>direction</td>
+<td>&quot;left&quot;</td>
+<td>滚动方向。可设置为：&quot;left&quot;, &quot;right&quot;, &quot;up&quot;, &quot;down&quot;</td>
+</tr>
+<tr>
+<td>isEqual</td>
+<td>true</td>
+<td>所有滚动的元素长宽是否相等。可设置为：true, false</td>
+</tr>
+<tr>
+<td>loop</td>
+<td>0</td>
+<td>循环滚动次数，0 表示无限循环</td>
+</tr>
+<tr>
+<td>scrollAmount</td>
+<td>1</td>
+<td>步长(px)</td>
+</tr>
+<tr>
+<td>scrollDelay</td>
+<td>20</td>
+<td>时长(ms)</td>
+</tr>
+</tbody></table>
+<h4 id="demo">DEMO</h4>
 <p>效果图见页面横幅banner,下面是代码:</p>
 <pre><code>&lt;!DOCTYPE html&gt;
 &lt;html&gt;

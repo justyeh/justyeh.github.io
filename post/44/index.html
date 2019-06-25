@@ -35,14 +35,13 @@
             <div class="nav">
                 <div class="menu">
                     <a href="/">Home</a>
-                    <a href="/about" class="">About</a>
-                    <a target="_blank" href="/projects/index.html">Projects</a>
-                    <a href="http://justyeh.github.io/tools" target="_blank">Tools</a>
+                    <a href="/projects/history/index.html">Projects</a>
+                    <a href="/projects/tools">Tools</a>
                     <a target="_blank" href="https://github.com/justyeh">Github</a>
                 </div>
                 <div class="search">
-                    <form action="/search" methods='get'>
-                        <input class="ani" autocomplete="off" type="search" name="keyword" value="">
+                    <form action="https://www.google.com" id="search" methods='get' target="_blank">
+                        <input class="ani" autocomplete="off" type="search" name="q" value="">
                         <button class="ani" type="submit">
                             <i class="fa fa-search"></i>
                         </button>
@@ -54,7 +53,7 @@
 
 
     <div class="container page">
-        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url();"></div> <div class="title">前端小脚本</div> <div class="info"><i class="fa fa-clock-o"></i> <p>1个月前</p> <!----></div> <div class="content"><div class="md"><h3 id="批量删除微博">批量删除微博</h3>
+        <div data-server-rendered="true" class="post-detail-page"><!----> <div class="title">前端小脚本</div> <div class="info"><i class="fa fa-clock-o"></i> <p>1个月前</p> <!----></div> <div class="content"><div class="md"><h3 id="批量删除微博">批量删除微博</h3>
 <pre><code class="language-js">document
     .querySelectorAll(&quot;.WB_feed.WB_feed_v3.WB_feed_v4 &gt;div[mid]&quot;)
     .forEach((nodeItem, index) =&gt; {

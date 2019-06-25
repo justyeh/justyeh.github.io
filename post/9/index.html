@@ -35,14 +35,13 @@
             <div class="nav">
                 <div class="menu">
                     <a href="/">Home</a>
-                    <a href="/about" class="">About</a>
-                    <a target="_blank" href="/projects/index.html">Projects</a>
-                    <a href="http://justyeh.github.io/tools" target="_blank">Tools</a>
+                    <a href="/projects/history/index.html">Projects</a>
+                    <a href="/projects/tools">Tools</a>
                     <a target="_blank" href="https://github.com/justyeh">Github</a>
                 </div>
                 <div class="search">
-                    <form action="/search" methods='get'>
-                        <input class="ani" autocomplete="off" type="search" name="keyword" value="">
+                    <form action="https://www.google.com" id="search" methods='get' target="_blank">
+                        <input class="ani" autocomplete="off" type="search" name="q" value="">
                         <button class="ani" type="submit">
                             <i class="fa fa-search"></i>
                         </button>
@@ -54,74 +53,74 @@
 
 
     <div class="container page">
-        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(/blogs/flex-layout/flexflex-layout-logo.jpg);"></div> <div class="title">flex layou使用教程</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-06-24</p> <i class="fa fa-tag"></i> <div><a href="/tag/9">flex</a><a href="/tag/37">爬虫</a></div></div> <div class="content"><div class="md"><blockquote>
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(./image/poster.jpg);"></div> <div class="title">flex layou使用教程</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-06-24</p> <i class="fa fa-tag"></i> <div><a href="/tag/9">flex</a><a href="/tag/37">爬虫</a></div></div> <div class="content"><div class="md"><blockquote>
 <p>最近在看微信小程序的文档，里面有使用flex布局，然后我去学习了阮一峰的flex教程，有感而发，自己也来一个！</p>
 </blockquote>
-<p><a href="/blogs/flex-layout/demo.html">在线demo</a></p>
+<p><a href="./demo/index.html">在线demo</a></p>
 <h3 id="速查">速查</h3>
 <p><strong>容器属性</strong></p>
-<p>&lt;table&gt;
-&lt;tr&gt;
-&lt;th&gt;属性&lt;/th&gt;
-&lt;th&gt;说明&lt;/th&gt;
-&lt;th&gt;取值（第一个是默认值）&lt;/th&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;flex-direction&lt;/td&gt;
-&lt;td&gt;主轴的方向&lt;/td&gt;
-&lt;td&gt;row，row-reverse，column，column-reverse&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;flex-wrap&lt;/td&gt;
-&lt;td&gt;如何换行&lt;/td&gt;
-&lt;td&gt;nowrap，wrap，wrap-reverse&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;justify-content&lt;/td&gt;
-&lt;td&gt;在主轴上的对齐方式&lt;/td&gt;
-&lt;td&gt;flex-start，flex-end，center，space-between，space-around&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;align-items&lt;/td&gt;
-&lt;td&gt;在交叉轴上如何对齐&lt;/td&gt;
-&lt;td&gt;stretch，flex-start，flex-end，center，baseline&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/table&gt;
-
-</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>说明</th>
+<th>取值（第一个是默认值）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>flex-direction</td>
+<td>主轴的方向</td>
+<td>row，row-reverse，column，column-reverse</td>
+</tr>
+<tr>
+<td>flex-wrap</td>
+<td>如何换行</td>
+<td>nowrap，wrap，wrap-reverse</td>
+</tr>
+<tr>
+<td>justify-content</td>
+<td>在主轴上的对齐方式</td>
+<td>flex-start，flex-end，center，space-between，space-around</td>
+</tr>
+<tr>
+<td>align-items</td>
+<td>在交叉轴上如何对齐</td>
+<td>stretch，flex-start，flex-end，center，baseline</td>
+</tr>
+</tbody></table>
 <p><strong>项目属性</strong></p>
-<p>&lt;table&gt;
-&lt;tr&gt;
-&lt;th&gt;属性&lt;/th&gt;
-&lt;th&gt;说明&lt;/th&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;order&lt;/td&gt;
-&lt;td&gt;项目的排列顺序。数值越小，排列越靠前，默认为0。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;flex-grow&lt;/td&gt;
-&lt;td&gt;项目的放大比例，默认为0，即如果存在剩余空间，也不放大。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;flex-shrink&lt;/td&gt;
-&lt;td&gt;项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;flex-basis&lt;/td&gt;
-&lt;td&gt;在分配多余空间之前，项目占据的主轴空间（main size）。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;flex&lt;/td&gt;
-&lt;td&gt;flex属性是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto，后两个属性可选。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;align-self&lt;/td&gt;
-&lt;td&gt;单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性。&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/table&gt;
-
-</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>order</td>
+<td>项目的排列顺序。数值越小，排列越靠前，默认为0。</td>
+</tr>
+<tr>
+<td>flex-grow</td>
+<td>项目的放大比例，默认为0，即如果存在剩余空间，也不放大。</td>
+</tr>
+<tr>
+<td>flex-shrink</td>
+<td>项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。</td>
+</tr>
+<tr>
+<td>flex-basis</td>
+<td>在分配多余空间之前，项目占据的主轴空间（main size）。</td>
+</tr>
+<tr>
+<td>flex</td>
+<td>flex属性是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto，后两个属性可选。</td>
+</tr>
+<tr>
+<td>align-self</td>
+<td>单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性。</td>
+</tr>
+</tbody></table>
 <h3 id="容器属性">容器属性</h3>
 <ul>
 <li>flex-direction</li>
@@ -276,7 +275,7 @@ align-items: flex-end;
 &lt;div class=&quot;item&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</code></pre><p><img src="/blogs/flex-layout/flexlayout1.jpg" alt=""></p>
+</code></pre><p><img src="./image/flexlayout1.jpg" alt=""></p>
 <h5 id="筛子布局（二个点）">筛子布局（二个点）</h5>
 <pre><code>.c2 .box1{
 justify-content: space-between;
@@ -392,7 +391,7 @@ align-self: flex-start;
 &lt;div class=&quot;item&quot;&gt;&lt;/div&gt;
 &lt;div class=&quot;item&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
-&lt;/div&gt;</code></pre><p><img src="/blogs/flex-layout/flexlayout2.jpg" alt=""></p>
+&lt;/div&gt;</code></pre><p><img src="./image/flexlayout2.jpg" alt=""></p>
 <h5 id="筛子布局（三个点）">筛子布局（三个点）</h5>
 <pre><code>.c3 .box1 .item:nth-child(2){
 align-self: center;
@@ -413,7 +412,7 @@ align-self: flex-end;
 &lt;div class=&quot;item&quot;&gt;&lt;/div&gt;
 &lt;div class=&quot;item&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
-&lt;/div&gt;</code></pre><p><img src="/blogs/flex-layout/flexlayout3.jpg" alt=""></p>
+&lt;/div&gt;</code></pre><p><img src="./image/flexlayout3.jpg" alt=""></p>
 <h5 id="筛子布局四个点）">筛子布局四个点）</h5>
 <pre><code>.c4 .box1{
 flex-direction: column;
@@ -449,7 +448,7 @@ line-height: 40px;
 &lt;div class=&quot;item&quot;&gt;3&lt;/div&gt;
 &lt;div class=&quot;item&quot;&gt;4&lt;/div&gt;
 &lt;/div&gt;
-&lt;/div&gt;</code></pre><p><img src="/blogs/flex-layout/flexlayout4.jpg" alt=""></p>
+&lt;/div&gt;</code></pre><p><img src="./image/flexlayout4.jpg" alt=""></p>
 <h5 id="gird布局">Gird布局</h5>
 <p>设值项目属性flex-grow: 1，最是简单的网格布局，项目可以平均分布。</p>
 <pre><code>.c5 .gird{
@@ -484,7 +483,7 @@ margin: 0;
 &lt;div class=&quot;cell&quot;&gt;1/4&lt;/div&gt;
 &lt;div class=&quot;cell&quot;&gt;1/4&lt;/div&gt;
 &lt;/div&gt;
-&lt;/div&gt;</code></pre><p><img src="/blogs/flex-layout/flexlayout5.jpg" alt=""></p>
+&lt;/div&gt;</code></pre><p><img src="./image/flexlayout5.jpg" alt=""></p>
 <h4 id="项目属性的介绍">项目属性的介绍</h4>
 <p>项目属性的介绍不是很清晰，写了几个小例子以供分析，比如有以下dom结构：</p>
 <pre><code>&lt;div class=&quot;list&quot;&gt;

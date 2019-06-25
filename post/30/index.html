@@ -35,14 +35,13 @@
             <div class="nav">
                 <div class="menu">
                     <a href="/">Home</a>
-                    <a href="/about" class="">About</a>
-                    <a target="_blank" href="/projects/index.html">Projects</a>
-                    <a href="http://justyeh.github.io/tools" target="_blank">Tools</a>
+                    <a href="/projects/history/index.html">Projects</a>
+                    <a href="/projects/tools">Tools</a>
                     <a target="_blank" href="https://github.com/justyeh">Github</a>
                 </div>
                 <div class="search">
-                    <form action="/search" methods='get'>
-                        <input class="ani" autocomplete="off" type="search" name="keyword" value="">
+                    <form action="https://www.google.com" id="search" methods='get' target="_blank">
+                        <input class="ani" autocomplete="off" type="search" name="q" value="">
                         <button class="ani" type="submit">
                             <i class="fa fa-search"></i>
                         </button>
@@ -54,7 +53,7 @@
 
 
     <div class="container page">
-        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(/blogs/javascript-banner.jpg);"></div> <div class="title">JavaScript异步问题解决方案</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-07-22</p> <i class="fa fa-tag"></i> <div><a href="/tag/48">cloudflare</a><a href="/tag/49">服务器</a></div></div> <div class="content"><div class="md"><blockquote>
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(./image/javascript-banner.jpg);"></div> <div class="title">JavaScript异步问题解决方案</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-07-22</p> <i class="fa fa-tag"></i> <div><a href="/tag/48">cloudflare</a><a href="/tag/49">服务器</a></div></div> <div class="content"><div class="md"><blockquote>
 <p>JavaScript是一门单线程语言，在执行一些比较耗时的操作（比如常见的Ajax请求）时，为了不阻塞后面代码的执行，往往需要执行异步操作。关于JS的运行机制，大家可以看阮一峰的这篇文章：<a href="http://www.ruanyifeng.com/blog/2014/10/event-loop.html">JavaScript 运行机制详解：再谈Event Loop</a></p>
 </blockquote>
 <blockquote>

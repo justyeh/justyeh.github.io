@@ -35,14 +35,13 @@
             <div class="nav">
                 <div class="menu">
                     <a href="/">Home</a>
-                    <a href="/about" class="">About</a>
-                    <a target="_blank" href="/projects/index.html">Projects</a>
-                    <a href="http://justyeh.github.io/tools" target="_blank">Tools</a>
+                    <a href="/projects/history/index.html">Projects</a>
+                    <a href="/projects/tools">Tools</a>
                     <a target="_blank" href="https://github.com/justyeh">Github</a>
                 </div>
                 <div class="search">
-                    <form action="/search" methods='get'>
-                        <input class="ani" autocomplete="off" type="search" name="keyword" value="">
+                    <form action="https://www.google.com" id="search" methods='get' target="_blank">
+                        <input class="ani" autocomplete="off" type="search" name="q" value="">
                         <button class="ani" type="submit">
                             <i class="fa fa-search"></i>
                         </button>
@@ -54,10 +53,10 @@
 
 
     <div class="container page">
-        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(/blogs/webuploader/webuploader.jpg);"></div> <div class="title">文件上传插件webuploder的使用</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-07-10</p> <i class="fa fa-tag"></i> <div><a href="/tag/10">webuploader</a><a href="/tag/13">justyeh</a></div></div> <div class="content"><div class="md"><blockquote>
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(./image/webuploader.jpg);"></div> <div class="title">文件上传插件webuploder的使用</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-07-10</p> <i class="fa fa-tag"></i> <div><a href="/tag/10">webuploader</a><a href="/tag/13">justyeh</a></div></div> <div class="content"><div class="md"><blockquote>
 <p>经常在项目中遇到文件上传的需求，进过多次的实践，证明这个上传插件确实不错，通过这篇文章会你可以详细的了解webuploader</p>
 </blockquote>
-<p><a href="/blogs/webuploader/demo.html">在线demo</a></p>
+<p><a href="./demo/index.html">在线demo</a></p>
 <h4 id="关于webuploader">关于webuploader</h4>
 <p>WebUploader是由Baidu WebFE(FEX)团队开发的一个简单的以HTML5为主，FLASH为辅的现代文件上传组件。在现代的浏览器里面能充分发挥HTML5的优势，同时又不摒弃主流IE浏览器，沿用原来的FLASH运行时，兼容IE6+，iOS 6+, android 4+。两套运行时，同样的调用方式，可供用户任意选用。</p>
 <p>采用大文件分片并发上传，极大的提高了文件上传效率</p>

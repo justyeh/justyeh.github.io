@@ -35,14 +35,13 @@
             <div class="nav">
                 <div class="menu">
                     <a href="/">Home</a>
-                    <a href="/about" class="">About</a>
-                    <a target="_blank" href="/projects/index.html">Projects</a>
-                    <a href="http://justyeh.github.io/tools" target="_blank">Tools</a>
+                    <a href="/projects/history/index.html">Projects</a>
+                    <a href="/projects/tools">Tools</a>
                     <a target="_blank" href="https://github.com/justyeh">Github</a>
                 </div>
                 <div class="search">
-                    <form action="/search" methods='get'>
-                        <input class="ani" autocomplete="off" type="search" name="keyword" value="">
+                    <form action="https://www.google.com" id="search" methods='get' target="_blank">
+                        <input class="ani" autocomplete="off" type="search" name="q" value="">
                         <button class="ani" type="submit">
                             <i class="fa fa-search"></i>
                         </button>
@@ -54,13 +53,13 @@
 
 
     <div class="container page">
-        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(/blogs/codemirror/codemirror-banner.jpg);"></div> <div class="title">web代码编辑器CodeMirror</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-07-10</p> <i class="fa fa-tag"></i> <div><a href="/tag/28">IDE</a><a href="/tag/29">Vue</a><a href="/tag/43">微信分享</a></div></div> <div class="content"><div class="md"><blockquote>
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(./image/codemirror-banner.jpg);"></div> <div class="title">web代码编辑器CodeMirror</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-07-10</p> <i class="fa fa-tag"></i> <div><a href="/tag/28">IDE</a><a href="/tag/29">Vue</a><a href="/tag/43">微信分享</a></div></div> <div class="content"><div class="md"><blockquote>
 <p>这两天有个项目需要使用在线代码编辑器，要求支持语法高亮、自动缩进、可切换高亮语法框架等要求。最终我选择了CodeMirror，发现这个插件确实不错，将其记录在我的博客中。</p>
 </blockquote>
 <blockquote>
 <p>本文有部分内容参考自知乎网友var dump的文章。连接：[<a href="https://zhuanlan.zhihu.com/p/22163474%5D">https://zhuanlan.zhihu.com/p/22163474]</a>(<a href="https://zhuanlan.zhihu.com/p/22163474">https://zhuanlan.zhihu.com/p/22163474</a></p>
 </blockquote>
-<p><a href="/blogs/codemirror/demo.html">在线DEMO</a></p>
+<p><a href="./demo/index.html">在线DEMO</a></p>
 <h4 id="关于codemirror">关于CodeMirror</h4>
 <p>CodeMirror是一个用于在浏览器编辑代码的javascript插件，为各种编程语言实现关键字，函数，变量等代码高亮显示，CodeMirror提供丰富的api和可扩展功能以及多个主题样式，能满足您各种项目的需求。</p>
 <p>CodeMirror支持大量语言的语法高亮，包括C、C++、C#、Java、Perl、PHP、JavaScript、Python、Lua、Go、Groovy、Ruby等，以及diff、LaTeX、SQL、wiki、Markdown等文件格式。此外，CodeMirror还支持代码自动完成、搜索/替换、HTML预览、行号、选择/搜索结果高亮、可视化tab、Emacs/VIM键绑定、代码自动格式等。</p>
@@ -267,7 +266,7 @@ editor.setOption(&quot;theme&quot;,&quot;seti&quot;);//设置主题</code></pre>
 <p>行号从哪个数开始计数，默认为1 。</p>
 <p><strong>lineNumberFormatter: function(line: integer) → string</strong></p>
 <p>使用一个函数设置行号。</p>
-<p><strong>gutters: array&lt;string&gt;</strong></p>
+<p><strong>gutters: array<string></strong></p>
 <p>用来添加额外的gutter（在行号gutter前或代替行号gutter）。值应该是CSS名称数组，每一项定义了用于绘制gutter背景的宽度（还有可选的背景）。为了能明确设置行号gutter的位置（默认在所有其它gutter的右边），也可以包含CodeMirror-linenumbers类。类名是用于传给setGutterMarker的键名(keys)。</p>
 <p><strong>fixedGutter: boolean</strong></p>
 <p>设置gutter跟随编辑器内容水平滚动（false）还是固定在左侧（true或默认）。</p>
@@ -295,7 +294,7 @@ editor.setOption(&quot;theme&quot;,&quot;seti&quot;);//设置主题</code></pre>
 <p>下面的选项仅用于一些特殊情况。</p>
 <p><strong>dragDrop: boolean</strong></p>
 <p>是否允许拖放，默认为true。</p>
-<p><strong>allowDropFileTypes: array&lt;string&gt;</strong></p>
+<p><strong>allowDropFileTypes: array<string></strong></p>
 <p>默认为null。当设置此项时，只接收包含在此数组内的文件类型拖入编辑器。文件类型为MIME名称。</p>
 <p><strong>cursorBlinkRate: number</strong></p>
 <p>光标闪动的间隔，单位为毫秒。默认为530。当设置为0时，会禁用光标闪动。负数会隐藏光标。</p>

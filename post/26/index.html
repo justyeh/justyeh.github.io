@@ -35,14 +35,13 @@
             <div class="nav">
                 <div class="menu">
                     <a href="/">Home</a>
-                    <a href="/about" class="">About</a>
-                    <a target="_blank" href="/projects/index.html">Projects</a>
-                    <a href="http://justyeh.github.io/tools" target="_blank">Tools</a>
+                    <a href="/projects/history/index.html">Projects</a>
+                    <a href="/projects/tools">Tools</a>
                     <a target="_blank" href="https://github.com/justyeh">Github</a>
                 </div>
                 <div class="search">
-                    <form action="/search" methods='get'>
-                        <input class="ani" autocomplete="off" type="search" name="keyword" value="">
+                    <form action="https://www.google.com" id="search" methods='get' target="_blank">
+                        <input class="ani" autocomplete="off" type="search" name="q" value="">
                         <button class="ani" type="submit">
                             <i class="fa fa-search"></i>
                         </button>
@@ -54,7 +53,7 @@
 
 
     <div class="container page">
-        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(/blogs/git/git.jpg);"></div> <div class="title">git乱码解决方法</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-06-24</p> <i class="fa fa-tag"></i> <div><a href="/tag/33">异步</a></div></div> <div class="content"><div class="md"><blockquote>
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(./image/git.jpg);"></div> <div class="title">git乱码解决方法</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-06-24</p> <i class="fa fa-tag"></i> <div><a href="/tag/33">异步</a></div></div> <div class="content"><div class="md"><blockquote>
 <p>git对中文的支持不是很好，想必英文不是很好的朋友一定深受其扰；因为Git 是在linux下开发的，而 Linux 的编码方式是基于 UTF-8 的，所以移植到 Windows 之后难免会存在编码冲突，导致乱码。
 下面的方法是我在网上总结来的，并且经过亲自实践，最终解决了这个问题。</p>
 </blockquote>
@@ -82,7 +81,7 @@ set convert-meta off</code></pre><h4 id="让-ls命令可以显示中文名称">�
 <pre><code># 在文件末尾处添加一行
 alias ls=&quot;ls --show-control-chars --color&quot;</code></pre><h4 id="对命令行进行设置">对命令行进行设置</h4>
 <p>右键&gt;Options...&gt;Text，设置<code>Locale</code>为<code>zh_CN</code>，设置<code>Character set</code>为<code>UTF-8</code>，见下图：
-<img src="/blogs/git//git-option.jpg" alt=""></p>
+<img src="./image/git-option.jpg" alt=""></p>
 </div></div></div>
     </div>
 

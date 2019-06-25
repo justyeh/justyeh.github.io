@@ -35,14 +35,13 @@
             <div class="nav">
                 <div class="menu">
                     <a href="/">Home</a>
-                    <a href="/about" class="">About</a>
-                    <a target="_blank" href="/projects/index.html">Projects</a>
-                    <a href="http://justyeh.github.io/tools" target="_blank">Tools</a>
+                    <a href="/projects/history/index.html">Projects</a>
+                    <a href="/projects/tools">Tools</a>
                     <a target="_blank" href="https://github.com/justyeh">Github</a>
                 </div>
                 <div class="search">
-                    <form action="/search" methods='get'>
-                        <input class="ani" autocomplete="off" type="search" name="keyword" value="">
+                    <form action="https://www.google.com" id="search" methods='get' target="_blank">
+                        <input class="ani" autocomplete="off" type="search" name="q" value="">
                         <button class="ani" type="submit">
                             <i class="fa fa-search"></i>
                         </button>
@@ -54,7 +53,7 @@
 
 
     <div class="container page">
-        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(/blogs/wechat-app/bg-weixin.jpg);"></div> <div class="title">微信小程序开发之初识小程序</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-06-24</p> <i class="fa fa-tag"></i> <div><a href="/tag/7">微信小程序</a></div></div> <div class="content"><div class="md"><blockquote>
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(./image/bg-weixin.jpg);"></div> <div class="title">微信小程序开发之初识小程序</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-06-24</p> <i class="fa fa-tag"></i> <div><a href="/tag/7">微信小程序</a></div></div> <div class="content"><div class="md"><blockquote>
 <p>今天接到个任务，公司有部门需要做一个微信小程序，正好接触一下新东西，就来记录一下学习的收获。</p>
 </blockquote>
 <h4 id="准备">准备</h4>
@@ -62,7 +61,7 @@
 <p>你需要了解基本的前端知识，包括js、css、html，如果你对这些还不熟悉，可以到<a href="http://www.w3school.com.cn/">w3cschool</a>上进行学习</p>
 <h5 id="ide搭建">IDE搭建</h5>
 <p>微信官方为我们提供了<a href="https://mp.weixin.qq.com/debug/wxadoc/dev/devtools/download.html">开发者工具</a>，直接下载安装就好了；如果你需要其他选择，网上有一篇<a href="http://www.ashan.org/archives/934">5款微信小程序开发对比</a>的文章，你也可以看一下，在本篇文章中，我使用的是官方提供的开发者工具。
-<img src="/blogs/wechat-app/WeChatIDE.png" alt="微信小程序开发者工具"></p>
+<img src="./image/WeChatIDE.png" alt="微信小程序开发者工具"></p>
 <h4 id="了解小程序">了解小程序</h4>
 <h5 id="小程序的文件类型">小程序的文件类型</h5>
 <p>小程序有以下几种文件类型</p>
@@ -84,11 +83,11 @@
 <p>这个也不是必须的，而且这个并不是指主界面哦~因为小程序的主页面是靠在JSON文件中配置来决定的
 js文件。</p>
 <p>有了以上两个必须的文件，IDE就不会报错了，也意味着这是最简单的微信小程序
-<img src="/blogs/wechat-app/WeChatIDE3.png" alt="文件类型"></p>
+<img src="./image/WeChatIDE3.png" alt="文件类型"></p>
 <h4 id="开始">开始</h4>
 <h5 id="配置app">配置app</h5>
 <p><code>app.json</code>是文件小程序的配置文件；
-<img src="/blogs/wechat-app/appjson.png" alt=""></p>
+<img src="./image/appjson.png" alt=""></p>
 <pre><code>{
   &quot;pages&quot;:[
     &quot;pages/index/index&quot;,
@@ -149,7 +148,7 @@ App({
     userInfo:null
   }
 })</code></pre><p>app()函数具体API解释如下:
-<img src="/blogs/wechat-app/app-func.png" alt="app方法 API"></p>
+<img src="./image/app-func.png" alt="app方法 API"></p>
 <h5 id="注册页面">注册页面</h5>
 <p>在开发者工具提供的demo中，有两个页面，可以通过<code>Page()</code> 函数用来注册一个页面。接受一个 object 参数，其指定页面的初始数据、生命周期函数、事件处理函数等。</p>
 <pre><code>//index.js
@@ -178,7 +177,7 @@ Page({
     })
   }
 })</code></pre><p>page()函数具体API解释如下:
-<img src="/blogs/wechat-app/page-func.png" alt="page方法 API"></p>
+<img src="./image/page-func.png" alt="page方法 API"></p>
 <h5 id="美化页面">美化页面</h5>
 <p>美化页面我们用到了 <code>wxml</code> 和 <code>wxss</code>文件。</p>
 <p>这是<code>wxss</code>代码：</p>
@@ -204,7 +203,7 @@ Page({
 &lt;/view&gt;</code></pre><p>如果你对css、js有基本的了解，这两个文件都不在话下。</p>
 <h5 id="事件绑定">事件绑定</h5>
 <p>事件列表
-<img src="/blogs/wechat-app/event.png" alt="">
+<img src="./image/event.png" alt="">
 事件绑定的写法同组件的属性，以 key、value 的形式</p>
 <ul>
 <li>key 以bind或catch开头，然后跟上事件的类型，如bindtap, catchtouchstart</li>

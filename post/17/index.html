@@ -35,14 +35,13 @@
             <div class="nav">
                 <div class="menu">
                     <a href="/">Home</a>
-                    <a href="/about" class="">About</a>
-                    <a target="_blank" href="/projects/index.html">Projects</a>
-                    <a href="http://justyeh.github.io/tools" target="_blank">Tools</a>
+                    <a href="/projects/history/index.html">Projects</a>
+                    <a href="/projects/tools">Tools</a>
                     <a target="_blank" href="https://github.com/justyeh">Github</a>
                 </div>
                 <div class="search">
-                    <form action="/search" methods='get'>
-                        <input class="ani" autocomplete="off" type="search" name="keyword" value="">
+                    <form action="https://www.google.com" id="search" methods='get' target="_blank">
+                        <input class="ani" autocomplete="off" type="search" name="q" value="">
                         <button class="ani" type="submit">
                             <i class="fa fa-search"></i>
                         </button>
@@ -54,10 +53,10 @@
 
 
     <div class="container page">
-        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(/blogs/simplemde/simplemde.jpg);"></div> <div class="title">Markdown编辑器simplemde-markdown-editor</div> <div class="info"><i class="fa fa-clock-o"></i> <p>4个月前</p> <!----></div> <div class="content"><div class="md"><blockquote>
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(./image/simplemde.jpg);"></div> <div class="title">Markdown编辑器simplemde-markdown-editor</div> <div class="info"><i class="fa fa-clock-o"></i> <p>4个月前</p> <!----></div> <div class="content"><div class="md"><blockquote>
 <p><a href="https://cnodejs.org/">cnode中文社区</a>里面使用了一款不错的Markdown编辑器，名字叫做<a href="https://github.com/lepture/editor">editor</a>，网友<a href="https://github.com/NextStepWebs/simplemde-markdown-editor/">NextStepWebs</a>基于这个版本做了一些改进。我尽我最大可能做一些翻译工作，希望能帮助的大家；当然，如果你熟悉英文，可以直接参考<a href="https://github.com/NextStepWebs/simplemde-markdown-editor/">官方文档</a>。</p>
 </blockquote>
-<p><a href="/blogs/simplemde/demo.html">在线demo</a></p>
+<p><a href="./demo/index.html">在线demo</a></p>
 <h4 id="特性">特性</h4>
 <ul>
 <li>SimpleMDE 是一个嵌入式 JavaScript 编辑器，用于书写好看且易懂的 markdown格式文本。</li>
@@ -139,7 +138,7 @@ simplemde.value(&quot;This text will appear in the editor&quot;);</code></pre><h
 <p>定义预览Markdown时的设置：</p>
 <ul>
 <li>singleLineBreaks：为false时禁用GFM的单行中断，默认true。</li>
-<li>strikethrough： 是否使用<a href="https://github.com/isagalaev/highlight.js">highlight.js</a>高亮插件，默认false；注意，为true是你需要引入相关文件：&lt;br&gt;<code>&lt;script src=&quot;https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js&quot;&gt;&lt;/script&gt;</code>&lt;br&gt;<code>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css&quot;&gt;</code>。</li>
+<li>strikethrough： 是否使用<a href="https://github.com/isagalaev/highlight.js">highlight.js</a>高亮插件，默认false；注意，为true是你需要引入相关文件：<br><code>&lt;script src=&quot;https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js&quot;&gt;&lt;/script&gt;</code><br><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css&quot;&gt;</code>。</li>
 </ul>
 <p><strong>shortcuts</strong></p>
 <p>设置快捷键，参考下文快捷键。</p>
@@ -159,152 +158,148 @@ simplemde.value(&quot;This text will appear in the editor&quot;);</code></pre><h
 是否启用工具栏按钮tips提示效果，默认值true。</p>
 <h4 id="toolbar图标">Toolbar图标</h4>
 <p>下面是内置的工具栏图标（默认部分启用）列表，在表格中，Name是图标的名称，Action是要打开的函数或URL，Tooltip是图标提示文字，class是作用于图标上的样式。</p>
-<p>&lt;table&gt;
-    &lt;thead&gt;
-    &lt;tr&gt;
-    &lt;th&gt;Name&lt;/th&gt;
-    &lt;th&gt;Action&lt;/th&gt;
-    &lt;th&gt;Tooltip&lt;/th&gt;
-    &lt;th&gt;Class&lt;/th&gt;
-    &lt;/tr&gt;
-    &lt;/thead&gt;
-    &lt;tbody&gt;
-    &lt;tr&gt;
-    &lt;td&gt;bold&lt;/td&gt;
-    &lt;td&gt;toggleBold&lt;/td&gt;
-    &lt;td&gt;Bold&lt;/td&gt;
-    &lt;td&gt;fa fa-bold&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-    &lt;td&gt;italic&lt;/td&gt;
-    &lt;td&gt;toggleItalic&lt;/td&gt;
-    &lt;td&gt;Italic&lt;/td&gt;
-    &lt;td&gt;fa fa-italic&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-    &lt;td&gt;strikethrough&lt;/td&gt;
-    &lt;td&gt;toggleStrikethrough&lt;/td&gt;
-    &lt;td&gt;Strikethrough&lt;/td&gt;
-    &lt;td&gt;fa fa-strikethrough&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-    &lt;td&gt;heading&lt;/td&gt;
-    &lt;td&gt;toggleHeadingSmaller&lt;/td&gt;
-    &lt;td&gt;Heading&lt;/td&gt;
-    &lt;td&gt;fa fa-header&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-    &lt;td&gt;heading-smaller&lt;/td&gt;
-    &lt;td&gt;toggleHeadingSmaller&lt;/td&gt;
-    &lt;td&gt;Smaller Heading&lt;/td&gt;
-    &lt;td&gt;fa fa-header&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-    &lt;td&gt;heading-bigger&lt;/td&gt;
-    &lt;td&gt;toggleHeadingBigger&lt;/td&gt;
-    &lt;td&gt;Bigger Heading&lt;/td&gt;
-    &lt;td&gt;fa fa-lg fa-header&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-    &lt;td&gt;heading-1&lt;/td&gt;
-    &lt;td&gt;toggleHeading1&lt;/td&gt;
-    &lt;td&gt;Big Heading&lt;/td&gt;
-    &lt;td&gt;fa fa-header fa-header-x fa-header-1&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-    &lt;td&gt;heading-2&lt;/td&gt;
-    &lt;td&gt;toggleHeading2&lt;/td&gt;
-    &lt;td&gt;Medium Heading&lt;/td&gt;
-    &lt;td&gt;fa fa-header fa-header-x fa-header-2&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-    &lt;td&gt;heading-3&lt;/td&gt;
-    &lt;td&gt;toggleHeading3&lt;/td&gt;
-    &lt;td&gt;Small Heading&lt;/td&gt;
-    &lt;td&gt;fa fa-header fa-header-x fa-header-3&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-    &lt;td&gt;code&lt;/td&gt;
-    &lt;td&gt;toggleCodeBlock&lt;/td&gt;
-    &lt;td&gt;Code&lt;/td&gt;
-    &lt;td&gt;fa fa-code&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-    &lt;td&gt;quote&lt;/td&gt;
-    &lt;td&gt;toggleBlockquote&lt;/td&gt;
-    &lt;td&gt;Quote&lt;/td&gt;
-    &lt;td&gt;fa fa-quote-left&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-    &lt;td&gt;unordered-list&lt;/td&gt;
-    &lt;td&gt;toggleUnorderedList&lt;/td&gt;
-    &lt;td&gt;Generic List&lt;/td&gt;
-    &lt;td&gt;fa fa-list-ul&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-    &lt;td&gt;ordered-list&lt;/td&gt;
-    &lt;td&gt;toggleOrderedList&lt;/td&gt;
-    &lt;td&gt;Numbered List&lt;/td&gt;
-    &lt;td&gt;fa fa-list-ol&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-    &lt;td&gt;clean-block&lt;/td&gt;
-    &lt;td&gt;cleanBlock&lt;/td&gt;
-    &lt;td&gt;Clean block&lt;/td&gt;
-    &lt;td&gt;fa fa-eraser fa-clean-block&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-    &lt;td&gt;link&lt;/td&gt;
-    &lt;td&gt;drawLink&lt;/td&gt;
-    &lt;td&gt;Create Link&lt;/td&gt;
-    &lt;td&gt;fa fa-link&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-    &lt;td&gt;image&lt;/td&gt;
-    &lt;td&gt;drawImage&lt;/td&gt;
-    &lt;td&gt;Insert Image&lt;/td&gt;
-    &lt;td&gt;fa fa-picture-o&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-    &lt;td&gt;table&lt;/td&gt;
-    &lt;td&gt;drawTable&lt;/td&gt;
-    &lt;td&gt;Insert Table&lt;/td&gt;
-    &lt;td&gt;fa fa-table&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-    &lt;td&gt;horizontal-rule&lt;/td&gt;
-    &lt;td&gt;drawHorizontalRule&lt;/td&gt;
-    &lt;td&gt;Insert Horizontal Line&lt;/td&gt;
-    &lt;td&gt;fa fa-minus&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-    &lt;td&gt;preview&lt;/td&gt;
-    &lt;td&gt;togglePreview&lt;/td&gt;
-    &lt;td&gt;Toggle Preview&lt;/td&gt;
-    &lt;td&gt;fa fa-eye no-disable&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-    &lt;td&gt;side-by-side&lt;/td&gt;
-    &lt;td&gt;toggleSideBySide&lt;/td&gt;
-    &lt;td&gt;Toggle Side by Side&lt;/td&gt;
-    &lt;td&gt;fa fa-columns no-disable no-mobile&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-    &lt;td&gt;fullscreen&lt;/td&gt;
-    &lt;td&gt;toggleFullScreen&lt;/td&gt;
-    &lt;td&gt;Toggle Fullscreen&lt;/td&gt;
-    &lt;td&gt;fa fa-arrows-alt no-disable no-mobile&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-    &lt;td&gt;guide&lt;/td&gt;
-    &lt;td&gt;&lt;a href=&quot;https://simplemde.com/markdown-guide&quot;&gt;This link&lt;/a&gt;&lt;/td&gt;
-    &lt;td&gt;Markdown Guide&lt;/td&gt;
-    &lt;td&gt;fa fa-question-circle&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;/tbody&gt;
-&lt;/table&gt;
-
-</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Action</th>
+<th>Tooltip</th>
+<th>Class</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>bold</td>
+<td>toggleBold</td>
+<td>Bold</td>
+<td>fa fa-bold</td>
+</tr>
+<tr>
+<td>italic</td>
+<td>toggleItalic</td>
+<td>Italic</td>
+<td>fa fa-italic</td>
+</tr>
+<tr>
+<td>strikethrough</td>
+<td>toggleStrikethrough</td>
+<td>Strikethrough</td>
+<td>fa fa-strikethrough</td>
+</tr>
+<tr>
+<td>heading</td>
+<td>toggleHeadingSmaller</td>
+<td>Heading</td>
+<td>fa fa-header</td>
+</tr>
+<tr>
+<td>heading-smaller</td>
+<td>toggleHeadingSmaller</td>
+<td>Smaller Heading</td>
+<td>fa fa-header</td>
+</tr>
+<tr>
+<td>heading-bigger</td>
+<td>toggleHeadingBigger</td>
+<td>Bigger Heading</td>
+<td>fa fa-lg fa-header</td>
+</tr>
+<tr>
+<td>heading-1</td>
+<td>toggleHeading1</td>
+<td>Big Heading</td>
+<td>fa fa-header fa-header-x fa-header-1</td>
+</tr>
+<tr>
+<td>heading-2</td>
+<td>toggleHeading2</td>
+<td>Medium Heading</td>
+<td>fa fa-header fa-header-x fa-header-2</td>
+</tr>
+<tr>
+<td>heading-3</td>
+<td>toggleHeading3</td>
+<td>Small Heading</td>
+<td>fa fa-header fa-header-x fa-header-3</td>
+</tr>
+<tr>
+<td>code</td>
+<td>toggleCodeBlock</td>
+<td>Code</td>
+<td>fa fa-code</td>
+</tr>
+<tr>
+<td>quote</td>
+<td>toggleBlockquote</td>
+<td>Quote</td>
+<td>fa fa-quote-left</td>
+</tr>
+<tr>
+<td>unordered-list</td>
+<td>toggleUnorderedList</td>
+<td>Generic List</td>
+<td>fa fa-list-ul</td>
+</tr>
+<tr>
+<td>ordered-list</td>
+<td>toggleOrderedList</td>
+<td>Numbered List</td>
+<td>fa fa-list-ol</td>
+</tr>
+<tr>
+<td>clean-block</td>
+<td>cleanBlock</td>
+<td>Clean block</td>
+<td>fa fa-eraser fa-clean-block</td>
+</tr>
+<tr>
+<td>link</td>
+<td>drawLink</td>
+<td>Create Link</td>
+<td>fa fa-link</td>
+</tr>
+<tr>
+<td>image</td>
+<td>drawImage</td>
+<td>Insert Image</td>
+<td>fa fa-picture-o</td>
+</tr>
+<tr>
+<td>table</td>
+<td>drawTable</td>
+<td>Insert Table</td>
+<td>fa fa-table</td>
+</tr>
+<tr>
+<td>horizontal-rule</td>
+<td>drawHorizontalRule</td>
+<td>Insert Horizontal Line</td>
+<td>fa fa-minus</td>
+</tr>
+<tr>
+<td>preview</td>
+<td>togglePreview</td>
+<td>Toggle Preview</td>
+<td>fa fa-eye no-disable</td>
+</tr>
+<tr>
+<td>side-by-side</td>
+<td>toggleSideBySide</td>
+<td>Toggle Side by Side</td>
+<td>fa fa-columns no-disable no-mobile</td>
+</tr>
+<tr>
+<td>fullscreen</td>
+<td>toggleFullScreen</td>
+<td>Toggle Fullscreen</td>
+<td>fa fa-arrows-alt no-disable no-mobile</td>
+</tr>
+<tr>
+<td>guide</td>
+<td>This link</td>
+<td>Markdown Guide</td>
+<td>fa fa-question-circle</td>
+</tr>
+</tbody></table>
 <p>自定义toolbar的用法：</p>
 <pre><code>// Customize only the order of existing buttons
 var simplemde = new SimpleMDE({
@@ -338,75 +333,7 @@ var simplemde = new SimpleMDE({
 <pre><code>.CodeMirror {
     height: 300px;
 }</code></pre><h4 id="快捷键">快捷键</h4>
-<p>SimpleMDE附带了一组预定义的键盘快捷键，但可以使用配置选项进行更改。 默认列表如下：</p>
-<p>&lt;table&gt;
-  &lt;thead&gt; 
-    &lt;tr&gt; 
-      &lt;th align=&quot;left&quot;&gt;Shortcut&lt;/th&gt;<br>      &lt;th align=&quot;left&quot;&gt;Action&lt;/th&gt; 
-    &lt;/tr&gt; 
-  &lt;/thead&gt;
-  &lt;tbody&gt; 
-    &lt;tr&gt; 
-      &lt;td align=&quot;left&quot;&gt;
-        &lt;em&gt;Cmd-&#39;&lt;/em&gt;
-      &lt;/td&gt;<br>      &lt;td align=&quot;left&quot;&gt;&quot;toggleBlockquote&quot;&lt;/td&gt; 
-    &lt;/tr&gt;<br>    &lt;tr&gt; 
-      &lt;td align=&quot;left&quot;&gt;
-        &lt;em&gt;Cmd-B&lt;/em&gt;
-      &lt;/td&gt;<br>      &lt;td align=&quot;left&quot;&gt;&quot;toggleBold&quot;&lt;/td&gt; 
-    &lt;/tr&gt;<br>    &lt;tr&gt; 
-      &lt;td align=&quot;left&quot;&gt;
-        &lt;em&gt;Cmd-E&lt;/em&gt;
-      &lt;/td&gt;<br>      &lt;td align=&quot;left&quot;&gt;&quot;cleanBlock&quot;&lt;/td&gt; 
-    &lt;/tr&gt;<br>    &lt;tr&gt; 
-      &lt;td align=&quot;left&quot;&gt;
-        &lt;em&gt;Cmd-H&lt;/em&gt;
-      &lt;/td&gt;<br>      &lt;td align=&quot;left&quot;&gt;&quot;toggleHeadingSmaller&quot;&lt;/td&gt; 
-    &lt;/tr&gt;<br>    &lt;tr&gt; 
-      &lt;td align=&quot;left&quot;&gt;
-        &lt;em&gt;Cmd-I&lt;/em&gt;
-      &lt;/td&gt;<br>      &lt;td align=&quot;left&quot;&gt;&quot;toggleItalic&quot;&lt;/td&gt; 
-    &lt;/tr&gt;<br>    &lt;tr&gt; 
-      &lt;td align=&quot;left&quot;&gt;
-        &lt;em&gt;Cmd-K&lt;/em&gt;
-      &lt;/td&gt;<br>      &lt;td align=&quot;left&quot;&gt;&quot;drawLink&quot;&lt;/td&gt; 
-    &lt;/tr&gt;<br>    &lt;tr&gt; 
-      &lt;td align=&quot;left&quot;&gt;
-        &lt;em&gt;Cmd-L&lt;/em&gt;
-      &lt;/td&gt;<br>      &lt;td align=&quot;left&quot;&gt;&quot;toggleUnorderedList&quot;&lt;/td&gt; 
-    &lt;/tr&gt;<br>    &lt;tr&gt; 
-      &lt;td align=&quot;left&quot;&gt;
-        &lt;em&gt;Cmd-P&lt;/em&gt;
-      &lt;/td&gt;<br>      &lt;td align=&quot;left&quot;&gt;&quot;togglePreview&quot;&lt;/td&gt; 
-    &lt;/tr&gt;<br>    &lt;tr&gt; 
-      &lt;td align=&quot;left&quot;&gt;
-        &lt;em&gt;Cmd-Alt-C&lt;/em&gt;
-      &lt;/td&gt;<br>      &lt;td align=&quot;left&quot;&gt;&quot;toggleCodeBlock&quot;&lt;/td&gt; 
-    &lt;/tr&gt;<br>    &lt;tr&gt; 
-      &lt;td align=&quot;left&quot;&gt;
-        &lt;em&gt;Cmd-Alt-I&lt;/em&gt;
-      &lt;/td&gt;<br>      &lt;td align=&quot;left&quot;&gt;&quot;drawImage&quot;&lt;/td&gt; 
-    &lt;/tr&gt;<br>    &lt;tr&gt; 
-      &lt;td align=&quot;left&quot;&gt;
-        &lt;em&gt;Cmd-Alt-L&lt;/em&gt;
-      &lt;/td&gt;<br>      &lt;td align=&quot;left&quot;&gt;&quot;toggleOrderedList&quot;&lt;/td&gt; 
-    &lt;/tr&gt;<br>    &lt;tr&gt; 
-      &lt;td align=&quot;left&quot;&gt;
-        &lt;em&gt;Shift-Cmd-H&lt;/em&gt;
-      &lt;/td&gt;<br>      &lt;td align=&quot;left&quot;&gt;&quot;toggleHeadingBigger&quot;&lt;/td&gt; 
-    &lt;/tr&gt;<br>    &lt;tr&gt; 
-      &lt;td align=&quot;left&quot;&gt;
-        &lt;em&gt;F9&lt;/em&gt;
-      &lt;/td&gt;<br>      &lt;td align=&quot;left&quot;&gt;&quot;toggleSideBySide&quot;&lt;/td&gt; 
-    &lt;/tr&gt;<br>    &lt;tr&gt; 
-      &lt;td align=&quot;left&quot;&gt;
-        &lt;em&gt;F11&lt;/em&gt;
-      &lt;/td&gt;<br>      &lt;td align=&quot;left&quot;&gt;&quot;toggleFullScreen&quot;&lt;/td&gt; 
-    &lt;/tr&gt; 
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-</p>
+<p>SimpleMDE附带了一组预定义的键盘快捷键，但可以使用配置选项进行更改。</p>
 <p>修改快捷键的方法：</p>
 <pre><code>var simplemde = new SimpleMDE({
     shortcuts: {

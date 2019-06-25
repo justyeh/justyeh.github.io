@@ -35,14 +35,13 @@
             <div class="nav">
                 <div class="menu">
                     <a href="/">Home</a>
-                    <a href="/about" class="">About</a>
-                    <a target="_blank" href="/projects/index.html">Projects</a>
-                    <a href="http://justyeh.github.io/tools" target="_blank">Tools</a>
+                    <a href="/projects/history/index.html">Projects</a>
+                    <a href="/projects/tools">Tools</a>
                     <a target="_blank" href="https://github.com/justyeh">Github</a>
                 </div>
                 <div class="search">
-                    <form action="/search" methods='get'>
-                        <input class="ani" autocomplete="off" type="search" name="keyword" value="">
+                    <form action="https://www.google.com" id="search" methods='get' target="_blank">
+                        <input class="ani" autocomplete="off" type="search" name="q" value="">
                         <button class="ani" type="submit">
                             <i class="fa fa-search"></i>
                         </button>
@@ -54,19 +53,32 @@
 
 
     <div class="container page">
-        <div data-server-rendered="true" class="post-list-page filter-page"><div class="filter-tip">关于<span>flex</span>的相关文章</div> <div class="post-list"><div class="post-item"><div class="poster" style="background-image:url(/blogs/flex-layout/flexflex-layout-logo.jpg);"></div> <div class="content"><a href="/post/9" class="title">flex layou使用教程</a> <div class="desc">
+        <div data-server-rendered="true" class="post-list-page filter-page"><div class="filter-tip">关于<span>flex</span>的相关文章</div> <div class="post-list"><div class="post-item"><div class="poster" style="background-image:url(/post/9/image/poster.jpg);"></div> <div class="content"><a href="/post/9" class="title">flex layou使用教程</a> <div class="desc">
 最近在看微信小程序的文档，里面有使用flex布局，然后我去学习了阮一峰的flex教程，有感而发，自己也来一个！
 
 在线demo
 速查
 容器属性
-&amp;lt;table&amp;gt;
-&amp;lt;tr&amp;gt;
-&amp;lt;th&amp;gt;属性&amp;lt;/th&amp;gt;
-&amp;lt;th&amp;gt;说明&amp;lt;/th&amp;gt;
-&amp;lt;th&amp;gt;取值（第一个是默认值）&amp;lt;/th&amp;gt;
-&amp;lt;/tr&amp;gt;
-&amp;lt;tr&amp;gt</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-06-24</p> <!----> <div><a href="/tag/9">flex</a><a href="/tag/37">爬虫</a></div></div></div></div></div><div class="post-list"><div class="post-item"><div class="poster" style="background-image:url(/blogs/flex-layout/flexflex-layout-logo.jpg);"></div> <div class="content"><a href="/post/31" class="title">flex兼容性写法</a> <div class="desc">
+
+
+
+属性
+说明
+取值（第一个是默认值）
+
+
+
+flex-direction
+主轴的方向
+row，row-reverse，column，column-reverse
+
+
+flex-wrap
+如何换行
+nowrap，wrap，wrap-reverse
+
+
+</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-06-24</p> <!----> <div><a href="/tag/9">flex</a><a href="/tag/37">爬虫</a></div></div></div></div><div class="post-item"><div class="poster" style="background-image:url(/post/31/image/poster.jpg);"></div> <div class="content"><a href="/post/31" class="title">flex兼容性写法</a> <div class="desc">
 利用flex可以方便快捷的帮助我们进行网页布局，不过由于历史标准很多，人工书写会有一些兼容性问题，这里将在网上搜集到的兼容性的写法放在博客中，以便取用。
 
 flex：定义布局为盒模型
