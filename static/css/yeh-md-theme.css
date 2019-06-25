@@ -67,7 +67,7 @@
 
 .md blockquote {
     color: #7f8fa4 !important;
-    padding: 5px 15px;
+    padding: 5px 10px;
     margin: 10px 0 10px;
     border-left: 3px solid #e7e9ed
 }
@@ -101,8 +101,7 @@
 .md ul,
 .md ol {
     padding: 0;
-    margin: 6px 0 6px 18px !important;
-    line-height: 1.6em;
+    margin: 5px 0 5px 17px !important;
 }
 
 .md li {
