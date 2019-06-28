@@ -53,27 +53,124 @@
 
 
     <div class="container page">
-        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(./image/javascript-banner.jpg);"></div> <div class="title">JavaScript节流和防抖</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-06-24</p> <!----></div> <div class="content"><div class="md"><p><a href="http://www.css88.com/archives/6598">http://www.css88.com/archives/6598</a></p>
-<p><a href="http://www.css88.com/archives/6589">http://www.css88.com/archives/6589</a></p>
-<pre><code>/* 节流 函数
- * case 1
- * window.onscroll = throttle(testFn, 200);
- * // case 2
- * window.onscroll = throttle(testFn, 200, 500);
-*/
-function throttle(fn, delay, atleast) {
-var timer = null;
- var previous = null;
- return function () {
-  ow = +new Date();
-  previous = now;
-  ow - previous &gt; atleast ) {
-fn();
-      ow;
-        ction() {
-    ();
-      }
-};</code></pre></div></div></div>
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(./image/javascript-banner.jpg);"></div> <div class="title">JavaScript节流和防抖</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-06-24</p> <!----></div> <div class="content"><div class="md"><h3 id="节流throttle">节流throttle</h3>
+<p>设定一个时间间隔，某个频繁触发的函数，在这个时间间隔内只会执行一次。也就是说，这个频繁触发的函数会以一个固定的周期执行。</p>
+<p>高频触发的函数每隔一个时间段执行执行，并且最后一次触发时也执行</p>
+<p>适用场景：</p>
+<ul>
+<li>鼠标不断点击触发，mousedown(单位时间内只触发一次)</li>
+<li>监听滚动事件，比如是否滑到底部自动加载更多，用 throttle 来判断</li>
+</ul>
+<p><strong>时间戳版本</strong></p>
+<pre><code>function throttle(func, delay){
+  let prev = Date.now();
+  return function(){
+    const context = this;
+    const args    = arguments;
+    const now     = Date.now();
+    if(now - prev &gt;= delay){
+      func.apply(context, args);
+      prev = Date.now();
+    }
+  }
+}
+</code></pre><p><strong>定时器版本</strong></p>
+<pre><code>fucntion throttle(func, delay){
+  let timer = null;
+
+  return funtion(){
+    let context = this;
+    let args    = arguments;
+    if(!timer){
+      timer = setTimeout(function(){
+        func.apply(context, args);
+        clearTimeout(timer);
+        timer = null;
+      }, delay);
+    }
+  }
+}</code></pre><h3 id="防抖debounce">防抖debounce</h3>
+<p>debounce 函数封装后，返回内部函数；每一次事件被触发，都会清除当前的 timer 然后重新设置超时并调用。这会导致每一次高频事件都会取消前一次的超时调用，导致事件处理程序不能被触发，只有当高频事件停止，最后一次事件触发的超时调用才能在 delay 时间后执行</p>
+<p>高频触发的函数只到最后一次触发时执行</p>
+<p>适用场景：</p>
+<ul>
+<li>search 搜索联想，用户在不断输入值时，用防抖来节约请求资源。</li>
+<li>window 触发 resize 的时候，不断的调整浏览器窗口大小</li>
+</ul>
+<p><strong>立即防抖</strong></p>
+<p>事件停止触发后才执行</p>
+<pre><code>function debounce(fun, delay) {
+    let timer = null;
+    return function() {
+        let context = this;
+        let args = arguments;
+        clearTimeout(timer);
+        timer = setTimeout(function() {
+            fn.apply(context, args);
+        }, delay);
+    };
+}</code></pre><p><strong>非立即防抖</strong></p>
+<p>事件会立马触发一次，之后事件停止触发后再执行一次</p>
+<pre><code>function debouce(func,delay,immediate){
+    var timer = null;
+    return function(){
+        var context = this;
+        var args = arguments;
+        if(timer) clearTimeout(time);
+        if(immediate){
+            //根据距离上次触发操作的时间是否到达delay来决定是否要现在执行函数
+            var doNow = !timer;
+            //每一次都重新设置timer，就是要保证每一次执行的至少delay秒后才可以执行
+            timer = setTimeout(function(){
+                timer = null;
+            },delay);
+            //立即执行
+            if(doNow){
+                func.apply(context,args);
+            }
+        }else{
+            timer = setTimeout(function(){
+                func.apply(context,args);
+            },delay);
+        }
+    }
+}</code></pre><h3 id="防抖和节流的结合">防抖和节流的结合</h3>
+<pre><code>/**
+ * 函数节流方法
+ * @param Function fn 延时调用函数
+ * @param Number delay 延迟多长时间
+ * @param Number atleast 至少多长时间触发一次
+ * @return Function 延迟执行的方法
+ */
+var throttle = function (fn, delay, atleast) {
+    var timer = null;
+    var previous = null;
+
+    return function () {
+        var now = +new Date();
+
+        if ( !previous ) previous = now;
+        if ( atleast &amp;&amp; now - previous &gt; atleast ) {
+            fn();
+            // 重置上一次开始时间为本次结束时间
+            previous = now;
+            clearTimeout(timer);
+        } else {
+            clearTimeout(timer);
+            timer = setTimeout(function() {
+                fn();
+                previous = null;
+            }, delay);
+        }
+    }
+};</code></pre><p>case</p>
+<pre><code>// case 1
+window.onscroll = throttle(testFn, 200);
+// case 2
+window.onscroll = throttle(testFn, 200, 500);</code></pre><p>在上面的例子中，case1 没有传递 atleast 参数，那么 testFn 只会带 scroll 停止后才会执行，即为防抖</p>
+<p>case2 有传递 atleast 参数，变现为第一次会延迟 500ms 执行，之后会每间隔 500ms 执行，即为节流</p>
+<p>当然，上面的例子没有处理参数和 this 绑定问题，有待优化</p>
+</div></div></div>
     </div>
 
     <footer>
