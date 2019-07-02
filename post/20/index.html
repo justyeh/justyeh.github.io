@@ -53,24 +53,24 @@
 
 
     <div class="container page">
-        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(./image/inner-scroll-layout.jpg);"></div> <div class="title">内滚动布局的概念与实现方法</div> <div class="info"><i class="fa fa-clock-o"></i> <p>57分钟前</p> <!----></div> <div class="content"><div class="md"><blockquote>
-<p>转载自腾讯isux，原文地址：<a href="https://isux.tencent.com/inner-scroll-layout.html">https://isux.tencent.com/inner-scroll-layout.html</a></p>
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(https://justyeh.github.io/static/blog/20/inner-scroll-layout.jpg);"></div> <div class="title">内滚动布局的概念与实现方法</div> <div class="info"><i class="fa fa-clock-o"></i> <p>6小时前</p> <!----></div> <div class="content"><div class="md"><blockquote>
+<p>转载自腾讯isux，原文地址：<a href="https://isux.tencent.com/inner-scroll-layout.html" title="">https://isux.tencent.com/inner-scroll-layout.html</a></p>
 </blockquote>
 <h4 id="一、什么是内滚动布局？">一、什么是内滚动布局？</h4>
 <p>所谓“内滚动布局”，顾名思义就是主滚动条在页面内部的布局，是相对于传统的<html>滚动而言的，例如，下图所示滚动条，是从头部下方开始：</p>
-<p><img src="./image/inner-scroll-layout1.png" alt="内滚动示意"></p>
+<p><img src="https://justyeh.github.io/static/blog/20/inner-scroll-layout1.png" alt="内滚动示意" /></p>
 <p>传统的页面滚动，基本上是相对于整个浏览器窗体，例如，QQ视频首页：</p>
-<p><img src="./image/inner-scroll-layout2.png" alt="通常滚动示意"></p>
+<p><img src="https://justyeh.github.io/static/blog/20/inner-scroll-layout2.png" alt="通常滚动示意" /></p>
 <h4 id="二、为什么会有内滚动布局？">二、为什么会有内滚动布局？</h4>
 <p>随着显示器设备越大越宽越密，以及现代web技术的发展。web站点已经开始有了从传统的瀑布式网页向类桌面软件风格站点转变的趋势。比方说，QQ音乐的首页目前是这样子的：</p>
-<p><img src="./image/inner-scroll-layout3.jpg" alt="QQ音乐首页截图"></p>
+<p><img src="https://justyeh.github.io/static/blog/20/inner-scroll-layout3.jpg" alt="QQ音乐首页截图" /></p>
 <p>以后可能就会变成这样子：</p>
-<p><img src="./image/inner-scroll-layout4.jpg" alt="QQ音乐首页截图"></p>
+<p><img src="https://justyeh.github.io/static/blog/20/inner-scroll-layout4.jpg" alt="QQ音乐首页截图" /></p>
 <p>“纳尼，这不就是现在的QQ音乐软件界面截图？”“这位同学眼神很犀利，没错，这就是有着全国最大的正版高质量乐库的QQ音乐PC版截图”。</p>
 <p>我们可以局部放大，会发现，是个实打实的内滚动布局。</p>
-<p><img src="./image/inner-scroll-layout5.png" alt="QQ音乐PC软件内滚动截图"></p>
+<p><img src="https://justyeh.github.io/static/blog/20/inner-scroll-layout5.png" alt="QQ音乐PC软件内滚动截图" /></p>
 <p>不仅是QQ音乐，其他很多桌面软件都是这种内滚动布局，比方说QQ软件管家等等。</p>
-<p><img src="./image/inner-scroll-layout6.png" alt="QQ软件管家内滚动截图"></p>
+<p><img src="https://justyeh.github.io/static/blog/20/inner-scroll-layout6.png" alt="QQ软件管家内滚动截图" /></p>
 <p>有此可见，一旦强交互的传统web页面桌面软件化，内滚动布局是绕不开的一堵墙，了解之还是很有必要的。</p>
 <h4 id="三、如何实现内滚动布局？">三、如何实现内滚动布局？</h4>
 <p>既然是内滚动，就有必要干掉浏览器原生<html>的滚动条，这个很简单：</p>
@@ -79,15 +79,15 @@
 <p>为了更好理解，我们拿实例说话。最近半年一直在参与企业QQ账户中心改版的项目，你可以看成是企业后台管理系统。这里有几个关键字，一是<strong>企业</strong>，二是<strong>管理系统</strong>。</p>
 <h5 id="1-企业">1. 企业</h5>
 <p>这里为什么要强调是“企业”呢？因为企业产品的用户一般都是购买了企业QQ产品的企业的员工，有一定IT技能的人。因此，用户的浏览器的现代感就比Qzone用户强不少。下图为同事在2015-05-20这个爱意满满的日子拉的userAgent数据：</p>
-<p><img src="./image/inner-scroll-layout7.png" alt="企业QQ用户浏览器数据"></p>
+<p><img src="https://justyeh.github.io/static/blog/20/inner-scroll-layout7.png" alt="企业QQ用户浏览器数据" /></p>
 <p>如果我们将支持CSS3 animation的浏览器称之为现代浏览器，可以发现，企业产品的用户，70%~80%的用户都是使用的现代浏览器。亲们，近8成的用户都是使用现代浏览器，这就意味着，企业产品其实可以作为现代web技术的试验田，在为用户提供更好体验更高质量产品的同时，为日后其他产品的现代化改造提供了宝贵的借鉴经验。而本文的内滚动布局，就是万千经验中的一小个。</p>
 <h5 id="2-管理系统">2. 管理系统</h5>
 <p>“管理系统”意味着站点以强交互为主，会有很多类似办公软件的交互操作在里面。如果是更偏重浏览的站点，例如企业QQ官网，显然，传统的垂直瀑布式的网站是更适合的，滚动浏览，再滚动，再浏览。但是，企业管理系统如此庞大，操作如此频繁，交互如此之多，传统的上下式网站显然很难让用户用得非常得心应手。下图为以前企业QQ账户中心组织结构页面（测试页面）的真容：</p>
-<p><img src="./image/inner-scroll-layout8.png" alt="旧企业账户中心组织架构页面"></p>
+<p><img src="https://justyeh.github.io/static/blog/20/inner-scroll-layout8.png" alt="旧企业账户中心组织架构页面" /></p>
 <p>企业QQ用户浏览器数据</p>
 <p>看着此页面，立马让我想起了6年前刚毕业那会的青葱岁月，那时候的页面的基本上就是这样的调调，小小的空间里有着小小的世界。时代发展，再辉煌的过去，如果没有改变，终将会被埋汰。</p>
 <p>正是由于以上两点，设计师设计的时候，大胆创新，设计成了<strong>全屏自适应、半响应、类PC软件风格(内滚动)</strong>的管理站点，下图为上面老页面同样数据的新测试页面截图：</p>
-<p><img src="./image/inner-scroll-layout9.png" alt="新企业账户中心成员与权限页面"></p>
+<p><img src="https://justyeh.github.io/static/blog/20/inner-scroll-layout9.png" alt="新企业账户中心成员与权限页面" /></p>
 <p>回到内滚动布局本身。</p>
 <p>新版企业账户中心全站，顶部以及左侧固定，不跟随滚动，右侧主体内滚动，如何实现呢？</p>
 <p>由于企业产品不用管0.4%的IE6用户，因此，事件就变得简单地多了。我们可以利用绝对定位元素的拉伸特性，使内滚动容器高度自适应匹配。HTML主结构示意如下：</p>
@@ -115,16 +115,16 @@ body
 <pre><code>$(&quot;.content&quot;).scroll(function() {
     // 跟我一起翻滚吧，骚年 again……
 });</code></pre><p>你以为事情就这么完了吗？太天真了！以前我们的滚动条是跟浏览器上边缘是靠在一起的，但是，自从变成了内滚动，滚动条是跟网站公用头部下边缘排排站，这会造成什么问题呢？就是一些offset的计算要发生一些变化。举个例子，我们希望表格头部操作区域有类似position:sticky效果，也就是视区内一起翻滚，要被滚出去的时候，fixed固定，不跟随。</p>
-<p><img src="./image/inner-scroll-layout10.png" alt="表格头部操作区域固定"></p>
+<p><img src="https://justyeh.github.io/static/blog/20/inner-scroll-layout10.png" alt="表格头部操作区域固定" /></p>
 <p>此时，我们的最大滚动高度值，就需要把网站头部的高度考虑进去（传统窗体滚动不需要，因为值是0）：</p>
 <pre><code>var maxScrollTop = $(&quot;#tableHeader&quot;).offset().top - $(&quot;.header&quot;).height();</code></pre><p>以上这个，我们可以称之为“变化”，与原本的实现相比无功无过，一种变化一种转移。实际上，内滚动布局还会带来带有质变性质的一些特性。</p>
 <h5 id="无法滚动的弹出层">无法滚动的弹出层</h5>
 <p>基本上，是个像样的web2.0网站都会有弹框web组件，一个黑色半透明的overlay层，上面摇曳着弹框面板，例如这样的：</p>
-<p><img src="./image/inner-scroll-layout11.png" alt="弹框示意"></p>
+<p><img src="https://justyeh.github.io/static/blog/20/inner-scroll-layout11.png" alt="弹框示意" /></p>
 <p>对于黑色半透明覆盖层，传统实现是这样的：如果要兼容IE6浏览器，一般是absolute绝对定位，高度由JS计算赋予；如果不需要管IE6, 则可以使用fixed固定定位。</p>
 <p>然而，在内滚动布局下，“赏”就出来了，就算需要兼容IE6浏览器，黑色半透明高宽100%自适应覆盖也不需要任何JS计算的帮助，也不需要监听window的resize事件，直接CSS就可以搞定。很简单：</p>
 <pre><code>.overlay { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }</code></pre><p>为啥一行CSS就能搞定所有场景？因为使用的是内滚动布局，如下图示意，屏幕就这么高，滚动在里面，自然自适应：</p>
-<p><img src="./image/inner-scroll-layout12.png" alt="半透明覆盖层原理示意"></p>
+<p><img src="https://justyeh.github.io/static/blog/20/inner-scroll-layout12.png" alt="半透明覆盖层原理示意" /></p>
 <p>看上去是内滚动布局带来的一个小小的“赏”，但是，实际上，埋下了一个不小的“罚”。</p>
 <p>随意改变滚动容器最大的问题在于，当存在覆盖层的时候，会影响背后页面内容的滚动。</p>
 <p>100%尺寸的position:absolute/fixed的覆盖层，会覆盖任何非<html>元素(包括<body>)(包括这些元素的滚动条)，因此，只要覆盖+滚动容器改变，页面就无法滚动。</p>
@@ -148,7 +148,7 @@ body
 <pre><code>&lt;div class=&quot;container&quot;&gt;
     &lt;dialog&gt;&lt;/dialog&gt;
 &lt;/div&gt;</code></pre><p>此时，弹框在一个可滚动的容器之中，妈妈再也不用担心我不能愉快地翻滚了！</p>
-<p><img src="./image/inner-scroll-layout13.gif" alt="半透明覆盖层原理示意"></p>
+<p><img src="https://justyeh.github.io/static/blog/20/inner-scroll-layout13.gif" alt="半透明覆盖层原理示意" /></p>
 <h4 id="五、结束语">五、结束语</h4>
 <p>由于传统窗体滚动已经深入人心，所以我们可能会觉得内滚动布局似乎有些坑；但是，如果当年是内滚动布局天下，我们又该如何看待新兴的窗体滚动布局呢？然后，从产品的角度讲，内滚动布局在操作如此频繁的重交互项目中所带来的交互体验上的改进，要远比经验不足带来的额外开发成本要大很多很多。</p>
 </div></div></div>

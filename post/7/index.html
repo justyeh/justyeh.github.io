@@ -53,16 +53,16 @@
 
 
     <div class="container page">
-        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(./image/git.jpg);"></div> <div class="title">Git的使用</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2018-03-28</p> <i class="fa fa-tag"></i> <div><a href="/tag/8">git</a></div></div> <div class="content"><div class="md"><blockquote>
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(https://justyeh.github.io/static/blog/7/git.jpg);"></div> <div class="title">Git的使用</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2018-03-28</p> <i class="fa fa-tag"></i> <div><a href="/tag/8">git</a></div></div> <div class="content"><div class="md"><blockquote>
 <p>最近开始由SVN阵营投向了git，这篇博客记录了我学习使用git的经验</p>
 </blockquote>
 <h4 id="安装git">安装git</h4>
 <p>Mac和Linux上通常会预装Git，运行：</p>
 <pre><code>git --version</code></pre><p>该命令会输出您计算机上所安装的Git版本号。如果没有得到版本号信息，则您需要安装git，下面是一些工具：</p>
 <ul>
-<li>Windows：<a href="https://git-for-windows.github.io/">git for windows</a></li>
-<li>Linux:<a href="http://www.howtogeek.com/140679/beginner-geek-how-to-start-using-the-linux-terminal/">Linux Terminal</a></li>
-<li>Mac OS: <a href="http://blog.teamtreehouse.com/introduction-to-the-mac-os-x-command-line">Terminal</a></li>
+<li>Windows：<a href="https://git-for-windows.github.io/" title="">git for windows</a></li>
+<li>Linux:<a href="http://www.howtogeek.com/140679/beginner-geek-how-to-start-using-the-linux-terminal/" title="">Linux Terminal</a></li>
+<li>Mac OS: <a href="http://blog.teamtreehouse.com/introduction-to-the-mac-os-x-command-line" title="">Terminal</a></li>
 </ul>
 <p>我使用的是Windows操作系统，并且使用的是阿里云的git平台，所以下面的内容都是基于以上条件的；</p>
 <h4 id="添加ssh-key">添加SSH Key</h4>
@@ -91,7 +91,7 @@
 <pre><code>git config --global user.email</code></pre><p><strong>验证前面做的那些配置</strong></p>
 <pre><code>git config --global --list</code></pre><p>由于使用了“--global”选项，所以您只需要做一次这样的配置。Git会在您系统的任何项目中使用这个信息。如果您希望在某个特定的项目中使用不同的用户名和邮箱地址，可以在那个项目中重新运行该命令，但不加“--global”选项。</p>
 <h4 id="git工作流">git工作流</h4>
-<p><img src="./image/git-trees.png" alt="git工作流"></p>
+<p><img src="https://justyeh.github.io/static/blog/7/git-trees.png" alt="git工作流" /></p>
 <p>你的本地仓库由 <code>git</code> 维护的三棵“树”组成。第一个是你的工作目录，它持有实际文件；第二个是暂存区（Index），它像个缓存区域，临时保存你的改动；最后是 <code>HEAD</code>，指向你最近一次提交后的结果。</p>
 <p>下面是一个常见修改代码的流程：你在本地修改了代码，然后使用<code>add</code>命令将文件提交到暂存区，此时你的代码被暂存了；然后使用<code>commit</code>命令将暂存区的文件提交到版本库；最后使用<code>push</code>命令将本地的改动推送到远程，至此，你便“成功”的完成了对代码的修改！</p>
 <h4 id="版本库的相关操作">版本库的相关操作</h4>

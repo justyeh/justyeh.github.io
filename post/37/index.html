@@ -53,7 +53,7 @@
 
 
     <div class="container page">
-        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(./image/poster.gif);"></div> <div class="title">[转载]深入研究-webkit-overflow-scrolling:touch及ios滚动</div> <div class="info"><i class="fa fa-clock-o"></i> <p>1小时前</p> <!----></div> <div class="content"><div class="md"><p>转载自<a href="https://www.cnblogs.com/xiahj/p/8036419.html">https://www.cnblogs.com/xiahj/p/8036419.html</a></p>
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(https://justyeh.github.io/static/blog/37/poster.gif);"></div> <div class="title">[转载]深入研究-webkit-overflow-scrolling:touch及ios滚动</div> <div class="info"><i class="fa fa-clock-o"></i> <p>6小时前</p> <!----></div> <div class="content"><div class="md"><p>转载自<a href="https://www.cnblogs.com/xiahj/p/8036419.html" title="">https://www.cnblogs.com/xiahj/p/8036419.html</a></p>
 <h3 id="1--webkit-overflow-scrollingtouch是什么？">1. -webkit-overflow-scrolling:touch是什么？</h3>
 <p>MDN上是这样定义的：</p>
 <blockquote>
@@ -63,7 +63,7 @@ touch: 使用具有回弹效果的滚动, 当手指从触摸屏上移开，内�
 </blockquote>
 <p>在移动端上，在你用overflow-y:scorll属性的时候，你会发现滚动的效果很木，很慢，这时候可以使用-webkit-overflow-scrolling:touch这个属性，让滚动条产生滚动回弹的效果，就像ios原生的滚动条一样流畅。</p>
 <h3 id="2-解决safari布局抖动的例子">2. 解决safari布局抖动的例子</h3>
-<p><img src="./image/1.png" alt=""></p>
+<p><img src="https://justyeh.github.io/static/blog/37/1.png" alt="" /></p>
 <p><strong>想实现一个布局为header、main、bottom的布局，其中头部和底部通过fixed固定，中间部分通过滚动条滑动</strong></p>
 <p>如果目的是实现只要中间的内容超过屏幕高度时，中间内容会自动滚动的效果的话，main部分加上上下的padding，然后不需要自己添加任何滚动条属性，当超出高度时，body会自动产生滚动条。这样我们的目的其实是实现了的。</p>
 <p>但是在safari上，当超出高度，页面往下滑时，浏览器底部的工具栏会随着页面一起晃动（向下滚动时会拉起底部工具栏），造成了很不好的体验。所以我们想在中间的main部分加一个独立的滚动条。</p>
@@ -98,7 +98,7 @@ touch: 使用具有回弹效果的滚动, 当手指从触摸屏上移开，内�
 </ul>
 </blockquote>
 <p>在网上也看到了一些人在问这个问题，不过不多，国外倒是讨论的更多一点，描述如下。</p>
-<p><img src="./image/2.png" alt=""></p>
+<p><img src="https://justyeh.github.io/static/blog/37/2.png" alt="" /></p>
 <p>偶尔卡住的问题，解决方案网上众说纷纭，遇到了很多相同的说法，比如如果卡住不动的话，就加一个z-index，就能解决该问题的说法。</p>
 <p>在试了很多次之后，这种说法没有一次解决过这个问题。这个说法能够传播出来，可能是使用者当时在使用的时候遇到了-webkit-overflow-scrolling:touch点透或者层级的问题。所以该方案不具有适用性。</p>
 <p>所以这个东西真的让我很苦恼了很久，以致于那段时间所有的滚动条不是通过body自己滚动，就是使用iScroll这样的库，繁琐地让我几乎想要放弃移动web，拥抱hybrid，不过在stackoverflow潜水了很久之后，总结了以下几种解决方案：</p>
@@ -107,17 +107,17 @@ touch: 使用具有回弹效果的滚动, 当手指从触摸屏上移开，内�
 <pre><code>position: static</code></pre><p>这样会解决部分因为定位(relative、fixed、absolute)导致的页面偶尔不能滚动的bug。</p>
 <blockquote>
 <p>但是滑动到顶部继续手指往下滑，或者到底部继续往上滑，还是会触发卡住的问题（其实是整个页面上下回弹），说他算bug，其实就是ios8以上的特性，如果滚动区域大一点，用户不会觉得这是bug，如果小了，用户会不知道发生了什么而卡住了。
-视频在这，有梯子的同学可以看一看<a href="https://www.youtube.com/watch?v=MkAVYbO_joo%E3%80%82">https://www.youtube.com/watch?v=MkAVYbO_joo。</a></p>
+视频在这，有梯子的同学可以看一看<a href="https://www.youtube.com/watch?v=MkAVYbO_joo。" title="">https://www.youtube.com/watch?v=MkAVYbO_joo。</a></p>
 </blockquote>
 <h4 id="32-如果添加动态内容页面不能滚动，让子元素height1">3.2 如果添加动态内容页面不能滚动，让子元素height+1</h4>
 <p>如果在-webkit-overflow-scrolling:touch属性的元素上，想通过动态添加内容来撑开容器，触发滚动，是有bug 的，页面是会卡住不动的。</p>
 <p>国内没有人讨论这个问题，国外倒是很多，例如下面的描述：</p>
-<p><img src="./image/3.png" alt=""></p>
+<p><img src="https://justyeh.github.io/static/blog/37/3.png" alt="" /></p>
 <p>收集了很多资料，用了之后，下面的方法真正的解决了我的问题，真是直呼神奇，方案如下图：</p>
 <p>图一：</p>
-<p><img src="./image/4.png" alt=""></p>
+<p><img src="https://justyeh.github.io/static/blog/37/4.png" alt="" /></p>
 <p>图二：</p>
-<p><img src="./image/5.png" alt=""></p>
+<p><img src="https://justyeh.github.io/static/blog/37/5.png" alt="" /></p>
 <p>方法就是在webkit-overflow-scrolling:touch属性的下一层子元素上，将height加1%或1px。从而主动触发scrollbar。</p>
 <pre><code>main-inner {
     min-height: calc(100% + 1px)

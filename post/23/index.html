@@ -53,7 +53,7 @@
 
 
     <div class="container page">
-        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(./image/modules-banner.jpg);"></div> <div class="title">JavaScript模块化开发</div> <div class="info"><i class="fa fa-clock-o"></i> <p>1小时前</p> <!----></div> <div class="content"><div class="md"><blockquote>
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(https://justyeh.github.io/static/blog/23/modules-banner.jpg);"></div> <div class="title">JavaScript模块化开发</div> <div class="info"><i class="fa fa-clock-o"></i> <p>6小时前</p> <!----></div> <div class="content"><div class="md"><blockquote>
 <p>通俗易懂的介绍了模块化概念，以及使用模块化编程的必要性。详细介绍了实现模块化开发的演变过程。</p>
 </blockquote>
 <h4 id="一、为什么会有模块化">一、为什么会有模块化</h4>
@@ -182,9 +182,9 @@ module.exports = {
 // 加载模块
 var nameModule = require(&#39;./myModel.js&#39;);
 nameModule.printName();</code></pre><h4 id="客户端规范">客户端规范</h4>
-<p>客户端规范主要有：AMD（异步模块定义，推崇依赖前置）、CMD（通用模块定义，推崇依赖就近）。AMD规范的实现主要有RequireJs，CMD规范的主要实现有SeaJs。SeaJs在国内用的比较多，但SeaJs已经停止维护了，就多做多的介绍。RequireJs是使用最广泛的模块化的实现方案，关于RequireJs的介绍，请参考本站文章：<a href="http://justyeh.com/2017/02/24/requirejs/">RequireJS参考手册</a>。</p>
+<p>客户端规范主要有：AMD（异步模块定义，推崇依赖前置）、CMD（通用模块定义，推崇依赖就近）。AMD规范的实现主要有RequireJs，CMD规范的主要实现有SeaJs。SeaJs在国内用的比较多，但SeaJs已经停止维护了，就多做多的介绍。RequireJs是使用最广泛的模块化的实现方案，关于RequireJs的介绍，请参考本站文章：<a href="http://justyeh.com/2017/02/24/requirejs/" title="">RequireJS参考手册</a>。</p>
 <h3 id="amd与cmd区别">AMD与CMD区别</h3>
-<p>下面的回答来自SeaJs的作者<a href="https://www.zhihu.com/question/20351507/answer/14859415">玉伯</a>：</p>
+<p>下面的回答来自SeaJs的作者<a href="https://www.zhihu.com/question/20351507/answer/14859415" title="">玉伯</a>：</p>
 <ul>
 <li><p>对于依赖的模块，AMD 是提前执行，CMD 是延迟执行。不过 RequireJS 从 2.0 开始，也改成可以延迟执行（根据写法不同，处理方式不同）。CMD 推崇 as lazy as possible.</p>
 </li>
