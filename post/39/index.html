@@ -53,7 +53,7 @@
 
 
     <div class="container page">
-        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(https://justyeh.github.io/static/blog/39/poster.png);"></div> <div class="title">Vue项目history模式下微信分享总结</div> <div class="info"><i class="fa fa-clock-o"></i> <p>6小时前</p> <!----></div> <div class="content"><div class="md"><blockquote>
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(https://justyeh.github.io/static/blog/39/poster.png);"></div> <div class="title">Vue项目history模式下微信分享总结</div> <div class="info"><i class="fa fa-clock-o"></i> <p>7小时前</p> <!----></div> <div class="content"><div class="md"><blockquote>
 <p>每回遇到微信分享都是一个坑，目前的商城项目使用Vue开发，采用history的路由模式，配置微信分享又遇到了很多问题，最后终于解决了，现将解决的过程分享一下。</p>
 </blockquote>
 <h3 id="技术要点">技术要点</h3>
@@ -79,7 +79,7 @@
 <blockquote>
 <p>所有需要使用JS-SDK的页面必须先注入配置信息，否则将无法调用（同一个url仅需调用一次，对于变化url的SPA的web app可在每次url变化时进行调用,目前Android微信客户端不支持pushState的H5新特性，所以使用pushState来实现web app的页面会导致签名失败，此问题会在Android6.2中修复）。</p>
 </blockquote>
-<p>上面那段话摘自<a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141115" title="">官方文档</a></p>
+<p>上面那段话摘自<a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141115" title="" target="_blank">官方文档</a></p>
 <p>开发者需要注意的事项：</p>
 <ol>
 <li>android和ios需要分开处理</li>
@@ -228,7 +228,7 @@ function shareSuccessCallback() {
 }
 </code></pre><h3 id="总结">总结</h3>
 <p>原先计划不能分享的页面就使用hideMenuItems方法隐藏掉相关按钮，在ios下试了一下，有些bug：显示按钮的页面切换的影藏按钮的页面，分享按钮有时依然存在，刷新就没问题，估计又是一个深坑，没精力在折腾了，就改为隐私页面分享到首页，公共页面分享原地址，如果有什么好的解决办法，请联系我！</p>
-<p>一开始我有参考sf上的一篇博客<a href="https://segmentfault.com/a/1190000014455713" title="">https://segmentfault.com/a/1190000014455713</a>，按照上面的代码，android手机都能成功，但是IOS有一个奇怪的问题，就是分享间歇性的失效，同一个页面，刚刚调起分享成功，再试一次就失败（没有图标、title，只能跳转到首页），经过“不断”努力的尝试，应该是解决了问题，说一下过程：</p>
+<p>一开始我有参考sf上的一篇博客<a href="https://segmentfault.com/a/1190000014455713" title="" target="_blank">https://segmentfault.com/a/1190000014455713</a>，按照上面的代码，android手机都能成功，但是IOS有一个奇怪的问题，就是分享间歇性的失效，同一个页面，刚刚调起分享成功，再试一次就失败（没有图标、title，只能跳转到首页），经过“不断”努力的尝试，应该是解决了问题，说一下过程：</p>
 <ol>
 <li>一开始以为是异步唤起没成功的问题，就和android一样给IOS调用wechatAuth方法也加了个定时器，测了一遍没效果，放弃</li>
 </ol>
@@ -239,14 +239,14 @@ function shareSuccessCallback() {
 <li>重新读了一遍文档，发现onMenuShareTimeline等方法即将废弃，就把jsApiList改为<code>jsApiList:[&#39;updateAppMessageShareData&#39;,&#39;updateTimelineShareData&#39;]</code>，改后就变成了IOS可以成功，android分享失败</li>
 </ol>
 <ol start="4">
-<li>百度updateAppMessageShareData安卓失败原因，参考这个链接<a href="https://www.jianshu.com/p/1b6e04c2944a" title="">https://www.jianshu.com/p/1b6e04c2944a</a>，把老的api也加到jsApiList中，仔细、反复试了试两种设备都ok，好像是成功了，说&quot;好像&quot;是因为心里没底啊，各种“魔法”代码！</li>
+<li>百度updateAppMessageShareData安卓失败原因，参考这个链接<a href="https://www.jianshu.com/p/1b6e04c2944a" title="" target="_blank">https://www.jianshu.com/p/1b6e04c2944a</a>，把老的api也加到jsApiList中，仔细、反复试了试两种设备都ok，好像是成功了，说&quot;好像&quot;是因为心里没底啊，各种“魔法”代码！</li>
 </ol>
 <p>最后，在这里希望腾讯官方能不能走点心，更新文档及时点，demo能不能提供完整点....</p>
 <p><strong>参考链接</strong></p>
-<p><a href="https://segmentfault.com/a/1190000014455713" title="">https://segmentfault.com/a/1190000014455713</a></p>
-<p><a href="https://www.jianshu.com/p/1b6e04c2944a" title="">https://www.jianshu.com/p/1b6e04c2944a</a></p>
-<p><a href="https://segmentfault.com/a/1190000012339148" title="">https://segmentfault.com/a/1190000012339148</a></p>
-<p><a href="https://github.com/vuejs/vue-router/issues/481" title="">https://github.com/vuejs/vue-router/issues/481</a></p>
+<p><a href="https://segmentfault.com/a/1190000014455713" title="" target="_blank">https://segmentfault.com/a/1190000014455713</a></p>
+<p><a href="https://www.jianshu.com/p/1b6e04c2944a" title="" target="_blank">https://www.jianshu.com/p/1b6e04c2944a</a></p>
+<p><a href="https://segmentfault.com/a/1190000012339148" title="" target="_blank">https://segmentfault.com/a/1190000012339148</a></p>
+<p><a href="https://github.com/vuejs/vue-router/issues/481" title="" target="_blank">https://github.com/vuejs/vue-router/issues/481</a></p>
 </div></div></div>
     </div>
 

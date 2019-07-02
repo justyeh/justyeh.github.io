@@ -53,7 +53,7 @@
 
 
     <div class="container page">
-        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(https://justyeh.github.io/static/blog/37/poster.gif);"></div> <div class="title">[转载]深入研究-webkit-overflow-scrolling:touch及ios滚动</div> <div class="info"><i class="fa fa-clock-o"></i> <p>6小时前</p> <!----></div> <div class="content"><div class="md"><p>转载自<a href="https://www.cnblogs.com/xiahj/p/8036419.html" title="">https://www.cnblogs.com/xiahj/p/8036419.html</a></p>
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(https://justyeh.github.io/static/blog/37/poster.gif);"></div> <div class="title">[转载]深入研究-webkit-overflow-scrolling:touch及ios滚动</div> <div class="info"><i class="fa fa-clock-o"></i> <p>6小时前</p> <!----></div> <div class="content"><div class="md"><p>转载自<a href="https://www.cnblogs.com/xiahj/p/8036419.html" title="" target="_blank">https://www.cnblogs.com/xiahj/p/8036419.html</a></p>
 <h3 id="1--webkit-overflow-scrollingtouch是什么？">1. -webkit-overflow-scrolling:touch是什么？</h3>
 <p>MDN上是这样定义的：</p>
 <blockquote>
@@ -107,7 +107,7 @@ touch: 使用具有回弹效果的滚动, 当手指从触摸屏上移开，内�
 <pre><code>position: static</code></pre><p>这样会解决部分因为定位(relative、fixed、absolute)导致的页面偶尔不能滚动的bug。</p>
 <blockquote>
 <p>但是滑动到顶部继续手指往下滑，或者到底部继续往上滑，还是会触发卡住的问题（其实是整个页面上下回弹），说他算bug，其实就是ios8以上的特性，如果滚动区域大一点，用户不会觉得这是bug，如果小了，用户会不知道发生了什么而卡住了。
-视频在这，有梯子的同学可以看一看<a href="https://www.youtube.com/watch?v=MkAVYbO_joo。" title="">https://www.youtube.com/watch?v=MkAVYbO_joo。</a></p>
+视频在这，有梯子的同学可以看一看<a href="https://www.youtube.com/watch?v=MkAVYbO_joo。" title="" target="_blank">https://www.youtube.com/watch?v=MkAVYbO_joo。</a></p>
 </blockquote>
 <h4 id="32-如果添加动态内容页面不能滚动，让子元素height1">3.2 如果添加动态内容页面不能滚动，让子元素height+1</h4>
 <p>如果在-webkit-overflow-scrolling:touch属性的元素上，想通过动态添加内容来撑开容器，触发滚动，是有bug 的，页面是会卡住不动的。</p>
