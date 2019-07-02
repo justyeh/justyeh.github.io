@@ -53,7 +53,7 @@
 
 
     <div class="container page">
-        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(./image/poster.gif);"></div> <div class="title">[转载]深入研究-webkit-overflow-scrolling:touch及ios滚动</div> <div class="info"><i class="fa fa-clock-o"></i> <p>5个月前</p> <!----></div> <div class="content"><div class="md"><p>转载自<a href="https://www.cnblogs.com/xiahj/p/8036419.html">https://www.cnblogs.com/xiahj/p/8036419.html</a></p>
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(./image/poster.gif);"></div> <div class="title">[转载]深入研究-webkit-overflow-scrolling:touch及ios滚动</div> <div class="info"><i class="fa fa-clock-o"></i> <p>1小时前</p> <!----></div> <div class="content"><div class="md"><p>转载自<a href="https://www.cnblogs.com/xiahj/p/8036419.html">https://www.cnblogs.com/xiahj/p/8036419.html</a></p>
 <h3 id="1--webkit-overflow-scrollingtouch是什么？">1. -webkit-overflow-scrolling:touch是什么？</h3>
 <p>MDN上是这样定义的：</p>
 <blockquote>
@@ -76,7 +76,7 @@ touch: 使用具有回弹效果的滚动, 当手指从触摸屏上移开，内�
     overflow-y: scroll;
 }</code></pre><p>不过不推荐这个fixed方案，因为页面偶尔卡住不动，下面说到了这个问题。</p>
 <h4 id="22-方案二">2.2 方案二</h4>
-<p><strong>中间的main不设定位，高度100%，再padding头部和尾部</strong></p>
+<p><strong>���间的main不设定位，高度100%，再padding头部和尾部</strong></p>
 <p>其中头部和底部的定位设为absolute会比设为fixed体验更好（况且fix布局在移动端本来就有各种各样的问题，还是尽量避开:) ）。</p>
 <p>大致代码如下，仍是 overflow-y 和-webkit-overflow-scrolling，重点在于中间部分依照文本流布局。</p>
 <pre><code>html, body {
