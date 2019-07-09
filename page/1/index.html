@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="/static/css/yeh-md-theme.css">
     <link rel="stylesheet" href="/static/js/highlight/ocean.min.css">
     <script src="/static/js/highlight/highlight.min.js"></script>
+    <script src="/static/js/highlight/highlightjs-line-numbers.min.js"></script>
     <script src="/static/js/public.js"></script>
 </head>
 
@@ -53,7 +54,11 @@
 
 
     <div class="container page">
-        <div data-server-rendered="true" class="post-list-page"><div class="post-list"><div class="post-item"><!----> <div class="content"><a href="/post/47" class="title">一道面试题（关于输出结果）</a> <div class="desc">
+        <div data-server-rendered="true" class="post-list-page"><div class="post-list"><div class="post-item"><div class="poster" style="background-image:url(https://justyeh.github.io/static/blog/48/puppeteer.jpg);"></div> <div class="content"><a href="/post/48" class="title">使用puppeteer做爬虫的一次实践</a> <div class="desc">
+这段时间迷上了一本漫画ヽ(✿ﾟ▽ﾟ)ノ，百度了一番，一直没有找到下载的资源，只找到几个可以在线观看的网站，不过网站的观看体验是在太差，小广告飘啊飘的(ノへ￣、)，于是决定把它给爬下来放在本地观看。
+
+nodegrass + cheerio
+在这之前我有过写爬虫的体验（使用 nodejs 做爬虫来爬取一本小说）,按照以前的经验，选定一个网站就开始操作了，经过漫长下载（5000+张图片）终于完成，结</div> <div class="info"><i class="fa fa-clock-o"></i> <p>刚刚</p> <i class="fa fa-tag"></i> <div><a href="/tag/37">爬虫</a><a href="/tag/57">puppeteer</a></div></div></div></div><div class="post-item"><!----> <div class="content"><a href="/post/47" class="title">一道面试题（关于输出结果）</a> <div class="desc">
 今天划水的时候看到一个面试题，比较有意思，记录一下。
 
 题目
@@ -73,7 +78,7 @@ Foo.getName = function() {
 cloudflare是一家国外的 CDN 加速服务商，提供免费和付费的加速和网站保护服务，国内用户使用此服务后有可能网站加载变得更慢，但至少目前，cloudflare是一个有效并且免费的解决方案。
 教程
 注册
-浏览器输入c</div> <div class="info"><i class="fa fa-clock-o"></i> <p>1天前</p> <i class="fa fa-tag"></i> <div><a href="/tag/48">cloudflare</a><a href="/tag/49">服务器</a></div></div></div></div><div class="post-item"><div class="poster" style="background-image:url(https://justyeh.github.io/static/blog/45/poster.png);"></div> <div class="content"><a href="/post/45" class="title">使用Charles做本地映射调试线上程序</a> <div class="desc">
+浏览器输入c</div> <div class="info"><i class="fa fa-clock-o"></i> <p>6天前</p> <i class="fa fa-tag"></i> <div><a href="/tag/48">cloudflare</a><a href="/tag/49">服务器</a></div></div></div></div><div class="post-item"><div class="poster" style="background-image:url(https://justyeh.github.io/static/blog/45/poster.png);"></div> <div class="content"><a href="/post/45" class="title">使用Charles做本地映射调试线上程序</a> <div class="desc">
 使用Charles做本地映射，使用本地文件调试线上程序的教程
 
 适用场景
@@ -87,7 +92,7 @@ document
     .forEach((nodeItem, index) =&amp;gt; {
         setTimeout(async () =&amp;gt; {
             try {
-            </div> <div class="info"><i class="fa fa-clock-o"></i> <p>1天前</p> <i class="fa fa-tag"></i> <div><a href="/tag/26">js</a></div></div></div></div><div class="post-item"><div class="poster" style="background-image:url(https://justyeh.github.io/static/blog/43/poster.png);"></div> <div class="content"><a href="/post/43" class="title">github项目收藏</a> <div class="desc">
+            </div> <div class="info"><i class="fa fa-clock-o"></i> <p>6天前</p> <i class="fa fa-tag"></i> <div><a href="/tag/26">js</a></div></div></div></div><div class="post-item"><div class="poster" style="background-image:url(https://justyeh.github.io/static/blog/43/poster.png);"></div> <div class="content"><a href="/post/43" class="title">github项目收藏</a> <div class="desc">
 记录我start的一些项目，并做简要的说明
 
 工具
@@ -97,7 +102,7 @@ https://github.com/chjj/pty.js
 shelljs
 这个库能够让我们在js文件中执行shell命令，借住它可以轻松实现自动化部署
 //局部模式
-var shell = require(&amp;#39;shelljs</div> <div class="info"><i class="fa fa-clock-o"></i> <p>1天前</p> <i class="fa fa-tag"></i> <div><a href="/tag/53">github</a></div></div></div></div><div class="post-item"><div class="poster" style="background-image:url(https://justyeh.github.io/static/blog/42/git.jpg);"></div> <div class="content"><a href="/post/42" class="title">git常用命令</a> <div class="desc">
+var shell = require(&amp;#39;shelljs</div> <div class="info"><i class="fa fa-clock-o"></i> <p>1周前</p> <i class="fa fa-tag"></i> <div><a href="/tag/53">github</a></div></div></div></div><div class="post-item"><div class="poster" style="background-image:url(https://justyeh.github.io/static/blog/42/git.jpg);"></div> <div class="content"><a href="/post/42" class="title">git常用命令</a> <div class="desc">
 记录比较常用但是容易忘记的git命令
 
 远程仓库和本地仓库建立关联
@@ -116,19 +121,19 @@ debug模式下报false
 这个没得说，就是调用wx.config方法的参数错误造成的，请确认以下事项：
 
 是否成功绑定了域名（域名校验文件要能被访问到）
-使用最新的js-sdk文</div> <div class="info"><i class="fa fa-clock-o"></i> <p>1天前</p> <i class="fa fa-tag"></i> <div><a href="/tag/29">Vue</a><a href="/tag/43">微信分享</a></div></div></div></div><div class="post-item"><div class="poster" style="background-image:url(https://justyeh.github.io/static/blog/37/poster.gif);"></div> <div class="content"><a href="/post/37" class="title">[转载]深入研究-webkit-overflow-scrolling:touch及ios滚动</a> <div class="desc">转载自https://www.cnblogs.com/xiahj/p/8036419.html
+使用最新的js-sdk文</div> <div class="info"><i class="fa fa-clock-o"></i> <p>1周前</p> <i class="fa fa-tag"></i> <div><a href="/tag/29">Vue</a><a href="/tag/43">微信分享</a></div></div></div></div><div class="post-item"><div class="poster" style="background-image:url(https://justyeh.github.io/static/blog/37/poster.gif);"></div> <div class="content"><a href="/post/37" class="title">[转载]深入研究-webkit-overflow-scrolling:touch及ios滚动</a> <div class="desc">转载自https://www.cnblogs.com/xiahj/p/8036419.html
 1. -webkit-overflow-scrolling:touch是什么？
 MDN上是这样定义的：
 
 -webkit-overflow-scrolling 属性控制元素在移动设备上是否使用滚动回弹效果.
 auto: 使用普通滚动, 当手指从触摸屏上移开，滚动会立即停止。
-touch: 使用具有回弹效</div> <div class="info"><i class="fa fa-clock-o"></i> <p>1天前</p> <i class="fa fa-tag"></i> <div><a href="/tag/25">css</a><a href="/tag/27">scroll</a></div></div></div></div><div class="post-item"><!----> <div class="content"><a href="/post/36" class="title">使用nodejs做爬虫来爬取一本小说</a> <div class="desc">
+touch: 使用具有回弹效</div> <div class="info"><i class="fa fa-clock-o"></i> <p>6天前</p> <i class="fa fa-tag"></i> <div><a href="/tag/25">css</a><a href="/tag/27">scroll</a></div></div></div></div><div class="post-item"><!----> <div class="content"><a href="/post/36" class="title">使用nodejs做爬虫来爬取一本小说</a> <div class="desc">
 最近在网上看到了一个小说，感觉挺好看的，在线阅读的网站广告比较多，想下载下来，结果找半天也没个全本下载的。于是想到用爬虫自己来实现，下面记录了我的实现过程。
 
 使用nodegrass做网络请求
 刚开始是使用http模块的get方法来做网络请求的，不过一直有中文乱码的问题，于是找到了nodegrass，使用比较简单：
 var gs = require(&amp;#39;nodegrass&amp;#39;);
-g</div> <div class="info"><i class="fa fa-clock-o"></i> <p>5个月前</p> <i class="fa fa-tag"></i> <div><a href="/tag/37">爬虫</a></div></div></div></div><div class="post-item"><!----> <div class="content"><a href="/post/35" class="title">折腾一个html5播放器</a> <div class="desc">
+g</div> <div class="info"><i class="fa fa-clock-o"></i> <p>6个月前</p> <i class="fa fa-tag"></i> <div><a href="/tag/37">爬虫</a></div></div></div></div><div class="post-item"><!----> <div class="content"><a href="/post/35" class="title">折腾一个html5播放器</a> <div class="desc">
 现在的网页中有很多场景中会涉及到视频播放，个人认为原生的控件已经做得很好了。但是老有人觉得原生的就是丑的，有什么办法呢，(&amp;#39;_&amp;#39;)。本文利用html5 video的相关api，尝试折腾出一个“美化”过的的视频播放器。
 
 代码地址https://github.com/justyeh/y-video-player
@@ -163,16 +168,7 @@ div{
     height:1px;
     background:#ddd;
     -webkit-transform: scaleY(0.5);
-    -we</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-09-07</p> <i class="fa fa-tag"></i> <div><a href="/tag/25">css</a><a href="/tag/34">1px</a></div></div></div></div><div class="post-item"><div class="poster" style="background-image:url(https://justyeh.github.io/static/blog/31/poster.jpg);"></div> <div class="content"><a href="/post/31" class="title">flex兼容性写法</a> <div class="desc">
-利用flex可以方便快捷的帮助我们进行网页布局，不过由于历史标准很多，人工书写会有一些兼容性问题，这里将在网上搜集到的兼容性的写法放在博客中，以便取用。
-
-flex：定义布局为盒模型
-.flex {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-}</div> <div class="info"><i class="fa fa-clock-o"></i> <p>1天前</p> <i class="fa fa-tag"></i> <div><a href="/tag/9">flex</a><a href="/tag/25">css</a></div></div></div></div></div> <div class="pager"><span class='prev current'>Prev</span><a class=' current' href='/page/1'>1</a><a class='' href='/page/2'>2</a><a class='' href='/page/3'>3</a><a class='next' href='/page/2'>Next</a></div></div>
+    -we</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2017-09-07</p> <i class="fa fa-tag"></i> <div><a href="/tag/25">css</a><a href="/tag/34">1px</a></div></div></div></div></div> <div class="pager"><span class='prev current'>Prev</span><a class=' current' href='/page/1'>1</a><a class='' href='/page/2'>2</a><a class='' href='/page/3'>3</a><a class='next' href='/page/2'>Next</a></div></div>
     </div>
 
     <footer>

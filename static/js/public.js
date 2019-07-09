@@ -1,4 +1,5 @@
 hljs.initHighlightingOnLoad();
+hljs.initLineNumbersOnLoad();
 
 window.onload = () => {
     const _form = document.querySelector("#search");

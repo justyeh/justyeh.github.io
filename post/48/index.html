@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="justyeh,justyeh@163.com" />
+    <meta name="apple-mobile-web-app-title" content="justyeh的前端博客" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#263238" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="x5-orientation" content="portrait" />
+    <meta name="theme-color" content="#263238" />
+    <meta name="description" content="爬虫，puppeteer" />
+    <meta name="keywords" content="爬虫，puppeteer" />
+    <title>使用puppeteer做爬虫的一次实践</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/front.css">
+    <link rel="stylesheet" href="/static/css/yeh-md-theme.css">
+    <link rel="stylesheet" href="/static/js/highlight/ocean.min.css">
+    <script src="/static/js/highlight/highlight.min.js"></script>
+    <script src="/static/js/highlight/highlightjs-line-numbers.min.js"></script>
+    <script src="/static/js/public.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="site">
+                <img src="/static/image/avatar.jpg" />
+                <p>JustYeh的前端博客</p>
+            </div>
+            <div class="nav">
+                <div class="menu">
+                    <a href="/">Home</a>
+                    <a href="/projects/history/index.html">Projects</a>
+                    <a href="/projects/tools">Tools</a>
+                    <a target="_blank" href="https://github.com/justyeh">Github</a>
+                </div>
+                <div class="search">
+                    <form action="https://www.google.com" id="search" methods='get' target="_blank">
+                        <input class="ani" autocomplete="off" type="search" name="q" value="">
+                        <button class="ani" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="container page">
+        <div data-server-rendered="true" class="post-detail-page"><div class="poster" style="background-image:url(https://justyeh.github.io/static/blog/48/puppeteer.jpg);"></div> <div class="title">使用puppeteer做爬虫的一次实践</div> <div class="info"><i class="fa fa-clock-o"></i> <p>刚刚</p> <i class="fa fa-tag"></i> <div><a href="/tag/37">爬虫</a><a href="/tag/57">puppeteer</a></div></div> <div class="content"><div class="md"><blockquote>
+<p>这段时间迷上了一本漫画ヽ(✿ﾟ▽ﾟ)ノ，百度了一番，一直没有找到下载的资源，只找到几个可以在线观看的网站，不过网站的观看体验是在太差，小广告飘啊飘的(ノへ￣、)，于是决定把它给爬下来放在本地观看。</p>
+</blockquote>
+<h2 id="nodegrass--cheerio">nodegrass + cheerio</h2>
+<p>在这之前我有过写爬虫的体验（<a href="https://justyeh.github.io/static/blog/48//post/36" title="" target="_blank">使用 nodejs 做爬虫来爬取一本小说</a>）,按照以前的经验，选定一个网站就开始操作了，经过漫长下载（5000+张图片）终于完成，结果看了几话后发现这网站里面的数据是不完整的，存在许多图片缺失的情况，CTMD!</p>
+<h2 id="puppeteer">puppeteer</h2>
+<p>吸取上面的教训后开始仔细甄别数据来源，总算找到一个数据完整的网站，不过也遇到一个难题，这个网站的图片地址是通过一段 js 动态生成的，比较恶心的是这 js 混淆的比较厉害，自己尝试了去解析一下，不过这活是在难搞，也就放弃了。</p>
+<p>于是我开始另外寻找思路：作为前端码畜，想一想 SPA 是怎么被爬取的呢？Headless 无头浏览器啊。</p>
+<p>一开始我找到的是 PhantomJS，试了一下发现并不好用：文档不好用、而且好像也不维护了。问了一下群里的老哥，发现了 puppeteer 这个神器（只要浏览器能操作的，puppeteer都能帮你模拟，还有截屏、设备模拟等使用功能），下面我就结合代码，说明一下使用经验。</p>
+<p><strong>app.js</strong></p>
+<pre><code>const getChapterImageSrc = require(&quot;./src/getChapterImageSrc&quot;);
+const download = require(&quot;./src/download&quot;);
+async function init() {
+    let list = await getChapterImageSrc(&quot;xxx&quot;);
+    list.forEach(async (item,itemIndex) =&gt; {
+        await download({
+            image: item,
+            index: itemIndex+1
+            dir: &quot;xxxx&quot;
+        });
+    });
+}
+init();</code></pre><p>上面的代码中 download 我并没有做并行处理，主要原因是单个任务下载完成后我会手动检查一下数据是否完整，必要的时候可以切断任务，但保证任务顺序是可控的！</p>
+<p><strong>getChapterImageSrc.js</strong></p>
+<pre><code>const axios = require(&quot;axios&quot;);
+const cheerio = require(&quot;cheerio&quot;);
+const pb = require(&quot;./progress-bar&quot;)(&quot;获取图片地址&quot;);
+const puppeteer = require(&quot;puppeteer&quot;);
+const path = require(&quot;path&quot;);
+
+module.exports = async baseUrl =&gt; {
+    try {
+        let res = await axios.get(baseUrl);
+        if (res) {
+            let brower = await puppeteer.launch({
+                headless: false,
+                devtools: true,
+                args: [
+                    //&quot;--proxy-server=&#39;direct://&#39;&quot;,
+                    //&quot;--proxy-bypass-list=*&quot;,
+                    &quot;--no-sandbox&quot;,
+                    &quot;--disable-setuid-sandbox&quot;,
+                    &quot;--enable-features=NetworkService&quot;
+                ],
+                // args: [`--proxy-server=&quot;socks5://127.0.0.1:1080&quot;` &#39;--no-sandbox&#39;, &#39;--disable-setuid-sandbox&#39;, &#39;--enable-features=NetworkService&#39;],
+                executablePath: path.resolve(
+                    &quot;C:/Users/54657645/AppData/Local/Google/Chrome/Application/chrome.exe&quot;
+                )
+            });
+
+            let $ = cheerio.load(res.data);
+            let pageTotal = $(&quot;.manga-page&quot;).text();
+            pageTotal = parseInt(pageTotal.slice(1, pageTotal.length));
+            let srcList = [];
+            for (let i = 1; i &lt;= pageTotal; i++) {
+                let page = await brower.newPage();
+                /* await page.setRequestInterception(true);
+                page.on(&quot;request&quot;, async request =&gt; {
+                    let resourceType = request.resourceType();
+                    if ([&quot;image&quot;, &quot;stylesheet&quot;].includes(resourceType)) {
+                        request.abort();
+                    } else {
+                        request.continue();
+                    }
+                }); */
+                await page.goto(`` || `${baseUrl}?p=${i}`);
+                html = await page.content();
+                let src =
+                    cheerio
+                        .load(html)(&quot;img#manga&quot;)
+                        .attr(&quot;src&quot;) || &quot;&quot;;
+                pb.render({ completed: i, total: pageTotal });
+                srcList.push(src);
+            }
+            await brower.close();
+            return srcList;
+        }
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+};</code></pre><p>这个代码就是本文的重点了：</p>
+<p>line2：cheerio 可以使 node 以 jquery 的方式解析 html，便于我们分析提取 html 内容</p>
+<p>line11-25：实例化一个浏览器对象</p>
+<ul>
+<li>headless：是否已无头浏览器方式启动，false 会打开一个浏览器</li>
+<li>args：浏览器启动的参数</li>
+<li>executablePath：启动的浏览器的地址，默认是库中的 chromium，这里指定为系统安装的 chrome</li>
+</ul>
+<p>line27-29：获取下载任务量（有多少张图片）</p>
+<p>line32：打开一个浏览器页面</p>
+<p>line33-41：这里是一个拦截器，在拦截器中我们终止了 css 和图片请求，目的是加快页面载入速度。不过这里我遇到了一个问题，只要打开了这个拦截器就会造成某个页面一直处于加载状态，导致 page 超时，最终我将这里注释掉了，还有待进一步研究！</p>
+<p>line42-47：设置页面 url，并获取页面 html 内容，最终得到图片的地址</p>
+<p><strong>download.js</strong></p>
+<pre><code>const fse = require(&quot;fs-extra&quot;);
+const request = require(&quot;request&quot;);
+
+module.exports = task =&gt; {
+    return new Promise((resolve, reject) =&gt; {
+        let splitUrl = task.image.split(&quot;/&quot;);
+        let name = splitUrl[splitUrl.length - 1];
+        let writeStream = fse.createWriteStream(
+            `./${task.dir}/${task.index}-${name}`,
+            {
+                autoClose: true
+            }
+        );
+        let readStream = request(encodeURI(task.image));
+        readStream.pipe(writeStream);
+        readStream.on(&quot;error&quot;, error =&gt; {
+            resolve(false);
+        });
+        writeStream.on(&quot;finish&quot;, () =&gt; {
+            resolve(true);
+        });
+        writeStream.on(&quot;error&quot;, error =&gt; {
+            resolve(false);
+        });
+    });
+};</code></pre><p>这个是下载图片的代码，通过管道的方式用 fs 模块将图片写到本地目录</p>
+<p><strong>process-bar.js</strong></p>
+<pre><code>// 这里用到一个很实用的 npm 模块，用以在同一行打印文本
+var slog = require(&quot;single-line-log&quot;).stdout;
+
+// 封装的 ProgressBar 工具
+function ProgressBar(description, bar_length) {
+// 两个基本参数(属性)
+this.description = description || &quot;Progress&quot;; // 命令行开头的文字信息
+this.length = bar_length || 25; // 进度条的长度(单位：字符)，默认设为 25
+
+    // 刷新进度条图案、文字的方法
+    this.render = function(opts) {
+        var percent = (opts.completed / opts.total).toFixed(4); // 计算进度(子任务的 完成数 除以 总数)
+        var cell_num = Math.floor(percent * this.length); // 计算需要多少个 █ 符号来拼凑图案
+
+        // 拼接黑色条
+        var cell = &quot;&quot;;
+        for (var i = 0; i &lt; cell_num; i++) {
+            cell += &quot;█&quot;;
+        }
+
+        // 拼接灰色条
+        var empty = &quot;&quot;;
+        for (var i = 0; i &lt; this.length - cell_num; i++) {
+            empty += &quot;░&quot;;
+        }
+
+        // 拼接最终文本
+        var cmdText =
+            this.description +
+            &quot;: &quot; +
+            (100 * percent).toFixed(2) +
+            &quot;% &quot; +
+            cell +
+            empty +
+            &quot; &quot; +
+            opts.completed +
+            &quot;/&quot; +
+            opts.total;
+
+        // 在单行输出文本
+        slog(cmdText);
+    };
+
+}
+
+// 模块导出
+module.exports = text =&gt; {
+return new ProgressBar(text, 50);
+};
+</code></pre><p>这个是一个控制台输出的库，便于查看任务进度!</p>
+<h2 id="参考链接">参考链接</h2>
+<p>官网
+<a href="https://pptr.dev/" title="" target="_blank">https://pptr.dev/</a></p>
+<p>中文文档
+<a href="https://zhaoqize.github.io/puppeteer-api-zh_CN/" title="" target="_blank">https://zhaoqize.github.io/puppeteer-api-zh_CN/</a></p>
+<p>github 
+<a href="https://github.com/GoogleChrome/puppeteer" title="" target="_blank">https://github.com/GoogleChrome/puppeteer</a></p>
+</div></div></div>
+    </div>
+
+    <footer>
+        <div>
+            <p>参考网址：</p>
+            <div class="links">
+                <a target="_blank" href="https://cnodejs.org/">CNode技术社区</a>
+                <a target="_blank" href="https://cn.vuejs.org/">Vue.js官网</a>
+                <a target="_blank" href="https://zh.nuxtjs.org/">Nuxt.js官网</a>
+                <a target="_blank" href="http://www.expressjs.com.cn/">Express.js官网</a>
+            </div>
+        </div>
+        <div>
+            <p>友情链接：</p>
+            <div class="links">
+                <a target="_blank" href="http://www.lanqiao.org/">蓝桥官网</a>
+                <a target="_blank" href="http://www.javabb.cn/">秦豹的个人网站</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

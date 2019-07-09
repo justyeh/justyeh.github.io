@@ -85,7 +85,7 @@
 }
 
 .md pre code {
-    padding: 15px 10px;
+    padding: 15px 10px 15px 0;
     border: none;
 }
 
@@ -144,4 +144,16 @@
 .md>table th code,
 .md>table tr:nth-child(2n) code {
     background-color: #efefef;
+}
+
+
+/* 显示行号 */
+table.hljs-ln .hljs-ln-numbers {
+    text-align: center;
+    border-right: solid 1px #fff;
+    padding: 0 10px;
+}
+
+table.hljs-ln .hljs-ln-code {
+    padding-left: 10px;
 }
