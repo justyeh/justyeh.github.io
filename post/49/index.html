@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="justyeh,justyeh@163.com" />
+    <meta name="apple-mobile-web-app-title" content="justyeh的前端博客" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#263238" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="x5-orientation" content="portrait" />
+    <meta name="theme-color" content="#263238" />
+    <meta name="description" content="微服务" />
+    <meta name="keywords" content="微服务" />
+    <title>【转载】用微前端的方式搭建类单页应用</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/front.css">
+    <link rel="stylesheet" href="/static/css/yeh-md-theme.css">
+    <link rel="stylesheet" href="/static/js/highlight/ocean.min.css">
+    <script src="/static/js/highlight/highlight.min.js"></script>
+    <script src="/static/js/highlight/highlightjs-line-numbers.min.js"></script>
+    <script src="/static/js/public.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="site">
+                <img src="/static/image/avatar.jpg" />
+                <p>JustYeh的前端博客</p>
+            </div>
+            <div class="nav">
+                <div class="menu">
+                    <a href="/">Home</a>
+                    <a href="/projects/history/index.html">Projects</a>
+                    <a href="/projects/tools">Tools</a>
+                    <a target="_blank" href="https://github.com/justyeh">Github</a>
+                </div>
+                <div class="search">
+                    <form action="https://www.google.com" id="search" methods='get' target="_blank">
+                        <input class="ani" autocomplete="off" type="search" name="q" value="">
+                        <button class="ani" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="container page">
+        <div data-server-rendered="true" class="post-detail-page"><!----> <div class="title">【转载】用微前端的方式搭建类单页应用</div> <div class="info"><i class="fa fa-clock-o"></i> <p>刚刚</p> <i class="fa fa-tag"></i> <div><a href="/tag/58">微服务</a></div></div> <div class="content"><div class="md"><p>原文链接<a href="https://tech.meituan.com/2018/09/06/fe-tiny-spa.html" title="" target="_blank">https://tech.meituan.com/2018/09/06/fe-tiny-spa.html</a></p>
+<p>另一个前端微服务解决方案<a href="https://single-spa.js.org/" title="" target="_blank">https://single-spa.js.org/</a></p>
+<h2 id="前言">前言</h2>
+<p><a href="https://www.thoughtworks.com/radar/techniques/micro-frontends" title="" target="_blank">微前端</a>由ThoughtWorks 2016年提出，将后端微服务的理念应用于浏览器端，即将 Web 应用由单一的单体应用转变为多个小型前端应用聚合为一的应用。</p>
+<p>美团已经是一家拥有几万人规模的大型互联网公司，提升整体效率至关重要，这需要很多内部和外部的管理系统来支撑。由于这些系统之间存在大量的连通和交互诉求，因此我们希望能够按照用户和使用场景将这些系统汇总成一个或者几个综合的系统。</p>
+<p>我们把这种由多个微前端聚合出来的单页应用叫做“类单页应用”，美团HR系统就是基于这种设计实现的。美团HR系统是由30多个微前端应用聚合而成，包含1000多个页面，300多个导航菜单项。对用户来说，HR系统是一个单页应用，整个交互过程非常顺畅；对开发者同学来说，各个应用均可独立开发、独立测试、独立发布，大大提高了开发效率。</p>
+<p>接下来，本文将为大家介绍“微前端构建类单页应用”在美团HR系统中的一些实践。同时也分享一些我们的思考和经验，希望能够对大家有所启发。</p>
+<h2 id="hr系统的微前端设计">HR系统的微前端设计</h2>
+<p>因为美团的HR系统所涉及项目比较多，目前由三个团队来负责。其中：OA团队负责考勤、合同、流程等功能，HR团队负责入职、转正、调岗、离职等功能，上海团队负责绩效、招聘等功能。这种团队和功能的划分模式，使得每个系统都是相对独立的，拥有独立的域名、独立的UI设计、独立的技术栈。但是，这样会带来开发团队之间职责划分不清、用户体验效果差等问题，所以就迫切需要把HR系统转变成只有一个域名和一套展示风格的系统。</p>
+<p>为了满足公司业务发展的要求，我们做了一个HR的门户页面，把各个子系统的入口做了链接归拢。然而我们发现HR门户的意义非常小，用户跳转两次之后，又完全不知道跳到哪里去了。因此我们通过将HR系统整合为一个应用的方式，来解决以上问题。</p>
+<p>一般而言，“类单页应用”的实现方式主要有两种：</p>
+<ol>
+<li>iframe嵌</li>
+<li>微前端合并类单页应用</li>
+</ol>
+<p>其中，iframe嵌入方式是比较容易实现的，但在实践的过程中带来了如下问题：</p>
+<ul>
+<li>子项目需要改造，需要提供一组不带导航的功能</li>
+<li>iframe嵌入的显示区大小不容易控制，存在一定局限性</li>
+<li>URL的记录完全无效，页面刷新不能够被记忆，刷新会返回首页</li>
+<li>iframe功能之间的跳转是无效的</li>
+<li>iframe的样式显示、兼容性等都具有局限性</li>
+</ul>
+<p>考虑到这些问题，iframe嵌入并不能满足我们的业务诉求，所以我们开始用微前端的方式来搭建HR系统。</p>
+<p>在这个微前端的方案里，有几个我们必须要解决的问题：</p>
+<ol>
+<li>一个前端需要对应多个后端</li>
+<li>提供一套应用注册机制，完成应用的无缝整合</li>
+<li>构建时集成应用和应用独立发布部署</li>
+</ol>
+<p>只有解决了以上问题，我们的集成才是有效且真正可落地的，接下来详细讲解一下这几个问题的实现思路。</p>
+<h2 id="一个前端对应多个后端">一个前端对应多个后端</h2>
+<p>HR系统最终线上运行的是一个单页应用，而项目开发中要求应用独立，因此我们新建了一个入口项目，用于整合各个应用。在我们的实践中，把这个项目叫做“Portal项目”或“主项目”，业务应用叫做“子项目”，整个项目结构图如下所示：</p>
+<p>!()[1.png]</p>
+<p>“Portal项目”是比较特殊的，在开发阶段是一个容器，不包含任何业务，除了提供“子项目”注册、合并功能外，还可以提供一些系统级公共支持，例如： * 用户登录机制 * 菜单权限获取 * 全局异常处理 * 全局数据打点</p>
+<p>“子项目”对外输出不需要入口HTML页面，只需要输出的资源文件即可，资源文件包括js、css、fonts和imgs等。</p>
+<p>HR系统在线上运行了一个前端服务（Node Server），这个Server用于响应用户登录、鉴权、资源的请求。HR系统的数据请求并没有经过前端服务做透传，而是被Nginx转发到后端Server上，具体交互如下图所示：</p>
+<p>!()[2.png]</p>
+<p>转发规则上限制数据请求格式必须是 系统名+Api做前缀 这样保障了各个系统之间的请求可以完全隔离。其中，Nginx的配置示例如下：</p>
+<pre><code>server {
+    listen          80;
+    server_name     xxx.xx.com;
+
+    location  /project/api/ {
+        set $upstream_name &quot;server.project&quot;;
+        proxy_pass  http://$upstream_name;
+    }
+    ...
+
+    location  / {
+        set $upstream_name &quot;web.portal&quot;;
+        proxy_pass  http://$upstream_name;
+    }
+}</code></pre><p>我们将用户的统一登录和认证问题交给了SSO，所有的项目的后端Server都要接入SSO校验登录状态，从而保障业务系统间用户安全认证的一致性。</p>
+<p>在项目结构确定以后，应用如何进行合并呢？因此，我们开始制定了一套应用注册机制。</p>
+<h2 id="应用注册机制">应用注册机制</h2>
+<p>“Portal项目”提供注册的接口，“子项目”进行注册，最终聚合成一个单页应用。在整套机制中，比较核心的部分是路由注册机制，“子项目”的路由应该由自己控制，而整个系统的导航是“Portal项目”提供的。</p>
+<h2 id="路由注册">路由注册</h2>
+<p>路由的控制由三部分组成：权限菜单树、导航和路由树，“Portal项目”中封装一个组件App，根据菜单树和路由树生成整个页面。路由挂载到DOM树上的代码如下：</p>
+<pre><code>let Router = &lt;Router
+            fetchMenu = {fetchMenuHandle}
+            routes = {routes}
+            app = {App}
+            history = {history}
+            &gt;
+ReactDOM.render(Router,document.querySelector(&quot;#app&quot;));</code></pre><p>Router是在react-router的基础上做了一层封装，通过menu和routes最后生成一个如下所示的路由树：</p>
+<pre><code>&lt;Router&gt;
+  &lt;Route path=&quot;/&quot; component={App}&gt;
+    &lt;Route path=&quot;/namespace/xx&quot; component={About} /&gt;
+    &lt;Route path=&quot;inbox&quot; component={Inbox}&gt;
+      &lt;Route path=&quot;messages/:id&quot; component={Message} /&gt;
+    &lt;/Route&gt;
+  &lt;/Route&gt;
+&lt;/Router&gt;</code></pre><p>具体注册使用了全局的<code>window.app.routes</code>，“Portal项目”从<code>window.app.routes</code>获取路由，“子项目”把自己需要注册的路由添加到<code>window.app.routes</code>中，子项目的注册如下:</p>
+<pre><code>let app = window.app = window.app || {}; 
+app.routes = (app.routes || []).concat([
+{
+  code:&#39;attendance-record&#39;,    
+  path: &#39;/attendance-record&#39;,
+  component: wrapper(() =&gt; async(require(&#39;./nodes/attendance-record&#39;), &#39;kaoqin&#39;)),
+}]);</code></pre><p>路由合并的同时也把具体的功能做了引用关联，再到构建时就可以把所有的功能与路由管理起来。项目的作用域要怎么控制呢？我们要求“子项目”间是彼此隔离，要避免样式污染，要做独立的数据流管理，我们用项目作用域的方式来解决这些问题。</p>
+<h2 id="项目作用域控制">项目作用域控制</h2>
+<p>在路由控制的时候我们提到了 window.app，我们也是通过这个全局App来做项目作用域的控制。window.app包含了如下几部分：</p>
+<pre><code>let app = window.app || {};
+app = {
+    require:function(request){...},
+    define:function(name,context,index){...},
+    routes:[...],
+    init:function(namespace,reducers){...}       
+};</code></pre><p>window.app主要功能：</p>
+<ul>
+<li>define 定义项目的公共库，主要用来解决JS公共库的管理问题</li>
+<li>require 引用自己的定义的基础库，配合define来使用</li>
+<li>routes 用于存放全局的路由，子项目路由添加到window.app.routes，用于完成路由的注册</li>
+<li>init 注册入口，为子项目添加上namesapce标识，注册上子项目管理数据流的reducers</li>
+</ul>
+<p>子项目完整的注册，如下所示：</p>
+<pre><code>import reducers from &#39;./redux/kaoqin-reducer&#39;;
+let app = window.app = window.app || {}; 
+app.routes = (app.routes || []).concat([
+{
+  code:&#39;attendance-record&#39;,    
+  path: &#39;/attendance-record&#39;,
+  component: wrapper(() =&gt; async(require(&#39;./nodes/attendance-record&#39;), &#39;kaoqin&#39;)),
+  // ... 其他路由
+}]);
+
+function wrapper(loadComponent) {
+  let React = null;
+  let Component = null;
+  let Wrapped = props =&gt; (
+    &lt;div className=&quot;namespace-kaoqin&quot;&gt;
+      &lt;Component {...props} /&gt;
+    &lt;/div&gt;
+  );
+  return async () =&gt; {
+    await window.app.init(&#39;namespace-kaoqin&#39;,reducers);
+    React = require(&#39;react&#39;);
+    Component = await loadComponent();
+    return Wrapped;
+  };
+}</code></pre><p>其中做了这几件事情：</p>
+<ol>
+<li>把路由添加到window.app中</li>
+<li>业务第一次功能被调用的时候执行 window.app.init(namespace,reducers)，注册项目作用域和数据流的reducers</li>
+<li>对业务功能的挂载节点包装一个根节点：Component挂载在className为namespace-kaoqin的div下面</li>
+</ol>
+<p>这样就完成了“子项目”的注册，“子项目”的对外输出是一个入口文件和一系列的资源文件，这些文件由webpack构建生成。</p>
+<p>CSS作用域方面，使用webpack在构建阶段为业务的所有CSS都加上自己的作用域，构建配置如下：</p>
+<pre><code>//webpack打包部分，在postcss插件中 添加namespace的控制
+config.postcss.push(postcss.plugin(&#39;namespace&#39;, () =&gt; css =&gt;
+  css.walkRules(rule =&gt; {
+    if (rule.parent &amp;&amp; rule.parent.type === &#39;atrule&#39; &amp;&amp; rule.parent.name !== &#39;media&#39;) return;
+    rule.selectors = rule.selectors.map(s =&gt; `.namespace-kaoqin ${s === &#39;body&#39; ? &#39;&#39; : s}`);
+  })
+));</code></pre><p>CSS处理用到postcss-loader，postcss-loader用到postcss，我们添加postcss的处理插件，为每一个CSS选择器都添加名为.namespace-kaoqin的根选择器，最后打包出来的CSS，如下所示：</p>
+<pre><code>.namespace-kaoqin .attendance-record {
+    height: 100%;
+    position: relative
+}
+
+.namespace-kaoqin .attendance-record .attendance-record-content {
+    font-size: 14px;
+    height: 100%;
+    overflow: auto;
+    padding: 0 20px
+}
+... </code></pre><p>CSS样式问题解决之后，接下来看一下，Portal提供的init做了哪些工作。</p>
+<pre><code>let inited = false;
+let ModalContainer = null;
+app.init = async function (namespace,reducers) {
+  if (!inited) {
+    inited = true;
+    let block = await new Promise(resolve =&gt; {
+      require.ensure([], function (require) {
+        app.define(&#39;block&#39;, require.context(&#39;block&#39;, true, /^\.\/(?!dev)([^\/]|\/(?!demo))+\.jsx?$/));
+        resolve(require(&#39;block&#39;));
+      }, &#39;common&#39;);
+    });
+    ModalContainer = document.createElement(&#39;div&#39;);
+    document.body.appendChild(mtfv3ModalContainer);
+    let { Modal} = block;
+    Modal.getContainer = () =&gt; ModalContainer;
+  }
+  ModalContainer.setAttribute(&#39;class&#39;, `${namespace}`);
+  mountReducers(namepace,reducers)
+};</code></pre><p>init方法主要做了两件事情：</p>
+<ol>
+<li>挂载“子项目”的reducers，把“子项目”的数据流挂载了redux上</li>
+<li>“子项目”的弹出窗全部挂载在一个全局的div上，并为这个div添加对应的项目作用域，配合“子项目”构建的CSS，确保弹出框样式正确
+上述代码中还看到了app.define的用法，它主要是用来处理JS公共库的控制，例如我们用到的组件库Block，期望每个“子项目”的版本都是统一的。因此我们需要解决JS公共库版本统一的问题。</li>
+</ol>
+<h2 id="js公共库版本统一">JS公共库版本统一</h2>
+<p>为了不侵入“子项目”，我们采用构建过程中替换的方式来做，“Portal项目”把公共库引入进来，重新定义，然后通过window.app.require的方式引用，在编译“子项目”的时候，把引用公共库的代码从require(&#39;react&#39;)全部替换为window.app.require(&#39;react&#39;)，这样就可以将JS公共库的版本都交给“Portal项目”来控制了。</p>
+<p>define 的代码和示例如下：</p>
+<pre><code>/**
+* 重新定义包
+* @param name  引用的包名，例如 react
+* @param context 资源引用器 实际上是 webpackContext（是一个方法，来引用资源文件）
+* @param index 定义的包的入口文件
+*/
+app.define = function (name, context, index) {
+  let keys = context.keys();
+  for (let key of keys) {
+    let parts = (name + key.slice(1)).split(&#39;/&#39;);
+    let dir = this.modules;
+    for (let i = 0; i &lt; parts.length - 1; i++) {
+      let part = parts[i];
+      if (!dir.hasOwnProperty(part)) {
+        dir[part] = {};
+      }
+      dir = dir[part];
+    }
+    dir[parts[parts.length - 1]] = context.bind(context, key);
+  }
+  if (index != null) {
+    this.modules[name][&#39;index.js&#39;] = this.modules[name][index];
+  }
+};
+//定义app的react 
+//定义一个react资源库：把原来react根目录和lib目录下的.js全部获取到，绑定到新定义的react中，并指定react.js作为入口文件
+app.define(&#39;react&#39;, require.context(&#39;react&#39;, true, /^.\/(lib\/)?[^\/]+\.js$/), &#39;react.js&#39;);
+app.define(&#39;react-dom&#39;, require.context(&#39;react-dom&#39;, true, /^.\/index\.js$/));</code></pre><p>“子项目”的构建，使用webpack的externals（外部扩展）来对引用进行替换：</p>
+<pre><code>/**
+ * 对一些公共包的引用做处理 通过webpack的externals（外部扩展）来解决
+ */
+const libs = [&#39;react&#39;, &#39;react-dom&#39;, &quot;block&quot;];
+
+module.exports = function (context, request, callback) {
+    if (libs.indexOf(request.split(&#39;/&#39;, 1)[0]) !== -1) {
+        //如果文件的require路径中包含libs中的 替换为 window.app.require(&#39;${request}&#39;); 
+        //var在这儿是声明的意思 
+        callback(null, `var window.app.require(&#39;${request}&#39;)`);
+    } else {
+        callback();
+    }
+};</code></pre><p>这样项目的注册就完成了，还有一些需要“子项目”自己改造的地方，例如本地启动需要把“Portal项目”的导航加载进来，需要做mock数据等等。</p>
+<p>项目的注册完成了，我们如何发布部署呢？</p>
+<h2 id="构建后集成和独立部署">构建后集成和独立部署</h2>
+<p>在HR系统的整合过程中，开发阶段对“子项目”是“零侵入”，而在发布阶段，我们也希望如此。</p>
+<p>我们的部署过程，大概如下：</p>
+<p><img src="https://justyeh.github.io/static/blog/49/3.png" alt="" /></p>
+<p>第一步：在发布机上，获取代码、安装依赖、执行构建； 第二步：把构建的结果上传到服务器； 第三步：在服务器执行 node index.js 把服务启动起来。</p>
+<p>“Portal项目”构建之后的文件结构如下：</p>
+<p><img src="https://justyeh.github.io/static/blog/49/4.png" alt="" /></p>
+<p>“子项目”构建后的文件结构如下：</p>
+<p><img src="https://justyeh.github.io/static/blog/49/5.png" alt="" /></p>
+<p>线上运行的文件结构如下：</p>
+<p><img src="https://justyeh.github.io/static/blog/49/6.png" alt="" /></p>
+<p>把“子项目”的构建文件上传到服务器对应的“子项目”文件目录下，然后对“子项目”的资源文件进行集成合并，生成.dist目录中的文件，提供给用户线上访问使用。</p>
+<p>每次发布，我们主要做以下三件事情：</p>
+<ol>
+<li>发布最新的静态资源文件</li>
+<li>重新生成entry-xx.js和index.html（更新入口引用）</li>
+<li>重启前端服务</li>
+</ol>
+<p>如果是纯静态服务，完全可以做到热部署，动态更新一下引用关系即可，不需要重启服务。因为我们在Node服务层做了一些公共服务，所以选择了重启服务，我们使用了公司的基础服务和PM2来实现热启动。</p>
+<p>对于历史文件，我们需要做版本控制，以保障之前的访问能够正常运行。此外，为了保证服务的高可用性，我们上线了4台机器，分别在两个机房进行部署，最终来提高HR系统的容错性。</p>
+<h2 id="总结">总结</h2>
+<p>以上就是我们使用React技术栈和微前端方式搭建的“类单页应用”HR业务系统，回顾一下这个技术方案，整个框架流程如下图所示：</p>
+<p><img src="https://justyeh.github.io/static/blog/49/7.png" alt="" /></p>
+<p>在产品层面上，“微前端类单页应用”打破了独立项目的概念，我们可以根据用户的需求自由组装我们的页面应用，例如：我们可以在HR门户上把考勤、请假、OA审批、财务报销等高频功能放在一起。甚至可以让用户自己定制功能，让用户真的感受到我们是一个系统。</p>
+<p>“微前端构建类单页应用”方案是基于React技术栈开发，如果把路由管理机制和注册机制抽离出来作为一个公共的库，就可以在webpack的基础上封装成一个业务无关性的通用方案，而且使用起来非常的友好。</p>
+<p>截止目前，HR系统已经稳定运行了1年多的时间，我们总结了以下三个优点：</p>
+<ol>
+<li>单页应用的体验比较好，按需加载，交互流畅</li>
+<li>项目微前端化，业务解耦，稳定性有保障，项目的粒度易控制</li>
+<li>项目的健壮性比较好，项目注册仅仅增加了入口文件的大小，30多个项目目前只有12K</li>
+</ol>
+<h2 id="作者简介">作者简介</h2>
+<p>贾召，2014年加入美团，先后主导了OA、HR、财务等企业项目的前端搭建，自主研发React组件库Block，在Block的基础上统一了整个企业平台的前端技术栈，致力于提高研发团队的工作效率。</p>
+</div></div></div>
+    </div>
+
+    <footer>
+        <div>
+            <p>参考网址：</p>
+            <div class="links">
+                <a target="_blank" href="https://cnodejs.org/">CNode技术社区</a>
+                <a target="_blank" href="https://cn.vuejs.org/">Vue.js官网</a>
+                <a target="_blank" href="https://zh.nuxtjs.org/">Nuxt.js官网</a>
+                <a target="_blank" href="http://www.expressjs.com.cn/">Express.js官网</a>
+            </div>
+        </div>
+        <div>
+            <p>友情链接：</p>
+            <div class="links">
+                <a target="_blank" href="http://www.lanqiao.org/">蓝桥官网</a>
+                <a target="_blank" href="http://www.javabb.cn/">秦豹的个人网站</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
