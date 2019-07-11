@@ -104,8 +104,14 @@
     margin: 5px 0 5px 17px !important;
 }
 
-.md li {
+.md ul,
+.md ul li {
     list-style: disc;
+}
+
+.md ol,
+.md ol li {
+    list-style: decimal;
 }
 
 .md hr {
