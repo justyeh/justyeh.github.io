@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="justyeh,justyeh@163.com" />
+    <meta name="apple-mobile-web-app-title" content="justyeh的前端博客" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#263238" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="x5-orientation" content="portrait" />
+    <meta name="theme-color" content="#263238" />
+    <meta name="description" content="Vue" />
+    <meta name="keywords" content="Vue" />
+    <title>7个有用的Vue开发技巧</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/front.css">
+    <link rel="stylesheet" href="/static/css/yeh-md-theme.css">
+    <link rel="stylesheet" href="/static/js/highlight/ocean.min.css">
+    <script src="/static/js/highlight/highlight.min.js"></script>
+    <script src="/static/js/highlight/highlightjs-line-numbers.min.js"></script>
+    <script src="/static/js/public.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="site">
+                <img src="/static/image/avatar.jpg" />
+                <p>JustYeh的前端博客</p>
+            </div>
+            <div class="nav">
+                <div class="menu">
+                    <a href="/">Home</a>
+                    <a href="/projects/history/index.html">Projects</a>
+                    <a href="/projects/tools">Tools</a>
+                    <a target="_blank" href="https://github.com/justyeh">Github</a>
+                </div>
+                <div class="search">
+                    <form action="https://www.google.com" id="search" methods='get' target="_blank">
+                        <input class="ani" autocomplete="off" type="search" name="q" value="">
+                        <button class="ani" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="container page">
+        <div data-server-rendered="true" class="post-detail-page"><!----> <div class="title">7个有用的Vue开发技巧</div> <div class="info"><i class="fa fa-clock-o"></i> <p>2019-07-30</p> <i class="fa fa-tag"></i> <div><a href="/tag/29">Vue</a></div></div> <div class="content"><div class="md"><h2 id="1状态共享">1状态共享</h2>
+<p>随着组件的细化，就会遇到多组件状态共享的情况，Vuex当然可以解决这类问题，不过就像Vuex官方文档所说的，如果应用不够大，为避免代码繁琐冗余，最好不要使用它，今天我们介绍的是<code>vue.js</code> 2.6新增加的<a href="https://vuejs.org/v2/api/#Vue-observable" title="" target="_blank">Observable API</a> ，通过使用这个api我们可以应对一些简单的跨组件数据状态共享的情况。</p>
+<p>如下这个例子，我们将在组件外创建一个store，然后在<code>App.vue</code>组件里面使用<code>store.js</code>提供的store和mutation方法，同理其它组件也可以这样使用，从而实现多个组件共享数据状态。</p>
+<p>首先创建一个<code>store.js</code>，包含一个store和一个mutations，分别用来指向数据和处理方法。</p>
+<pre><code>import Vue from &quot;vue&quot;;
+
+export const store = Vue.observable({ count: 0 });
+
+export const mutations = {
+  setCount(count) {
+    store.count = count;
+  }
+};</code></pre><p>然后在<code>App.vue</code>里面引入这个<code>store.js</code>，在组件里面使用引入的数据和方法</p>
+<pre><code>&lt;template&gt;
+  &lt;div id=&quot;app&quot;&gt;
+    &lt;img width=&quot;25%&quot; src=&quot;./assets/logo.png&quot;&gt;
+    &lt;p&gt;count:{{count}}&lt;/p&gt;
+    &lt;button @click=&quot;setCount(count+1)&quot;&gt;+1&lt;/button&gt;
+    &lt;button @click=&quot;setCount(count-1)&quot;&gt;-1&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import { store, mutations } from &quot;./store&quot;;
+export default {
+  name: &quot;App&quot;,
+  computed: {
+    count() {
+      return store.count;
+    }
+  },
+  methods: {
+    setCount: mutations.setCount
+  }
+};
+&lt;/script&gt;</code></pre><p>你可以点击<a href="https://codesandbox.io/s/4w0mo0kyow" title="" target="_blank">在线DEMO</a>查看最终效果</p>
+<h2 id="2长列表性能优化">2长列表性能优化</h2>
+<p>我们应该都知道vue会通过<code>object.defineProperty</code>对数据进行劫持，来实现视图响应数据的变化，然而有些时候我们的组件就是纯粹的数据展示，不会有任何改变，我们就不需要vue来劫持我们的数据，在大量数据展示的情况下，这能够很明显的减少组件初始化的时间，那如何禁止vue劫持我们的数据呢？可以通过<code>object.freeze</code>方法来冻结一个对象，一旦被冻结的对象就再也不能被修改了。</p>
+<pre><code>export default {
+  data: () =&gt; ({
+    users: {}
+  }),
+  async created() {
+    const users = await axios.get(&quot;/api/users&quot;);
+    this.users = Object.freeze(users);
+  }
+};</code></pre><p>另外需要说明的是，这里只是冻结了users的值，引用不会被冻结，当我们需要reactive数据的时候，我们可以重新给users赋值。</p>
+<pre><code>export default {
+  data: () =&gt; ({
+    users: []
+  }),
+  async created() {
+    const users = await axios.get(&quot;/api/users&quot;);
+    this.users = Object.freeze(users);
+  },
+  methods:{
+    // 改变值不会触发视图响应
+    this.users[0] = newValue
+    // 改变引用依然会触发视图响应
+    this.users = newArray
+  }
+};</code></pre><h2 id="3去除多余的样式">3去除多余的样式</h2>
+<p>随着项目越来越大，书写的不注意，不自然的就会产生一些多余的css，小项目还好，一旦项目大了以后，多余的css会越来越多，导致包越来越大，从而影响项目运行性能，所以有必要在正式环境去除掉这些多余的css，这里推荐一个库<a href="https://www.purgecss.com/" title="" target="_blank">purgecss</a>，支持CLI、JavascriptApi、Webpack等多种方式使用，通过这个库，我们可以很容易的去除掉多余的css。</p>
+<p>我做了一个测试，<a href="https://codesandbox.io/s/zkq258ly4" title="" target="_blank">在线DEMO</a></p>
+<pre><code>&lt;h1&gt;Hello Vanilla!&lt;/h1&gt;
+&lt;div&gt;
+  We use Parcel to bundle this sandbox, you can find more info about Parcel
+  &lt;a href=&quot;https://parceljs.org&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;here&lt;/a&gt;.
+&lt;/div&gt;</code></pre><pre><code>body {
+  font-family: sans-serif;
+}
+a {
+  color: red;
+}
+ul {
+  li {
+    list-style: none;
+  }
+}</code></pre><pre><code>import Purgecss from &quot;purgecss&quot;;
+const purgecss = new Purgecss({
+  content: [&quot;**/*.html&quot;],
+  css: [&quot;**/*.css&quot;]
+});
+const purgecssResult = purgecss.purge();</code></pre><p>最终产生的purgecssResult结果如下，可以看到多余的a和ul标签的样式都没了</p>
+<p>!()[1.png]</p>
+<h2 id="4作用域插槽">4作用域插槽</h2>
+<p>利用好作用域插槽可以做一些很有意思的事情，比如定义一个基础布局组件A，只负责布局，不管数据逻辑，然后另外定义一个组件B负责数据处理，布局组件A需要数据的时候就去B里面去取。假设，某一天我们的布局变了，我们只需要去修改组件A就行，而不用去修改组件B，从而就能充分复用组件B的数据处理逻辑，关于这块我之前写过一篇实际案例，可以点击<a href="https://juejin.im/post/5c2d7030f265da613a54236f" title="" target="_blank">这里</a>查看。</p>
+<p>这里涉及到的一个最重要的点就是父组件要去获取子组件里面的数据，之前是利用<code>slot-scope</code>，自vue 2.6.0起，提供了更好的支持 <code>slot</code> 和 <code>slot-scope</code> 特性的 API 替代方案。</p>
+<p>比如，我们定一个名为current-user的组件：</p>
+<pre><code>&lt;span&gt;
+  &lt;slot&gt;{{ user.lastName }}&lt;/slot&gt;
+&lt;/span&gt;</code></pre><p>父组件引用<code>current-user</code>的组件，但想用名替代姓（老外名字第一个单词是名，后一个单词是姓）：</p>
+<pre><code>&lt;current-user&gt;
+  {{ user.firstName }}
+&lt;/current-user&gt;</code></pre><p>这种方式不会生效，因为user对象是子组件的数据，在父组件里面我们获取不到，这个时候我们就可以通过<code>v-slot</code>来实现。</p>
+<p>首先在子组件里面，将user作为一个<code>&lt;slot&gt;</code>元素的特性绑定上去：</p>
+<pre><code>&lt;span&gt;
+  &lt;slot v-bind:user=&quot;user&quot;&gt;
+    {{ user.lastName }}
+  &lt;/slot&gt;
+&lt;/span&gt;</code></pre><p>之后，我们就可以在父组件引用的时候，给<code>v-slot</code>带一个值来定义我们提供的插槽 prop 的名字：</p>
+<pre><code>&lt;current-user&gt;
+  &lt;template v-slot:default=&quot;slotProps&quot;&gt;
+    {{ slotProps.user.firstName }}
+  &lt;/template&gt;
+&lt;/current-user&gt;</code></pre><p>这种方式还有缩写语法，可以查看<a href="https://cn.vuejs.org/v2/guide/components-slots.html#%E7%8B%AC%E5%8D%A0%E9%BB%98%E8%AE%A4%E6%8F%92%E6%A7%BD%E7%9A%84%E7%BC%A9%E5%86%99%E8%AF%AD%E6%B3%95" title="" target="_blank">独占默认插槽的缩写语法</a>，最终我们引用的方式如下：</p>
+<pre><code>&lt;current-user v-slot=&quot;slotProps&quot;&gt;
+  {{ slotProps.user.firstName }}
+&lt;/current-user&gt;</code></pre><p>相比之前slot-scope代码更清晰，更好理解。</p>
+<h2 id="5属性事件传递">5属性事件传递</h2>
+<p>写过高阶组件的童鞋可能都会碰到过将加工过的属性向下传递的情况，如果碰到属性较多时，需要一个个去传递，非常不友好并且费时，有没有一次性传递的呢（比如react里面的<code>{...this.props}</code>）？答案就是v-bind和v-on。</p>
+<p>举个例子，假如有一个基础组件<code>BaseList</code>，只有基础的列表展示功能，现在我们想在这基础上增加排序功能，这个时候我们就可以创建一个高阶组件<code>SortList</code>。</p>
+<pre><code>&lt;!-- SortList  --&gt;
+&lt;template&gt;
+  &lt;BaseList v-bind=&quot;$props&quot; v-on=&quot;$listeners&quot;&gt; &lt;!-- ... --&gt; &lt;/BaseList&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+  import BaseList from &quot;./BaseList&quot;;
+  // 包含了基础的属性定义
+  import BaseListMixin from &quot;./BaseListMixin&quot;;
+  // 封装了排序的逻辑
+  import sort from &quot;./sort.js&quot;;
+
+  export default {
+    props: BaseListMixin.props,
+    components: {
+      BaseList
+    }
+  };
+&lt;/script&gt;</code></pre><p>可以看到传递属性和事件的方便性，而不用一个个去传递</p>
+<h2 id="6函数式组件">6函数式组件</h2>
+<p>函数式组件，即无状态，无法实例化，内部没有任何生命周期处理方法，非常轻量，因而渲染性能高，特别适合用来只依赖外部数据传递而变化的组件。</p>
+<p>写法如下：</p>
+<ul>
+<li>在<code>template</code>标签里面标明<code>functional</code></li>
+<li>只接受<code>props</code>值</li>
+<li>不需要<code>script</code>标签</li>
+</ul>
+<pre><code>&lt;!-- App.vue --&gt;
+&lt;template&gt;
+  &lt;div id=&quot;app&quot;&gt;
+    &lt;List
+      :items=&quot;[&#39;Wonderwoman&#39;, &#39;Ironman&#39;]&quot;
+      :item-click=&quot;item =&gt; (clicked = item)&quot;
+    /&gt;
+    &lt;p&gt;Clicked hero: {{ clicked }}&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import List from &quot;./List&quot;;
+
+export default {
+  name: &quot;App&quot;,
+  data: () =&gt; ({ clicked: &quot;&quot; }),
+  components: { List }
+};
+&lt;/script&gt;</code></pre><pre><code>&lt;!-- List.vue 函数式组件 --&gt;
+&lt;template functional&gt;
+  &lt;div&gt;
+    &lt;p v-for=&quot;item in props.items&quot; @click=&quot;props.itemClick(item);&quot;&gt;
+      {{ item }}
+    &lt;/p&gt;
+  &lt;/div&gt;
+&lt;/template&gt;</code></pre><h2 id="7监听组件的生命周期">7监听组件的生命周期</h2>
+<p>比如有父组件<code>Parent</code>和子组件<code>Child</code>，如果父组件监听到子组件挂载<code>mounted</code>就做一些逻辑处理，常规的写法可能如下：</p>
+<pre><code>// Parent.vue
+&lt;Child @mounted=&quot;doSomething&quot;/&gt;
+
+// Child.vue
+mounted() {
+  this.$emit(&quot;mounted&quot;);
+}</code></pre><p>这里提供一种特别简单的方式，子组件不需要任何处理，只需要在父组件引用的时候通过<code>@hook</code>来监听即可，代码重写如下：</p>
+<pre><code>&lt;Child @hook:mounted=&quot;doSomething&quot;/&gt;</code></pre><p>当然这里不仅仅是可以监听<code>mounted</code>，其它的生命周期事件，例如：<code>created</code>，<code>updated</code>等都可以，是不是特别方便~</p>
+<h2 id="参考链接">参考链接</h2>
+<ul>
+<li><a href="https://vuedose.tips/tips/" title="" target="_blank">vueTips</a></li>
+<li><a href="https://alligator.io/vuejs/" title="" target="_blank">vuePost</a></li>
+</ul>
+<p><strong>原文地址：<a href="https://juejin.im/post/5ce3b519f265da1bb31c0d5f" title="" target="_blank">https://juejin.im/post/5ce3b519f265da1bb31c0d5f</a></strong></p>
+</div></div></div>
+    </div>
+
+    <footer>
+        <div>
+            <p>参考网址：</p>
+            <div class="links">
+                <a target="_blank" href="https://cnodejs.org/">CNode技术社区</a>
+                <a target="_blank" href="https://cn.vuejs.org/">Vue.js官网</a>
+                <a target="_blank" href="https://zh.nuxtjs.org/">Nuxt.js官网</a>
+                <a target="_blank" href="http://www.expressjs.com.cn/">Express.js官网</a>
+            </div>
+        </div>
+        <div>
+            <p>友情链接：</p>
+            <div class="links">
+                <a target="_blank" href="http://www.lanqiao.org/">蓝桥官网</a>
+                <a target="_blank" href="http://www.javabb.cn/">秦豹的个人网站</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
