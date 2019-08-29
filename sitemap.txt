@@ -2,6 +2,7 @@ https://justyeh.github.io
 https://justyeh.github.io/page/1
 https://justyeh.github.io/page/2
 https://justyeh.github.io/page/3
+https://justyeh.github.io/post/51
 https://justyeh.github.io/post/50
 https://justyeh.github.io/post/49
 https://justyeh.github.io/post/48
@@ -83,3 +84,4 @@ https://justyeh.github.io/tag/55
 https://justyeh.github.io/tag/56
 https://justyeh.github.io/tag/57
 https://justyeh.github.io/tag/58
+https://justyeh.github.io/tag/59
