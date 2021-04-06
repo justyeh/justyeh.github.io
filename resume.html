@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" name="viewport" />
     <title>叶文祥-简历</title>
     <style>
       * {
@@ -80,7 +80,7 @@
       </style>
       <img class="avatar" src="./avatar.jpg" />
       <h2 class="name">叶文祥</h2>
-      <p>5年前端，不断进步的技术人</p>
+      <p class="desc">5年前端，不断进步的技术人</p>
 
       <style>
         .base .flex span {
@@ -118,6 +118,9 @@
           flex: 1;
           display: flex;
           align-content: center;
+        }
+        .intention .flex > div:last-child svg {
+          width: 16px;
         }
       </style>
       <div class="block intention">
@@ -305,21 +308,20 @@
           </div>
 
           <div class="item">
-            <h5>个人项目-博客</h5>
+            <h5>个人项目-nuxt.justyeh.top博客</h5>
             <p>这个网站是我的业余学习成果，里面放了些工作中的经验和技术总结</p>
             <p>技术栈：Vue.js+Nuxt.js+ES6+Webpack+Mysql+Node.js+Express.js</p>
             <p>前后台一并负责，使用SSR进行页面渲染</p>
-            <p>一个前端综合性较强的项目，比较能反应我当时的技术水平</p>
+            <p>积极参与开源社区，目前star 160</p>
           </div>
         </div>
       </div>
 
       <div class="block">
-        <h4 class="title">自我介绍</h4>
+        <h4 class="title">个人优势</h4>
         <ul>
-          <li>
-            5年前端开发经验，项目经验丰富，参与过h5、webapp、企业官网、中后台系统等多种项目的前端开发工作，对后台开发也有一定的了解，能够和后台达成良好的默契。
-          </li>
+          <li>项目经验丰富，参与过h5、webapp、企业官网、中后台系统等多种项目的前端开发工作。</li>
+          <li>写过nodejs项目，对后台开发也有一定的了解，能够和后台达成良好的默契</li>
           <li>踏实肯干，责任心强，独立解决问题能力强，能快速适应新的工作学习和生活环境，个人学习能力强。</li>
           <li>
             github：<a href="https://github.com/justyeh" target="_blank">https://github.com/justyeh</a> ，个人博客：<a
@@ -343,5 +345,38 @@
         </ul>
       </div>
     </div>
+    <style>
+      @media only screen and (max-width: 900px) {
+        body {
+          word-wrap: break-word;
+        }
+        .document {
+          margin: 0;
+          width: 100%;
+          padding: 10px;
+        }
+        .avatar {
+          display: block;
+          position: relative;
+          top: auto;
+          right: auto;
+          margin: 0 auto;
+        }
+        .name,
+        .desc {
+          text-align: center;
+        }
+
+        .flex {
+          display: block;
+        }
+        .flex > span {
+          display: block;
+        }
+        .base span::after {
+          display: none;
+        }
+      }
+    </style>
   </body>
 </html>
