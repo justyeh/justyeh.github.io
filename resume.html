@@ -10,44 +10,48 @@
         box-sizing: border-box;
         margin: 0;
         padding: 0;
-        line-height: 1.5;
       }
       body {
         background: #f3f3f3;
         font-size: 14px;
         color: #747474;
+        line-height: 1.4;
       }
-      ul{
+      ul {
         list-style-position: inside;
       }
-      li+li{
-        padding-top: 8px;
+      li + li {
+        padding-top: 5px;
       }
-      a{
+      a {
         color: #00c091;
       }
       .title {
-        font-size: 18px;
-        margin-bottom: 10px;
+        font-size: 16px;
+        margin-bottom: 5px;
         color: #000;
       }
-      h5{
-        color: #000;
-      }
+
       .document {
         width: 820px;
         margin: 50px auto;
         background: #fff;
-        padding: 30px;
+        padding: 20px;
         position: relative;
       }
-      
+
       .block {
-        padding-top: 30px;
+        padding-top: 15px;
       }
       .flex {
         display: flex;
         align-items: center;
+      }
+
+      @media print {
+        .document {
+          margin: 0 auto;
+        }
       }
     </style>
   </head>
@@ -55,19 +59,19 @@
     <div class="document">
       <style>
         .name {
-        font-size: 28px;
-        margin-bottom: 10px;
-        color: #000;
-      }
-      .avatar {
-        position: absolute;
-        top: 30px;
-        right: 30px;
-        width: 120px;
-        height: 150px;
-        object-fit: cover;
-        border: solid 3px #e5e5e5;
-      }
+          font-size: 24px;
+          margin-bottom: 5px;
+          color: #000;
+        }
+        .avatar {
+          position: absolute;
+          top: 30px;
+          right: 30px;
+          width: 120px;
+          height: 150px;
+          object-fit: cover;
+          border: solid 3px #e5e5e5;
+        }
       </style>
       <img class="avatar" src="./avatar.jpg" />
       <h2 class="name">叶文祥</h2>
@@ -96,6 +100,21 @@
           <span>5年经验</span>
           <span>186-7127-0136</span>
           <span>justyeh@163.com</span>
+        </div>
+      </div>
+
+      <style>
+        .education .flex > span {
+          flex: 1;
+        }
+      </style>
+      <div class="block education">
+        <h4 class="title">教育背景</h4>
+        <div class="flex">
+          <span>2012.9-2016.7</span>
+          <span>湖北工程学院</span>
+          <span>计算机科学与技术</span>
+          <span></span>
         </div>
       </div>
 
@@ -225,21 +244,6 @@
       </div>
 
       <style>
-        .education .flex > span {
-          flex: 1;
-        }
-      </style>
-      <div class="block education">
-        <h4 class="title">教育背景</h4>
-        <div class="flex">
-          <span>2012.9-2016.7</span>
-          <span>湖北工程学院</span>
-          <span>计算机科学与技术</span>
-          <span></span>
-        </div>
-      </div>
-
-      <style>
         .work .flex > span {
           flex: 1;
         }
@@ -259,13 +263,19 @@
         </div>
       </div>
 
-
-     <style>
-       .project .item+.item{
-        padding-top: 10px;
-       }
-     </style>
-      <div class="block project" >
+      <style>
+        .project .item + .item {
+          padding-top: 10px;
+        }
+        .project h5 {
+          color: #000;
+          font-size: 14px;
+        }
+        .project p {
+          line-height: 1.4;
+        }
+      </style>
+      <div class="block project">
         <h4 class="title">项目经验</h4>
         <div class="list">
           <div class="item">
@@ -292,29 +302,29 @@
             <p>参与前后台功能页面的开发</p>
           </div>
 
-         <div class="item">
-          <h5>个人项目-博客</h5>
-          <p>这个网站是我的业余学习成果，里面放了些工作中的经验和技术总结</p>
-          <p>技术栈：Vue.js+Nuxt.js+ES6+Webpack+Mysql+Node.js+Express.js</p>
-          <p>前后台一并负责，使用SSR进行页面渲染</p>
-          <p>一个前端综合性较强的项目，比较能反应我当时的技术水平</p>
-         </div>
+          <div class="item">
+            <h5>个人项目-博客</h5>
+            <p>这个网站是我的业余学习成果，里面放了些工作中的经验和技术总结</p>
+            <p>技术栈：Vue.js+Nuxt.js+ES6+Webpack+Mysql+Node.js+Express.js</p>
+            <p>前后台一并负责，使用SSR进行页面渲染</p>
+            <p>一个前端综合性较强的项目，比较能反应我当时的技术水平</p>
+          </div>
         </div>
       </div>
 
-      
-
       <div class="block">
         <h4 class="title">自我介绍</h4>
-        <ul></ul>
+        <ul>
           <li>
             5年前端开发经验，项目经验丰富，参与过h5、webapp、企业官网、中后台系统等多种项目的前端开发工作，对后台开发也有一定的了解，能够和后台达成良好的默契。
           </li>
+          <li>踏实肯干，责任心强，独立解决问题能力强，能快速适应新的工作学习和生活环境，个人学习能力强。</li>
           <li>
-            踏实肯干，责任心强，独立解决问题能力强，能快速适应新的工作学习和生活环境，个人学习能力强。
-          </li>
-          <li>
-            github：<a href="https://github.com/justyeh" target="_blank">https://github.com/justyeh</a> ，个人博客：<a href="http://justyeh.top/" target="_blank">http://justyeh.top/</a>
+            github：<a href="https://github.com/justyeh" target="_blank">https://github.com/justyeh</a> ，个人博客：<a
+              href="http://justyeh.top/"
+              target="_blank"
+              >http://justyeh.top/</a
+            >
           </li>
         </ul>
       </div>
